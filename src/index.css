@@ -882,6 +882,8 @@ section {
 
 .hero-cv-button:hover .hero-cv-icon { transform: translateY(2px); }
 
+
+
 /* Scroll link */
 .hero-scroll-link {
     display: flex;
@@ -1322,16 +1324,31 @@ section {
 }
 
 .cv-modal-download {
+    /* 🔧 Button reset — required because the element
+       changed from <a> to <button>. Without this, browsers
+       paint a default grey background + border. */
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+
+    /* Existing layout (unchanged) */
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
     padding: 0;
+    text-decoration: none;
     transition: transform 0.3s ease;
 }
 
-.cv-modal-download:hover { transform: translateY(-2px); }
+.cv-modal-download:hover {
+    transform: translateY(-2px);
+}
+
 
 .cv-modal-download-ring {
     position: absolute;
@@ -1580,6 +1597,32 @@ section {
     width: 34px;
     height: 1px;
     background: linear-gradient(90deg, #ff5020, transparent);
+}
+
+/* ---------- Full legal name ---------- */
+
+.about-name {
+    margin-bottom: 22px;
+
+    font-family: "Orbitron", sans-serif;
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    color: #ffffff;
+
+    text-shadow:
+            0 0 20px rgba(255, 80, 32, 0.35),
+            0 0 40px rgba(255, 40, 10, 0.15);
+}
+
+@media (max-width: 640px) {
+    .about-name {
+        margin-bottom: 18px;
+        font-size: 0.98rem;
+        letter-spacing: 0.04em;
+    }
 }
 
 .about-heading {

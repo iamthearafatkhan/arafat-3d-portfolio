@@ -79,54 +79,91 @@ const Hero = () => {
 
                     {/* ========================= LEFT ========================= */}
                     <header className="hero-content">
-                        <div className="hero-kicker">
-                            <span className="kicker-line" />
-                            <span>AI / ML ENGINEER · DATA SCIENCE · RESEARCH</span>
-                        </div>
 
-                        <div className="hero-text">
-                            <div className="hero-name-wrapper">
-                                <span className="hero-name-index">I'm</span>
-                                <h1 className="hero-name">
-                                    ARAFAT
-                                    <span>KHAN</span>
-                                </h1>
-                            </div>
+    {/* ========================================
+        BISMILLAH — kicker replacement
+    ======================================== */}
+    <div className="flex flex-col gap-1.5 mb-7">
+        <div className="flex items-center gap-3">
+            <span className="kicker-line" />
+            <span
+                className="font-['Amiri',serif] text-[1.15rem] leading-none text-amber-200/95 tracking-wide"
+                dir="rtl"
+            >
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+            </span>
+        </div>
+        <span className="pl-[46px] font-['Rajdhani'] text-[10px] font-semibold uppercase tracking-[0.25em] text-white/45">
+            In the name of Allah, the Most Gracious, the Most Merciful
+        </span>
+    </div>
 
-                            <div className="hero-title">
-                                <span className="hero-title-muted">Building</span>
+    {/* ========================================
+        NAME
+    ======================================== */}
+    <div className="hero-text">
+        <div className="hero-name-wrapper">
+            <span className="hero-name-index">I'm</span>
+            <h1 className="hero-name">
+                ARAFAT
+                <span>KHAN</span>
+            </h1>
+        </div>
 
-                                <span className="hero-word-slider">
-                                    <span className="hero-word-wrapper">
-                                        {words.map((word, index) => (
-                                            <span
-                                                key={`${word.text}-${index}`}
-                                                className="hero-word"
-                                            >
-                                                <span className="hero-word-icon">
-                                                    <img
-                                                        src={word.imgPath}
-                                                        alt={word.text}
-                                                    />
-                                                </span>
-                                                <span>{word.text}</span>
-                                            </span>
-                                        ))}
-                                    </span>
-                                </span>
-                            </div>
+        <div className="hero-title">
+            <span className="hero-title-muted">Building</span>
 
-                            <div className="hero-title-second">
-                                Graduate Engineer
-                                <span className="hero-dot">.</span>
-                            </div>
-                        </div>
+            <span className="hero-word-slider">
+                <span className="hero-word-wrapper">
+                    {words.map((word, index) => (
+                        <span
+                            key={`${word.text}-${index}`}
+                            className="hero-word"
+                        >
+                            <span className="hero-word-icon">
+                                <img src={word.imgPath} alt={word.text} />
+                            </span>
+                            <span>{word.text}</span>
+                        </span>
+                    ))}
+                </span>
+            </span>
+        </div>
 
-                        <p className="hero-description">
-                            I turn data, research and intelligent algorithms
-                            into practical digital experiences and machine
-                            learning systems.
-                        </p>
+        <div className="hero-title-second">
+            Graduate Engineer
+            <span className="hero-dot">.</span>
+        </div>
+    </div>
+
+    {/* ========================================
+        QURAN VERSE — Surah Taha 20:114
+    ======================================== */}
+    <div className="relative mt-7 mb-7 max-w-[590px] pl-5 border-l-2 border-amber-400/35">
+        <div
+            className="font-['Amiri',serif] text-2xl md:text-[1.7rem] leading-[1.7] text-right text-amber-100/95"
+            dir="rtl"
+        >
+            رَبِّ زِدْنِي عِلْمًا
+        </div>
+
+        <p className="mt-2.5 font-['Rajdhani'] text-[0.95rem] italic leading-relaxed text-white/60">
+            "My Lord, increase me in knowledge."
+        </p>
+
+        <div className="mt-1.5 font-['Orbitron'] text-[9px] uppercase tracking-[0.25em] text-amber-400/70">
+            — Surah Taha · 20:114
+        </div>
+    </div>
+
+    {/* ========================================
+        DESCRIPTION
+    ======================================== */}
+    <p className="hero-description">
+        I turn data, research and intelligent algorithms
+        into practical digital experiences and machine
+        learning systems.
+    </p>
 
                         <div className="hero-actions">
                             <a href="#work" className="cyber-button hero-project-button">

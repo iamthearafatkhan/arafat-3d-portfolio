@@ -45,6 +45,11 @@ const About = () => {
                         <span>ABOUT ME</span>
                     </div>
 
+                    {/* ---------- FULL LEGAL NAME ---------- */}
+                    <div className="about-name">
+                        Md Arafat Hossen Rabby
+                    </div>
+
                     <h2 className="about-heading">
                         Building intelligent
                         <span className="about-heading-accent">
@@ -83,7 +88,7 @@ const About = () => {
                 </div>
 
                 {/* ===================================
-                    RIGHT — info cards
+                    RIGHT — info cards (unchanged)
                 =================================== */}
                 <div className="about-info">
                     {aboutInfo.map((item, i) => (

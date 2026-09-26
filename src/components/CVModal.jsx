@@ -15,6 +15,13 @@ const DownloadIcon = () => (
     </svg>
 );
 
+/* =========================================================
+   CV MODAL
+   ========================================================= */
+
+const CV_PATH = "/images/Md-Arafat-Hossen-Rabby-CV.pdf";
+const CV_FILENAME = "Md-Arafat-Hossen-Rabby-CV.pdf";
+
 const CVModal = ({ onClose }) => {
     /* Lock body scroll */
     useEffect(() => {
@@ -34,6 +41,40 @@ const CVModal = ({ onClose }) => {
         return () => window.removeEventListener("keydown", onKey);
     }, [onClose]);
 
+    /* ---------- DOWNLOAD HANDLER ----------
+       Fetches the PDF as a Blob, then triggers a download
+       with the exact filename we want. This bypasses the
+       browser's inline-PDF-viewer interception that ignores
+       the `download` attribute on PDF links. */
+    const handleDownload = async () => {
+        try {
+            const response = await fetch(CV_PATH);
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch CV (${response.status})`);
+            }
+
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.href = blobUrl;
+            link.download = CV_FILENAME;
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            /* Free the Blob URL after the download starts */
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+        } catch (err) {
+            console.error("CV download failed:", err);
+
+            /* Fallback: open in a new tab so the user can save manually */
+            window.open(CV_PATH, "_blank", "noopener,noreferrer");
+        }
+    };
+
     return (
         <div
             className="cv-modal-backdrop"
@@ -46,10 +87,8 @@ const CVModal = ({ onClose }) => {
                 className="cv-modal"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Galaxy swirl behind the modal */}
                 <span className="cv-modal-swirl" aria-hidden="true" />
 
-                {/* Close */}
                 <button
                     type="button"
                     className="cv-modal-close"
@@ -59,30 +98,32 @@ const CVModal = ({ onClose }) => {
                     <CloseIcon />
                 </button>
 
-                {/* Header strip */}
                 <div className="cv-modal-head">
                     <div className="cv-modal-head-left">
                         <span className="cv-modal-dot" />
                         <span>ARAFAT KHAN · CV</span>
                     </div>
 
-                    <a
-                        href="/arafat-cv.pdf"
-                        download="Arafat-Khan-CV.pdf"
+                    {/* 🔧 Download is now a BUTTON, not an anchor.
+                        It triggers a JS handler that fetches the PDF
+                        as a Blob and saves it with the exact filename. */}
+                    <button
+                        type="button"
+                        onClick={handleDownload}
                         className="cv-modal-download"
+                        aria-label={`Download ${CV_FILENAME}`}
                     >
                         <span className="cv-modal-download-ring" aria-hidden="true" />
                         <span className="cv-modal-download-inner">
                             <DownloadIcon />
                             <span>Download</span>
                         </span>
-                    </a>
+                    </button>
                 </div>
 
-                {/* PDF viewer */}
                 <div className="cv-modal-viewer">
                     <iframe
-                        src="images/Arafat-CV.pdf#toolbar=0&navpanes=0"
+                        src={`${CV_PATH}#toolbar=0&navpanes=0`}
                         title="Arafat Khan CV"
                     />
                 </div>

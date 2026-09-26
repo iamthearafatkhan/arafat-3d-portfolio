@@ -16,7 +16,7 @@ const Hero = () => {
         });
 
         tl.fromTo(
-            ".hero-kicker",
+            ".hero-bismillah",
             { y: 30, opacity: 0, filter: "blur(8px)" },
             { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }
         )
@@ -33,10 +33,16 @@ const Hero = () => {
                 "-=0.45"
             )
             .fromTo(
-                ".hero-description",
+                ".hero-verse",
                 { y: 20, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.7 },
                 "-=0.3"
+            )
+            .fromTo(
+                ".hero-description",
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.7 },
+                "-=0.35"
             )
             .fromTo(
                 ".hero-actions",
@@ -60,18 +66,14 @@ const Hero = () => {
                 <div className="hero-background">
                     <img src="/images/bg.png" alt="" className="hero-bg-image" />
 
-                    {/* Star field (CSS-only, no images) */}
                     <div className="hero-stars" aria-hidden="true" />
 
-                    {/* Nebula glows */}
                     <div className="hero-nebula hero-nebula-1" />
                     <div className="hero-nebula hero-nebula-2" />
                     <div className="hero-nebula hero-nebula-3" />
 
-                    {/* Grid overlay */}
                     <div className="hero-grid" />
 
-                    {/* Rotating galaxy swirl behind the whole hero */}
                     <div className="hero-galaxy-swirl" aria-hidden="true" />
                 </div>
 
@@ -80,102 +82,101 @@ const Hero = () => {
                     {/* ========================= LEFT ========================= */}
                     <header className="hero-content">
 
-    {/* ========================================
-        BISMILLAH — kicker replacement
-    ======================================== */}
-    <div className="flex flex-col gap-1.5 mb-7">
-        <div className="flex items-center gap-3">
-            <span className="kicker-line" />
-            <span
-                className="font-['Amiri',serif] text-[1.15rem] leading-none text-amber-200/95 tracking-wide"
-                dir="rtl"
-            >
-                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-            </span>
-        </div>
-        <span className="pl-[46px] font-['Rajdhani'] text-[10px] font-semibold uppercase tracking-[0.25em] text-white/45">
-            In the name of Allah, the Most Gracious, the Most Merciful
-        </span>
-    </div>
-
-    {/* ========================================
-        NAME
-    ======================================== */}
-    <div className="hero-text">
-        <div className="hero-name-wrapper">
-            <span className="hero-name-index">I'm</span>
-            <h1 className="hero-name">
-                ARAFAT
-                <span>KHAN</span>
-            </h1>
-        </div>
-
-        <div className="hero-title">
-            <span className="hero-title-muted">Building</span>
-
-            <span className="hero-word-slider">
-                <span className="hero-word-wrapper">
-                    {words.map((word, index) => (
-                        <span
-                            key={`${word.text}-${index}`}
-                            className="hero-word"
-                        >
-                            <span className="hero-word-icon">
-                                <img src={word.imgPath} alt={word.text} />
+                        {/* ========================================
+                            BISMILLAH
+                        ======================================== */}
+                        <div className="hero-bismillah flex flex-col gap-1.5 mb-7">
+                            <div className="flex items-center gap-3">
+                                <span className="kicker-line" />
+                                <span
+                                    className="font-['Amiri',serif] text-[1.15rem] leading-none text-amber-200/95 tracking-wide"
+                                    dir="rtl"
+                                >
+                                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                                </span>
+                            </div>
+                            <span className="pl-[46px] font-['Rajdhani'] text-[10px] font-semibold uppercase tracking-[0.25em] text-white/45">
+                                In the name of Allah, the Most Gracious, the Most Merciful
                             </span>
-                            <span>{word.text}</span>
-                        </span>
-                    ))}
-                </span>
-            </span>
-        </div>
+                        </div>
 
-        <div className="hero-title-second">
-            Graduate Engineer
-            <span className="hero-dot">.</span>
-        </div>
-    </div>
+                        {/* ========================================
+                            NAME
+                        ======================================== */}
+                        <div className="hero-text">
+                            <div className="hero-name-wrapper">
+                                <span className="hero-name-index">I'm</span>
+                                <h1 className="hero-name">
+                                    ARAFAT
+                                    <span>KHAN</span>
+                                </h1>
+                            </div>
 
-    {/* ========================================
-        QURAN VERSE — Surah Taha 20:114
-    ======================================== */}
-    <div className="relative mt-7 mb-7 max-w-[590px] pl-5 border-l-2 border-amber-400/35">
-        <div
-            className="font-['Amiri',serif] text-2xl md:text-[1.7rem] leading-[1.7] text-right text-amber-100/95"
-            dir="rtl"
-        >
-            رَبِّ زِدْنِي عِلْمًا
-        </div>
+                            <div className="hero-title">
+                                <span className="hero-title-muted">Building</span>
 
-        <p className="mt-2.5 font-['Rajdhani'] text-[0.95rem] italic leading-relaxed text-white/60">
-            "My Lord, increase me in knowledge."
-        </p>
+                                <span className="hero-word-slider">
+                                    <span className="hero-word-wrapper">
+                                        {words.map((word, index) => (
+                                            <span
+                                                key={`${word.text}-${index}`}
+                                                className="hero-word"
+                                            >
+                                                <span className="hero-word-icon">
+                                                    <img src={word.imgPath} alt={word.text} />
+                                                </span>
+                                                <span>{word.text}</span>
+                                            </span>
+                                        ))}
+                                    </span>
+                                </span>
+                            </div>
 
-        <div className="mt-1.5 font-['Orbitron'] text-[9px] uppercase tracking-[0.25em] text-amber-400/70">
-            — Surah Taha · 20:114
-        </div>
-    </div>
+                            <div className="hero-title-second">
+                                Graduate Engineer
+                                <span className="hero-dot">.</span>
+                            </div>
+                        </div>
 
-    {/* ========================================
-        DESCRIPTION
-    ======================================== */}
-    <p className="hero-description">
-        I turn data, research and intelligent algorithms
-        into practical digital experiences and machine
-        learning systems.
-    </p>
+                        {/* ========================================
+                            QURAN VERSE
+                        ======================================== */}
+                        <div className="hero-verse relative mt-7 mb-7 max-w-[590px] pl-5 border-l-2 border-amber-400/35">
+                            <div
+                                className="font-['Amiri',serif] text-2xl md:text-[1.7rem] leading-[1.7] text-right text-amber-100/95"
+                                dir="rtl"
+                            >
+                                رَبِّ زِدْنِي عِلْمًا
+                            </div>
+
+                            <p className="mt-2.5 font-['Rajdhani'] text-[0.95rem] italic leading-relaxed text-white/60">
+                                "My Lord, increase me in knowledge."
+                            </p>
+
+                            <div className="mt-1.5 font-['Orbitron'] text-[9px] uppercase tracking-[0.25em] text-amber-400/70">
+                                — Surah Taha · 20:114
+                            </div>
+                        </div>
+
+                        {/* ========================================
+                            DESCRIPTION
+                        ======================================== */}
+                        <p className="hero-description">
+                            I turn data, research and intelligent algorithms
+                            into practical digital experiences and machine
+                            learning systems.
+                        </p>
 
                         <div className="hero-actions">
                             <a href="#work" className="cyber-button hero-project-button">
                                 <span className="cyber-button-glow" aria-hidden="true" />
                                 <span className="cyber-button-content">
-        <span className="cyber-button-text">EXPLORE PROJECTS</span>
-        <span className="cyber-button-arrow">↗</span>
-    </span>
+                                    <span className="cyber-button-text">EXPLORE PROJECTS</span>
+                                    <span className="cyber-button-arrow">↗</span>
+                                </span>
                                 <span className="cyber-button-line" aria-hidden="true" />
                             </a>
 
-                            {/* CV button with galaxy ring */}
                             <button
                                 type="button"
                                 className="hero-cv-button"
@@ -216,7 +217,6 @@ const Hero = () => {
                 </div>
             </section>
 
-            {/* CV Modal */}
             {cvOpen && <CVModal onClose={() => setCvOpen(false)} />}
         </>
     );

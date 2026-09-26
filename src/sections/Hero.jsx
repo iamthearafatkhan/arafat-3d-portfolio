@@ -64,7 +64,7 @@ const Hero = () => {
 
                 {/* ---------- GALAXY GLASS BACKGROUND ---------- */}
                 <div className="hero-background">
-                    <img src="/images/bg.png" alt="" className="hero-bg-image" />
+                    <img src="/images/bg.jpg" alt="" className="hero-bg-image" />
 
                     <div className="hero-stars" aria-hidden="true" />
 

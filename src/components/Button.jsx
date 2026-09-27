@@ -1,14 +1,14 @@
-const Button = ({ text, className = "", id }) => {
+const Button = ({ text, className = "", id, href = "#counter" }) => {
 
     const handleClick = (event) => {
         event.preventDefault();
 
-        const target = document.getElementById("counter");
+        /* 🔧 FIX: was hardcoded to "counter" — now reads from the href */
+        const targetId = href.replace("#", "");
+        const target = document.getElementById(targetId);
 
-        if (target && id) {
-
-            const offset =
-                window.innerHeight * 0.12;
+        if (target) {
+            const offset = window.innerHeight * 0.12;
 
             const top =
                 target.getBoundingClientRect().top +
@@ -24,16 +24,14 @@ const Button = ({ text, className = "", id }) => {
 
     return (
         <a
-            href="#counter"
+            href={href}
             id={id}
             onClick={handleClick}
-            className={`cyber-button ${className}`}
+            className={`cyber-button animate-[cyberFloat_6s_ease-in-out_infinite] ${className}`}
         >
-
             <span className="cyber-button-glow" />
 
             <span className="cyber-button-content">
-
                 <span className="cyber-button-text">
                     {text}
                 </span>
@@ -41,11 +39,9 @@ const Button = ({ text, className = "", id }) => {
                 <span className="cyber-button-arrow">
                     ↗
                 </span>
-
             </span>
 
             <span className="cyber-button-line" />
-
         </a>
     );
 };

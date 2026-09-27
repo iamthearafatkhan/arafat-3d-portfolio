@@ -218,6 +218,12 @@ section {
     100% { transform: scale(1.55); opacity: 0;    filter: blur(4px);  }
 }
 
+/* Floating animation for cyber buttons */
+@keyframes cyberFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-14px); }
+}
+
 
 /* =========================================================
    NAVBAR

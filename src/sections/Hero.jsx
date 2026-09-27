@@ -179,15 +179,15 @@ const Hero = () => {
 
                             <button
                                 type="button"
-                                className="hero-cv-button"
+                                className="cyber-button"
                                 onClick={() => setCvOpen(true)}
                             >
-                                <span className="hero-cv-ring" aria-hidden="true" />
-                                <span className="hero-cv-ring-2" aria-hidden="true" />
-                                <span className="hero-cv-inner">
-                                    <span className="hero-cv-icon">↓</span>
-                                    <span className="hero-cv-text">VIEW CV</span>
+                                <span className="cyber-button-glow" aria-hidden="true" />
+                                <span className="cyber-button-content">
+                                
+                                    <span className="cyber-button-text">VIEW CV</span>
                                 </span>
+                                <span className="cyber-button-line" aria-hidden="true" />
                             </button>
 
                             <a href="#about" className="hero-scroll-link">

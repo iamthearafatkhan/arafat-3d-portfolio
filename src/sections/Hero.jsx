@@ -158,7 +158,7 @@ const Hero = () => {
                             </div>
 
                             <p className="mt-2.5 font-['Rajdhani'] text-[0.95rem] italic leading-relaxed text-white/60">
-                                "My Lord, increase me in knowledge."
+                                "My Allah, increase me in knowledge."
                             </p>
 
                             <div className="mt-1.5 font-['Orbitron'] text-[9px] uppercase tracking-[0.25em] text-amber-400/70">

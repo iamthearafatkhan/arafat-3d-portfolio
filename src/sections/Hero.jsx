@@ -61,12 +61,7 @@ const Hero = () => {
     return (
         <>
             {/* Inline keyframe for the floating cyber buttons — no CSS file touched */}
-            <style>{`
-                @keyframes cyberFloat {
-                    0%, 100% { transform: translateY(0); }
-                    50%      { transform: translateY(-8px); }
-                }
-            `}</style>
+           
 
             <section id="hero" className="hero-section">
 

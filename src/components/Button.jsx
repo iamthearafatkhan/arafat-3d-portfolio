@@ -27,7 +27,7 @@ const Button = ({ text, className = "", id, href = "#counter" }) => {
             href={href}
             id={id}
             onClick={handleClick}
-            className={`cyber-button animate-[cyberFloat_6s_ease-in-out_infinite] ${className}`}
+            className={`cyber-button animate-[cyberFloat_4.5s_ease-in-out_infinite] ${className}`}
         >
             <span className="cyber-button-glow" />
 

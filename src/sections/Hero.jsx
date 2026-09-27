@@ -186,6 +186,7 @@ const Hero = () => {
                                 <span className="cyber-button-content">
                                 
                                     <span className="cyber-button-text">VIEW CV</span>
+                                    <span className="cyber-button-arrow">↓</span>
                                 </span>
                                 <span className="cyber-button-line" aria-hidden="true" />
                             </button>

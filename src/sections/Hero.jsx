@@ -181,7 +181,7 @@ const Hero = () => {
                         <div className="hero-actions">
                             <a
                                 href="#work"
-                                className="cyber-button hero-project-button animate-[cyberFloat_6s_ease-in-out_infinite]"
+                                className="cyber-button hero-project-button animate-[cyberFloat_4.5s_ease-in-out_infinite]"
                             >
                                 <span className="cyber-button-glow" aria-hidden="true" />
                                 <span className="cyber-button-content">
@@ -193,7 +193,7 @@ const Hero = () => {
 
                             <button
                                 type="button"
-                                className="cyber-button animate-[cyberFloat_6s_ease-in-out_infinite] [animation-delay:-3s]"
+                                className="cyber-button animate-[cyberFloat_4.5s_ease-in-out_infinite] [animation-delay:-2.25s]"
                                 onClick={() => setCvOpen(true)}
                             >
                                 <span className="cyber-button-glow" aria-hidden="true" />

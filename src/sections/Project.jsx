@@ -204,6 +204,57 @@ const ProjectOrbital = ({ onOpenProject }) => {
         <div className="project-orbital">
             <div className="project-orbital-stage">
 
+                {/* ==============================
+                    ORBITAL RINGS (SVG, behind cards)
+                    ============================== */}
+                <svg
+                    className="orbital-ring"
+                    viewBox="0 0 1200 420"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                >
+                    <defs>
+                        <linearGradient id="orbitGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%"   stopColor="rgba(255,80,32,0)" />
+                            <stop offset="15%"  stopColor="rgba(255,120,60,0.35)" />
+                            <stop offset="50%"  stopColor="rgba(255,180,140,0.9)" />
+                            <stop offset="85%"  stopColor="rgba(255,120,60,0.35)" />
+                            <stop offset="100%" stopColor="rgba(255,80,32,0)" />
+                        </linearGradient>
+                        <linearGradient id="orbitGrad2" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%"   stopColor="rgba(180,80,255,0)" />
+                            <stop offset="50%"  stopColor="rgba(180,80,255,0.5)" />
+                            <stop offset="100%" stopColor="rgba(180,80,255,0)" />
+                        </linearGradient>
+                    </defs>
+
+                    {/* Outer dashed ellipse */}
+                    <ellipse
+                        cx="600"
+                        cy="210"
+                        rx="560"
+                        ry="150"
+                        fill="none"
+                        stroke="url(#orbitGrad)"
+                        strokeWidth="1.2"
+                        strokeDasharray="3 10"
+                        className="orbital-ring-line"
+                    />
+
+                    {/* Inner solid ellipse */}
+                    <ellipse
+                        cx="600"
+                        cy="210"
+                        rx="430"
+                        ry="110"
+                        fill="none"
+                        stroke="url(#orbitGrad2)"
+                        strokeWidth="0.8"
+                        opacity="0.55"
+                        className="orbital-ring-line"
+                    />
+                </svg>
+
                 {/* Prev arrow */}
                 <button
                     type="button"
@@ -407,7 +458,7 @@ const Project = () => {
                 .project-orbital-stage {
                     position: relative;
                     width: 100%;
-                    height: clamp(520px, 62vh, 640px);
+                    height: clamp(380px, 50vh, 460px);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -423,54 +474,69 @@ const Project = () => {
                     transform-style: preserve-3d;
                 }
 
+                /* ---------- Orbital Rings ---------- */
+                .orbital-ring {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 1;
+                    overflow: visible;
+                }
+
+                .orbital-ring-line {
+                    animation: orbitPulse 6s ease-in-out infinite;
+                }
+
+                @keyframes orbitPulse {
+                    0%, 100% { opacity: 0.55; }
+                    50%      { opacity: 1;    }
+                }
+
                 /* ---------- Slots ---------- */
                 .project-orbital-slot {
                     position: absolute;
                     top: 50%;
                     left: 50%;
-                    width: min(380px, 84vw);
+                    width: min(280px, 76vw);
                     transform-origin: center center;
-                    will-change: transform, opacity, filter;
+                    will-change: transform, opacity;
                     backface-visibility: hidden;
                     transition:
                         transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-                        opacity 0.6s ease,
-                        filter 0.6s ease;
+                        opacity 0.6s ease;
                 }
 
-                /* Center — big, sharp, fully interactive */
+                /* Center — full size, sharp, interactive */
                 .project-orbital-slot.slot-center {
                     transform: translate(-50%, -50%) translateX(0) scale(1) rotateY(0deg);
                     z-index: 10;
                     opacity: 1;
-                    filter: none;
                 }
 
-                /* Left — smaller, tilted, faded */
+                /* Left — half size, tilted, faded. NO blur. */
                 .project-orbital-slot.slot-left {
-                    transform: translate(-50%, -50%) translateX(-105%) scale(0.76) rotateY(12deg);
+                    transform: translate(-50%, -50%) translateX(-108%) scale(0.5) rotateY(14deg);
                     z-index: 8;
-                    opacity: 0.6;
-                    filter: blur(1.5px);
+                    opacity: 0.5;
                     cursor: pointer;
                 }
 
                 /* Right — mirrored */
                 .project-orbital-slot.slot-right {
-                    transform: translate(-50%, -50%) translateX(105%) scale(0.76) rotateY(-12deg);
+                    transform: translate(-50%, -50%) translateX(108%) scale(0.5) rotateY(-14deg);
                     z-index: 8;
-                    opacity: 0.6;
-                    filter: blur(1.5px);
+                    opacity: 0.5;
                     cursor: pointer;
                 }
 
                 /* Off-screen — waiting behind */
                 .project-orbital-slot.slot-hidden {
-                    transform: translate(-50%, -50%) scale(0.4) rotateY(0deg);
+                    transform: translate(-50%, -50%) scale(0.2) rotateY(0deg);
                     z-index: 1;
                     opacity: 0;
                     pointer-events: none;
-                    filter: blur(6px);
                 }
 
                 /* Disable inner card interactions on side slots */
@@ -486,8 +552,8 @@ const Project = () => {
                     transform: translateY(-50%);
                     z-index: 20;
 
-                    width: 56px;
-                    height: 56px;
+                    width: 48px;
+                    height: 48px;
 
                     display: flex;
                     align-items: center;
@@ -504,7 +570,7 @@ const Project = () => {
 
                     color: #ff8c42;
                     font-family: "Orbitron", sans-serif;
-                    font-size: 26px;
+                    font-size: 24px;
                     line-height: 1;
 
                     cursor: pointer;
@@ -539,19 +605,19 @@ const Project = () => {
 
                 @media (max-width: 640px) {
                     .orbital-nav {
-                        width: 44px;
-                        height: 44px;
-                        font-size: 22px;
+                        width: 40px;
+                        height: 40px;
+                        font-size: 20px;
                     }
                     .orbital-nav-prev { left: 4px; }
                     .orbital-nav-next { right: 4px; }
 
                     .project-orbital-slot.slot-left {
-                        transform: translate(-50%, -50%) translateX(-70%) scale(0.6) rotateY(14deg);
+                        transform: translate(-50%, -50%) translateX(-92%) scale(0.45) rotateY(16deg);
                         opacity: 0.35;
                     }
                     .project-orbital-slot.slot-right {
-                        transform: translate(-50%, -50%) translateX(70%) scale(0.6) rotateY(-14deg);
+                        transform: translate(-50%, -50%) translateX(92%) scale(0.45) rotateY(-16deg);
                         opacity: 0.35;
                     }
                 }
@@ -562,7 +628,7 @@ const Project = () => {
                     justify-content: center;
                     align-items: center;
                     gap: 10px;
-                    margin-top: 34px;
+                    margin-top: 30px;
                 }
 
                 .orbital-dot {
@@ -590,7 +656,7 @@ const Project = () => {
 
                 /* ---------- Note ---------- */
                 .orbital-note {
-                    margin-top: 26px;
+                    margin-top: 22px;
                     text-align: center;
 
                     font-family: "Orbitron", sans-serif;
@@ -603,8 +669,10 @@ const Project = () => {
                 /* ---------- Reduced motion ---------- */
                 @media (prefers-reduced-motion: reduce) {
                     .project-orbital-slot,
-                    .orbital-dot {
+                    .orbital-dot,
+                    .orbital-ring-line {
                         transition: none;
+                        animation: none;
                     }
                 }
             `}</style>

@@ -191,10 +191,7 @@ const Hero = () => {
                                 <span className="cyber-button-line" aria-hidden="true" />
                             </button>
 
-                            <a href="#about" className="hero-scroll-link">
-                                <span className="scroll-circle">↓</span>
-                                <span>SCROLL TO EXPLORE</span>
-                            </a>
+                            
                         </div>
                     </header>
 

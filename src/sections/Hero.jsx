@@ -60,6 +60,14 @@ const Hero = () => {
 
     return (
         <>
+            {/* Inline keyframe for the floating cyber buttons — no CSS file touched */}
+            <style>{`
+                @keyframes cyberFloat {
+                    0%, 100% { transform: translateY(0); }
+                    50%      { transform: translateY(-8px); }
+                }
+            `}</style>
+
             <section id="hero" className="hero-section">
 
                 {/* ---------- GALAXY GLASS BACKGROUND ---------- */}
@@ -139,7 +147,7 @@ const Hero = () => {
                         </div>
 
                         {/* ========================================
-                            QURAN VERSE
+                            QURAN VERSE — Surah Taha 20:114
                         ======================================== */}
                         <div className="hero-verse relative mt-7 mb-7 max-w-[590px] pl-5 border-l-2 border-amber-400/35">
                             <div
@@ -150,7 +158,7 @@ const Hero = () => {
                             </div>
 
                             <p className="mt-2.5 font-['Rajdhani'] text-[0.95rem] italic leading-relaxed text-white/60">
-                                "My Allah, increase me in knowledge."
+                                "My Lord, increase me in knowledge."
                             </p>
 
                             <div className="mt-1.5 font-['Orbitron'] text-[9px] uppercase tracking-[0.25em] text-amber-400/70">
@@ -167,8 +175,14 @@ const Hero = () => {
                             learning systems.
                         </p>
 
+                        {/* ========================================
+                            ACTIONS — floating cyber buttons
+                        ======================================== */}
                         <div className="hero-actions">
-                            <a href="#work" className="cyber-button hero-project-button">
+                            <a
+                                href="#work"
+                                className="cyber-button hero-project-button animate-[cyberFloat_6s_ease-in-out_infinite]"
+                            >
                                 <span className="cyber-button-glow" aria-hidden="true" />
                                 <span className="cyber-button-content">
                                     <span className="cyber-button-text">EXPLORE PROJECTS</span>
@@ -179,19 +193,16 @@ const Hero = () => {
 
                             <button
                                 type="button"
-                                className="cyber-button"
+                                className="cyber-button animate-[cyberFloat_6s_ease-in-out_infinite] [animation-delay:-3s]"
                                 onClick={() => setCvOpen(true)}
                             >
                                 <span className="cyber-button-glow" aria-hidden="true" />
                                 <span className="cyber-button-content">
-                                
                                     <span className="cyber-button-text">VIEW CV</span>
                                     <span className="cyber-button-arrow">↓</span>
                                 </span>
                                 <span className="cyber-button-line" aria-hidden="true" />
                             </button>
-
-                            
                         </div>
                     </header>
 

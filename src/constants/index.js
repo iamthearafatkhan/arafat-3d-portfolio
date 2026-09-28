@@ -219,6 +219,13 @@ export const skillGroups = [
 
 export const certificates = [
     {
+        title: "Diploma in Computer Graphic Design",
+        issuer: "Need Computer Training Institute",
+        year: "2017",
+        image: "/images/certs/diploma-CSD.jpg",
+        link: "Link Not found",
+    },
+   {
         title: "Complete Python Bootcamp 2025",
         issuer: "Udemy",
         year: "2025",

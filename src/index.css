@@ -885,9 +885,9 @@ section {
     position: relative;
     width: 100%;
 
-    /* 🔧 frame height reduced — image fills more, no floating feel */
-    height: min(600px, 66vh);
-    min-height: 480px;
+    /* 🔧 was min(600px, 66vh) — smaller so the image head rises */
+    height: min(560px, 62vh);
+    min-height: 440px;
 
     display: flex;
     align-items: center;
@@ -983,8 +983,8 @@ section {
 .hero-human-image {
     position: absolute;
 
-    /* 🔧 lifted 6% — head sits higher, aligns with ARAFAT baseline */
-    bottom: 6%;
+    /* 🔧 lifted more — pulls the head toward ARAFAT's level */
+    bottom: 16%;
 
     left: 50%;
     transform: translateX(-50%);
@@ -992,7 +992,6 @@ section {
     height: 95%;
     object-fit: contain;
     object-position: center bottom;
-
     user-select: none;
     pointer-events: none;
     z-index: 1;
@@ -1023,8 +1022,8 @@ section {
 .hero-robo-image {
     position: absolute;
 
-    /* 🔧 matches the human image lift of 6% */
-    inset: 0 0 6% 0;
+    /* 🔧 matches the human image lift of 16% */
+    inset: 0 0 16% 0;
 
     width: 100%;
     height: 100%;

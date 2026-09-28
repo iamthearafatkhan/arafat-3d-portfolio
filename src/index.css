@@ -24,7 +24,6 @@ section {
     width: 100dvw;
 }
 
-/* Fixed navbar offset for anchor links */
 #hero,
 #about,
 #work,
@@ -65,7 +64,6 @@ section {
    SHARED KEYFRAMES
    ========================================================= */
 
-/* Navbar logo + contact-btn rotating border */
 @keyframes galaxyRotate {
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -76,25 +74,21 @@ section {
     100% { background-position: -100% 0; }
 }
 
-/* Status dots across all sections */
 @keyframes dotPulse {
     0%, 100% { opacity: 0.4; transform: scale(0.85); }
     50%      { opacity: 1;   transform: scale(1);    }
 }
 
-/* Hero "SYSTEM ONLINE" indicator */
 @keyframes statusPulse {
     0%, 100% { opacity: 0.4; transform: scale(0.8); }
     50%      { opacity: 1;   transform: scale(1);   }
 }
 
-/* Black hole atmospheric glow */
 @keyframes blackholeAtmosphere {
     0%, 100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.65; }
     50%      { transform: translate(-50%, -50%) scale(1.08); opacity: 1;    }
 }
 
-/* Hero word slider — desktop */
 @keyframes heroWordLoop {
     0%, 14%   { transform: translateY(0);      }
     18%, 32%  { transform: translateY(-56px);  }
@@ -103,7 +97,6 @@ section {
     72%, 100% { transform: translateY(-224px); }
 }
 
-/* Modals (used by project, cert, CV) */
 @keyframes modalFadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
@@ -114,12 +107,10 @@ section {
     to   { opacity: 1; transform: scale(1) translateY(0);       }
 }
 
-/* Rotating swirl (used by skills bubbles, cert cards, cv modal) */
 @keyframes skillSwirl {
     to { transform: rotate(360deg); }
 }
 
-/* Floating animations */
 @keyframes cardFloat {
     0%, 100% { transform: translateY(0);    }
     50%      { transform: translateY(-10px); }
@@ -140,7 +131,6 @@ section {
     50%      { transform: translateY(-14px); }
 }
 
-/* Ring spinning (CV + footer icons) */
 @keyframes heroRingSpin {
     to { transform: rotate(360deg); }
 }
@@ -149,7 +139,6 @@ section {
     to { transform: rotate(360deg); }
 }
 
-/* Swirls and shifts */
 @keyframes heroSwirl {
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
@@ -175,7 +164,6 @@ section {
     to { transform: rotate(360deg); }
 }
 
-/* Nebula drift */
 @keyframes nebulaDrift1 {
     0%   { transform: translate(0, 0) scale(1); }
     100% { transform: translate(-40px, 30px) scale(1.12); }
@@ -186,7 +174,6 @@ section {
     100% { transform: translate(50px, -30px) scale(1.15); }
 }
 
-/* Footer */
 @keyframes footerStatusPulse {
     0%, 100% { opacity: 0.55; transform: scale(0.85); }
     50%      { opacity: 1;    transform: scale(1.1);  }
@@ -206,7 +193,6 @@ section {
     50%      { opacity: 1;   transform: scale(1.2); }
 }
 
-/* Skill bubble burst */
 @keyframes particleSpray {
     0%   { transform: scale(0.3); opacity: 1; }
     100% { transform: scale(3.2); opacity: 0; }
@@ -218,14 +204,9 @@ section {
     100% { transform: scale(1.55); opacity: 0;    filter: blur(4px);  }
 }
 
-/* Floating animation for cyber buttons */
 @keyframes cyberFloat {
-    0%, 100% {
-        transform: translate(0, 0);
-    }
-    50% {
-        transform: translate(0, -22px);
-    }
+    0%, 100% { transform: translate(0, 0);    }
+    50%      { transform: translate(0, -22px); }
 }
 
 
@@ -521,6 +502,9 @@ section {
     pointer-events: none;
 }
 
+
+/* ---------- HERO LAYOUT — balanced for HR reading ───────── */
+
 .hero-layout {
     position: relative;
     z-index: 5;
@@ -532,9 +516,12 @@ section {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(420px, 0.95fr);
     align-items: center;
-    gap: 40px;
 
-    padding: 100px 6vw 80px;
+    /* 🔧 wider gap so the two columns don't crowd each other on laptops */
+    gap: clamp(40px, 5vw, 72px);
+
+    /* 🔧 extra top padding so navbar never overlaps content */
+    padding: 130px 6vw 90px;
 }
 
 .hero-content {
@@ -790,7 +777,6 @@ section {
     background: linear-gradient(90deg, #ff5020, transparent);
 }
 
-/* CV button */
 .hero-cv-button {
     position: relative;
     display: inline-flex;
@@ -893,23 +879,15 @@ section {
 .hero-cv-button:hover .hero-cv-icon { transform: translateY(2px); }
 
 
-
-
-
-
-
-
-/* ---------- HERO VISUAL ---------- */
+/* ---------- HERO VISUAL — tuned for balance ---------- */
 
 .hero-visual {
     position: relative;
     width: 100%;
 
-    /* 🔧 was min(720px, 75vh) — reduced so the image fills more of the frame */
-    height: min(620px, 68vh);
-
-    /* 🔧 was 520px — reduced floor */
-    min-height: 460px;
+    /* 🔧 frame height reduced — image fills more, no floating feel */
+    height: min(600px, 66vh);
+    min-height: 480px;
 
     display: flex;
     align-items: center;
@@ -1005,8 +983,8 @@ section {
 .hero-human-image {
     position: absolute;
 
-    /* 🔧 was bottom: 0 — lifted by 3% */
-    bottom: 3%;
+    /* 🔧 lifted 6% — head sits higher, aligns with ARAFAT baseline */
+    bottom: 6%;
 
     left: 50%;
     transform: translateX(-50%);
@@ -1014,7 +992,11 @@ section {
     height: 95%;
     object-fit: contain;
     object-position: center bottom;
-    /* ... */
+
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+    filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.6));
 }
 
 .hero-reveal-mask {
@@ -1041,14 +1023,15 @@ section {
 .hero-robo-image {
     position: absolute;
 
-    /* 🔧 was inset: 0 — bottom inset 3% to match */
-    inset: 0 0 3% 0;
+    /* 🔧 matches the human image lift of 6% */
+    inset: 0 0 6% 0;
 
     width: 100%;
     height: 100%;
     object-fit: contain;
     object-position: center bottom;
-    /* ... */
+    user-select: none;
+    pointer-events: none;
 }
 
 .hero-galaxy-layer {
@@ -1310,9 +1293,6 @@ section {
 }
 
 .cv-modal-download {
-    /* 🔧 Button reset — required because the element
-       changed from <a> to <button>. Without this, browsers
-       paint a default grey background + border. */
     appearance: none;
     -webkit-appearance: none;
     background: transparent;
@@ -1321,7 +1301,6 @@ section {
     color: inherit;
     cursor: pointer;
 
-    /* Existing layout (unchanged) */
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -1334,7 +1313,6 @@ section {
 .cv-modal-download:hover {
     transform: translateY(-2px);
 }
-
 
 .cv-modal-download-ring {
     position: absolute;
@@ -1585,30 +1563,17 @@ section {
     background: linear-gradient(90deg, #ff5020, transparent);
 }
 
-/* ---------- Full legal name ---------- */
-
 .about-name {
     margin-bottom: 22px;
-
     font-family: "Orbitron", sans-serif;
     font-size: clamp(1.05rem, 1.6vw, 1.3rem);
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-
     color: #ffffff;
-
     text-shadow:
             0 0 20px rgba(255, 80, 32, 0.35),
             0 0 40px rgba(255, 40, 10, 0.15);
-}
-
-@media (max-width: 640px) {
-    .about-name {
-        margin-bottom: 18px;
-        font-size: 0.98rem;
-        letter-spacing: 0.04em;
-    }
 }
 
 .about-heading {
@@ -2855,17 +2820,14 @@ section {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
     gap: 18px;
-
-    /* 🔧 Caps how far bubbles can stretch on wide screens.
-       Without this, a row with 2 items would make each bubble enormous. */
     max-width: 100%;
 }
 
 .skill-bubble {
     position: relative;
     width: 100%;
-    max-width: 110px;             /* 🔧 hard ceiling on bubble size */
-    margin: 0 auto;                /* center it inside its grid cell */
+    max-width: 110px;
+    margin: 0 auto;
     aspect-ratio: 1 / 1;
     cursor: pointer;
     outline: none;
@@ -4120,11 +4082,11 @@ section {
 /* ---------- ≤ 1024px ---------- */
 
 @media (max-width: 1024px) {
-    /* Hero */
     .hero-layout {
         grid-template-columns: 1fr;
-        padding: 120px 6vw 70px;
+        padding: 130px 6vw 70px;
         text-align: center;
+        gap: 40px;
     }
 
     .hero-content {
@@ -4153,10 +4115,7 @@ section {
 
     .hero-name-index { display: none; }
 
-    /* Counter */
     .counter-section { padding: 60px 0 35px; }
-
-    /* About */
     .about-section { padding: 60px 0 40px; }
 
     .about-layout {
@@ -4166,19 +4125,16 @@ section {
 
     .about-text { max-width: 100%; }
 
-    /* Education / Skills / Certs */
     .education-section,
     .skills-section,
     .certs-section { padding: 90px 0 40px; }
 
-    /* Footer */
     .footer-layout { gap: 24px; }
 }
 
 /* ---------- ≤ 768px ---------- */
 
 @media (max-width: 768px) {
-    /* Hero */
     .hero-layout {
         padding: 110px 20px 50px;
         gap: 10px;
@@ -4204,7 +4160,6 @@ section {
     .hero-cv-inner { width: 200px; }
     .hero-scroll-link { margin-top: 2px; }
 
-    /* Word slider — 44px */
     .hero-word-slider { --slot-h: 44px; --gap: 8px; }
     .hero-word-icon { width: 30px; height: 30px; border-radius: 8px; }
     .hero-word-icon img { width: 18px; height: 18px; }
@@ -4217,12 +4172,10 @@ section {
         72%, 100% { transform: translateY(-176px); }
     }
 
-    /* CV modal */
     .cv-modal { max-height: 94vh; border-radius: 14px; }
     .cv-modal-head { padding: 12px 60px 12px 16px; font-size: 9px; }
     .cv-modal-download-inner { padding: 7px 14px; font-size: 9px; }
 
-    /* Black hole */
     .blackhole-loader::before {
         width: 45vw;
         height: 45vw;
@@ -4235,7 +4188,6 @@ section {
 /* ---------- ≤ 640px ---------- */
 
 @media (max-width: 640px) {
-    /* Hero */
     .hero-kicker { font-size: 9px; letter-spacing: 0.12em; }
     .hero-name { font-size: 3rem; }
     .hero-title { font-size: 1.45rem; }
@@ -4246,22 +4198,24 @@ section {
     .cyber-button { width: 200px; }
     .hero-cv-inner { width: 200px; }
 
-    /* Counter */
     .counter-section { padding: 50px 0 30px; }
     .counter-grid { grid-template-columns: 1fr; gap: 14px; }
     .counter-card { padding: 24px 22px; }
     .counter-number { font-size: 2.4rem; }
 
-    /* About */
     .about-section { padding: 40px 0 0; }
     .about-layout { padding: 0 20px; gap: 40px; }
+    .about-name {
+        margin-bottom: 18px;
+        font-size: 0.98rem;
+        letter-spacing: 0.04em;
+    }
     .about-heading { font-size: 1.85rem; }
     .about-text { font-size: 1rem; line-height: 1.6; }
     .about-info { grid-template-columns: 1fr; gap: 12px; }
     .about-card { padding: 18px 18px; }
     .about-card-value { font-size: 1rem; }
 
-    /* Projects */
     .projects-section { padding: 70px 0 30px; }
     .projects-layout { padding: 0 20px; }
     .projects-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -4271,7 +4225,6 @@ section {
     .project-image { aspect-ratio: 16 / 11; }
     .project-card-coming { min-height: 180px; }
 
-    /* Project modal */
     .project-modal-backdrop { padding: 12px; }
     .project-modal { max-height: 94vh; border-radius: 16px; }
     .project-modal-image { aspect-ratio: 16 / 9; }
@@ -4280,7 +4233,6 @@ section {
     .project-modal-actions { flex-direction: column; }
     .project-modal-btn { width: 100%; justify-content: center; }
 
-    /* Education / Skills / Certs */
     .education-section,
     .skills-section,
     .certs-section { padding: 70px 0 30px; }
@@ -4315,7 +4267,6 @@ section {
     .cert-modal { max-height: 94vh; }
     .cert-modal-body { padding: 20px 22px 24px; }
 
-    /* Footer */
     .footer-section { padding: 70px 20px 30px; margin-top: 80px; }
     .footer-name-text { font-size: clamp(2rem, 12vw, 3rem); }
     .footer-tagline {
@@ -4348,7 +4299,6 @@ section {
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-    /* All animations off */
     .navbar .contact-btn::before,
     .navbar .logo-text,
     .hero-word-wrapper,
@@ -4390,7 +4340,6 @@ section {
         animation: none;
     }
 
-    /* Transitions off */
     .hero-word-wrapper,
     .counter-card,
     .about-card,
@@ -4411,7 +4360,6 @@ section {
         transition: none;
     }
 
-    /* Hover transforms off */
     .counter-card:hover,
     .about-card:hover,
     .about-tag:hover,

@@ -13,10 +13,8 @@ import NavBar from "./components/NavBar.jsx";
 import CometCursor from "./components/CometCursor.jsx";
 
 const App = () => {
-    const [loading, setLoading] = useState(() => {
-        if (typeof window === "undefined") return true;
-        return !sessionStorage.getItem("introPlayed");
-    });
+    /* Always show the intro on every page load */
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (loading) {
@@ -33,13 +31,11 @@ const App = () => {
     }, [loading]);
 
     const handleComplete = () => {
-        sessionStorage.setItem("introPlayed", "1");
         setLoading(false);
     };
 
     return (
         <>
-            {/* Custom comet cursor — always on top */}
             <CometCursor />
 
             {loading && <BlackHoleLoader onComplete={handleComplete} />}

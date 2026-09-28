@@ -222,7 +222,7 @@ export const certificates = [
         title: "Diploma in Computer Graphic Design",
         issuer: "Need Computer Training Institute",
         year: "2017",
-        image: "/images/certs/diploma-CSD.jpg",
+        image: "/images/certs/diploma-CSD.jpeg",
         link: "Link Not found",
     },
    {

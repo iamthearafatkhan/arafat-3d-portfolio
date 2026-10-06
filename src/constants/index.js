@@ -136,7 +136,7 @@ export const educationItems = [
         institution: "Premier University Chittagong",
         location: "Chattogram, Bangladesh",
         year: "2021 – 2026",
-        degree: "BSc in Computer Science & Engineering",
+        degree: "BSc (Engineering) in Computer Science & Engineering",
         logo: "/images/edu/puc_logo.png",
     },
     {

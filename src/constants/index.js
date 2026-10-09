@@ -89,6 +89,55 @@ export const projects = [
         github: "https://github.com/iamthearafatkhan/DLR-PCVW-Acne-severity-classifier-using-few-shot",
         website: "https://acnegrad-ai.streamlit.app/",
     },
+   {
+    title: "CodeAssess: Online Programming Examination Platform",
+    shortDescription:
+        "A full-stack web platform where teachers create coding exams and students solve, run, and submit code that is auto-graded against hidden test cases.",
+    longDescription:
+        "CodeAssess is a full-stack web application for conducting programming exams at universities. " +
+        "Teachers create exams with a unique 6-character code, add questions in C, C++, Python, or Java, and define visible and hidden test cases for auto-grading. " +
+        "Students join with the exam code, solve problems in a Monaco-based editor, run code with custom input for debugging, and submit for automatic grading against hidden tests. " +
+        "Submissions are executed through a multi-provider code execution layer with automatic failover between Judge0 and onlinecompiler.io, ensuring reliability if one provider is unavailable. " +
+        "The platform includes anti-cheat event logging (tab switches, fullscreen exits, copy/paste), token n-gram plagiarism detection, teacher score overrides with written feedback, publish/unpublish results with letter-grade and GPA calculation, and CSV export of results. " +
+        "Authentication uses JWT with role-based access control (Student / Teacher), and the platform ships with rate limiting, input size validation, and hidden test-case protection to keep exams secure.",
+    problem:
+        "Universities still run coding exams by having students code on their own computers while teachers walk around checking each screen manually. " +
+        "There is no automatic grading, no fair way to enforce the same hidden tests across all students, no easy way to publish results, and no scalable way to detect plagiarism. " +
+        "Existing platforms like HackerRank are designed for interviews, not for classroom exams with exam codes, section-based access, or teacher-owned grading workflows.",
+    solution:
+        "CodeAssess solves this end-to-end: " +
+        "① Teacher creates an exam → system generates a unique join code. " +
+        "② Student joins with the code, solves in a browser editor, runs code with custom input, submits for auto-grading. " +
+        "③ Backend executes code in a sandboxed environment (Judge0 with fallback), compares output against hidden test cases, and computes a score. " +
+        "④ Teacher reviews submissions, overrides scores, adds feedback, and publishes results when ready. " +
+        "⑤ Student sees published grades and GPA instantly. " +
+        "Anti-cheat logging and plagiarism detection run quietly in the background.",
+    expected:
+        "A teacher can create an exam and grade 30+ students without printing or manual checking. " +
+        "Students see consistent, objective grading from identical hidden test cases. " +
+        "Results are published once, viewed by all students, and exportable as CSV. " +
+        "Plagiarism and suspicious behaviour are flagged for teacher review. " +
+        "The whole flow runs on free-tier infrastructure (Render + Vercel + Neon + Judge0).",
+    image: "/images/codeassess.png",
+    year: "2026",
+    tags: ["Full-Stack", "Web Development", "EdTech", "Django", "React"],
+    tools: [
+        { name: "React",        icon: "/images/tools/react.svg" },
+        { name: "Vite",         icon: "/images/tools/vitejs.svg" },
+        { name: "Tailwind CSS", icon: "/images/tools/Tailwind-CSS.svg" },
+        { name: "Monaco Editor",icon: "/images/tools/monaco.svg" },
+        { name: "Django",       icon: "/images/tools/Django.svg" },
+        { name: "DRestFramework",          icon: "/images/tools/djangorest.svg" },
+        { name: "PostgreSQL",   icon: "/images/tools/postgresql.svg" },
+        { name: "JWT",          icon: "/images/tools/jwt.svg" },
+        { name: "Judge0",       icon: "/images/tools/compiler.svg" },
+        { name: "Render",       icon: "/images/tools/render.svg" },
+        { name: "Vercel",       icon: "/images/tools/vercel.svg" },
+        { name: "Neon",         icon: "/images/tools/neon.svg" },
+    ],
+    github: "https://github.com/iamthearafatkhan/CodeAssess",
+    website: "https://codexaam.vercel.app",
+},
     {
         title: "E-Mail Spam Detection",
         shortDescription:

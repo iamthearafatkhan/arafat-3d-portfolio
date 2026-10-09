@@ -89,9 +89,7 @@ export const projects = [
         github: "https://github.com/iamthearafatkhan/DLR-PCVW-Acne-severity-classifier-using-few-shot",
         website: "https://acnegrad-ai.streamlit.app/",
     },
-   {
-    title: "CodeAssess: Online Programming Examination Platform",
-    shortDescription:
+   shortDescription:
         "A full-stack web platform where teachers create coding exams and students solve, run, and submit code that is auto-graded against hidden test cases.",
     longDescription:
         "CodeAssess is a full-stack web application for conducting programming exams at universities. " +
@@ -118,6 +116,26 @@ export const projects = [
         "Results are published once, viewed by all students, and exportable as CSV. " +
         "Plagiarism and suspicious behaviour are flagged for teacher review. " +
         "The whole flow runs on free-tier infrastructure (Render + Vercel + Neon + Judge0).",
+
+    // 👇 Demo access — put this in a NOTICEABLE card on the portfolio page
+    demo: {
+        notice: "Live demo — try it yourself",
+        accounts: [
+            {
+                role: "Teacher",
+                email: "teacher@test.com",
+                password: "teacher123",
+                capabilities: "Create exams, add questions, grade submissions, publish results",
+            },
+            {
+                role: "Student",
+                email: "student@test.com",
+                password: "student123",
+                capabilities: "Join exams, solve problems, submit for auto-grading",
+            },
+        ],
+        tip: "Open in two browsers (or one incognito) to see both sides at once.",
+    },
     image: "/images/codeassess.png",
     year: "2026",
     tags: ["Full-Stack", "Web Development", "EdTech", "Django", "React"],

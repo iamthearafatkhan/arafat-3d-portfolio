@@ -373,12 +373,17 @@ const NavBar = () => {
                 }
 
                 /* ---------- Desktop uses the original inline nav ---------- */
-                @media (min-width: 1024px) {
-                    .nav-drawer,
-                    .nav-drawer-backdrop {
+                /* Hide hamburger on desktop */
+               @media (min-width: 1024px) {
+                   .nav-mobile-toggle { display: none; }
+               }
+
+               /* Hide the Contact button on mobile — the drawer has its own CTA */
+               @media (max-width: 1023px) {
+                   .navbar .contact-btn {
                         display: none;
-                    }
-                }
+                     }
+               }
             `}</style>
 
             <header className={`navbar ${scrolled ? "scrolled" : "not-scrolled"}`}>

@@ -308,7 +308,7 @@ const ProjectCard = ({ project, index, onOpen, isDragging }) => {
 };
 
 /* =========================================================
-   CAROUSEL
+   CAROUSEL — left-to-right, first card at the left edge
    ========================================================= */
 
 const ProjectCarousel = ({ onOpenProject }) => {
@@ -317,18 +317,20 @@ const ProjectCarousel = ({ onOpenProject }) => {
     const [isDragging, setIsDragging] = useState(false);
     const dragState = useRef({ startX: 0, scrollStart: 0, moved: false });
 
-    /* ---------- Scroll to a specific card ---------- */
+    /* Scroll a specific card to the left edge */
     const scrollToIndex = useCallback((i) => {
         const track = trackRef.current;
         if (!track) return;
+
         const cards = track.querySelectorAll(".carousel-card");
         const card = cards[i];
         if (!card) return;
 
+        const paddingLeft = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
         const trackRect = track.getBoundingClientRect();
         const cardRect = card.getBoundingClientRect();
-        const target = track.scrollLeft + (cardRect.left - trackRect.left) -
-            (trackRect.width / 2 - cardRect.width / 2);
+
+        const target = track.scrollLeft + (cardRect.left - trackRect.left) - paddingLeft;
 
         track.scrollTo({ left: target, behavior: "smooth" });
     }, []);
@@ -345,35 +347,44 @@ const ProjectCarousel = ({ onOpenProject }) => {
         scrollToIndex(next);
     }, [activeIndex, scrollToIndex]);
 
-    /* ---------- Track active card via scroll position ---------- */
+    /* Track active card from scroll position */
     useEffect(() => {
         const track = trackRef.current;
         if (!track) return;
 
+        let raf = 0;
+
         const onScroll = () => {
-            const cards = track.querySelectorAll(".carousel-card");
-            const center = track.scrollLeft + track.clientWidth / 2;
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                const cards = track.querySelectorAll(".carousel-card");
+                const paddingLeft = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+                const anchor = track.scrollLeft + paddingLeft;
 
-            let closest = 0;
-            let closestDist = Infinity;
+                let closest = 0;
+                let closestDist = Infinity;
 
-            cards.forEach((card, i) => {
-                const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-                const dist = Math.abs(cardCenter - center);
-                if (dist < closestDist) {
-                    closestDist = dist;
-                    closest = i;
-                }
+                cards.forEach((card, i) => {
+                    const cardLeft = card.offsetLeft;
+                    const dist = Math.abs(cardLeft - anchor);
+                    if (dist < closestDist) {
+                        closestDist = dist;
+                        closest = i;
+                    }
+                });
+
+                setActiveIndex(closest);
             });
-
-            setActiveIndex(closest);
         };
 
         track.addEventListener("scroll", onScroll, { passive: true });
-        return () => track.removeEventListener("scroll", onScroll);
+        return () => {
+            track.removeEventListener("scroll", onScroll);
+            cancelAnimationFrame(raf);
+        };
     }, []);
 
-    /* ---------- Drag to scroll ---------- */
+    /* Drag-to-scroll */
     const onMouseDown = (e) => {
         const track = trackRef.current;
         if (!track) return;
@@ -382,7 +393,7 @@ const ProjectCarousel = ({ onOpenProject }) => {
             scrollStart: track.scrollLeft,
             moved: false,
         };
-        setIsDragging(false); /* becomes true only after 4px move */
+        setIsDragging(false);
     };
 
     const onMouseMove = (e) => {
@@ -400,11 +411,10 @@ const ProjectCarousel = ({ onOpenProject }) => {
 
     const onMouseUp = () => {
         setIsDragging(false);
-        /* reset moved state on next tick so click handler sees it */
         setTimeout(() => { dragState.current.moved = false; }, 0);
     };
 
-    /* ---------- Vertical wheel → horizontal scroll ---------- */
+    /* Vertical wheel → horizontal scroll */
     const onWheel = (e) => {
         const track = trackRef.current;
         if (!track) return;
@@ -416,7 +426,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
 
     return (
         <div className="carousel-wrapper">
-            {/* Left arrow */}
             <button
                 type="button"
                 className="carousel-arrow carousel-arrow-prev"
@@ -427,7 +436,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
                 ‹
             </button>
 
-            {/* Track */}
             <div
                 ref={trackRef}
                 className={`carousel-track ${isDragging ? "is-dragging" : ""}`}
@@ -437,9 +445,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
                 onMouseLeave={onMouseUp}
                 onWheel={onWheel}
             >
-                {/* Left spacer so first card can center */}
-                <div className="carousel-spacer" aria-hidden="true" />
-
                 {projects.map((project, index) => (
                     <ProjectCard
                         key={project.title}
@@ -450,7 +455,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
                     />
                 ))}
 
-                {/* Coming-soon card as the last item */}
                 <article className="carousel-card carousel-card--coming">
                     <div className="project-coming-inner">
                         <div className="project-coming-dot" />
@@ -464,12 +468,8 @@ const ProjectCarousel = ({ onOpenProject }) => {
                         </p>
                     </div>
                 </article>
-
-                {/* Right spacer */}
-                <div className="carousel-spacer" aria-hidden="true" />
             </div>
 
-            {/* Right arrow */}
             <button
                 type="button"
                 className="carousel-arrow carousel-arrow-next"
@@ -480,7 +480,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
                 ›
             </button>
 
-            {/* Progress dots */}
             <div className="carousel-dots">
                 {projects.map((p, i) => (
                     <button
@@ -496,7 +495,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
                 ))}
             </div>
 
-            {/* Hint */}
             <p className="carousel-hint">
                 Drag · Scroll · Use arrow keys
             </p>
@@ -534,7 +532,7 @@ const Project = () => {
         <>
             <style>{`
                 /* =========================================================
-                   PROJECT CAROUSEL — horizontal snap scroll
+                   PROJECT CAROUSEL — left-to-right snap scroll
                    ========================================================= */
 
                 .carousel-wrapper {
@@ -544,9 +542,10 @@ const Project = () => {
 
                 /* ---------- Track ---------- */
                 .carousel-track {
+                    position: relative;
                     display: flex;
                     align-items: center;
-                    gap: 28px;
+                    gap: 24px;
 
                     overflow-x: auto;
                     overflow-y: hidden;
@@ -554,18 +553,19 @@ const Project = () => {
                     scroll-snap-type: x mandatory;
                     scroll-behavior: smooth;
 
+                    /* First card starts at this offset — no blank left gap */
+                    scroll-padding-left: max(24px, 4vw);
+                    scroll-padding-right: max(24px, 4vw);
+
                     padding: 60px 0 40px;
 
-                    /* Fixed height — never grows with project count */
                     height: 620px;
 
                     cursor: grab;
 
-                    /* Hide scrollbar */
                     scrollbar-width: none;
                     -ms-overflow-style: none;
 
-                    /* Perspective for the tilt effect */
                     perspective: 1600px;
                     perspective-origin: 50% 50%;
                 }
@@ -578,24 +578,22 @@ const Project = () => {
                     scroll-snap-type: none;
                 }
 
-                /* Spacers let the first/last card center */
-                .carousel-spacer {
-                    flex: 0 0 calc(50% - 190px);
-                    height: 1px;
-                }
-
                 /* ---------- Cards ---------- */
                 .carousel-card {
                     flex: 0 0 380px;
                     height: 500px;
-                    scroll-snap-align: center;
+
+                    /* 🔧 start alignment — first card at left edge */
+                    scroll-snap-align: start;
                     scroll-snap-stop: always;
+
                     position: relative;
                     cursor: pointer;
                     user-select: none;
                     -webkit-user-drag: none;
                 }
 
+                /* Coming-soon card */
                 .carousel-card--coming {
                     display: flex;
                     align-items: center;
@@ -647,7 +645,7 @@ const Project = () => {
                     color: rgba(255, 255, 255, 0.5);
                 }
 
-                /* ---------- 3D tilt inner ---------- */
+                /* ---------- 3D inner ---------- */
                 .project-card-3d .project-card-inner {
                     position: relative;
                     width: 100%;
@@ -688,7 +686,6 @@ const Project = () => {
                         0 0 100px rgba(255, 40, 10, 0.15);
                 }
 
-                /* Image area */
                 .carousel-card .project-image {
                     position: relative;
                     width: 100%;
@@ -740,7 +737,6 @@ const Project = () => {
                     backdrop-filter: blur(8px);
                 }
 
-                /* Glare */
                 .carousel-card .project-card-glare {
                     position: absolute;
                     inset: 0;
@@ -758,7 +754,6 @@ const Project = () => {
 
                 .carousel-card:hover .project-card-glare { opacity: 1; }
 
-                /* Body */
                 .carousel-card .project-body {
                     padding: 22px 24px 24px;
                     display: flex;
@@ -795,7 +790,6 @@ const Project = () => {
                     line-height: 1.35;
                     color: #ffffff;
                     text-shadow: 0 0 20px rgba(255, 60, 20, 0.20);
-
                     display: -webkit-box;
                     -webkit-line-clamp: 3;
                     -webkit-box-orient: vertical;
@@ -808,12 +802,10 @@ const Project = () => {
                     font-size: 0.92rem;
                     line-height: 1.55;
                     color: rgba(255, 255, 255, 0.58);
-
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
-
                     flex: 1;
                     min-height: 0;
                 }
@@ -916,7 +908,7 @@ const Project = () => {
                 }
 
                 /* =========================================================
-                   CAROUSEL CONTROLS — arrows, dots, hint
+                   CONTROLS
                    ========================================================= */
 
                 .carousel-arrow {
@@ -960,7 +952,7 @@ const Project = () => {
                 }
 
                 .carousel-arrow:disabled {
-                    opacity: 0.3;
+                    opacity: 0.25;
                     cursor: not-allowed;
                 }
 
@@ -972,7 +964,6 @@ const Project = () => {
                     .carousel-arrow-next { right: 0; }
                 }
 
-                /* ---------- Dots ---------- */
                 .carousel-dots {
                     display: flex;
                     justify-content: center;
@@ -1015,7 +1006,166 @@ const Project = () => {
                 }
 
                 /* =========================================================
-                   MODAL SECTIONS (unchanged)
+                   STONE-IN-SPACE BACKGROUND
+                   ========================================================= */
+
+                .projects-section {
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                /* Base layer: star field + nebula behind everything */
+                .project-stones {
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                    z-index: 0;
+                    overflow: hidden;
+                }
+
+                /* Distant star field */
+                .project-stones::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background-image:
+                        radial-gradient(1px 1px at 8% 18%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 22% 42%, rgba(255, 220, 200, 0.7), transparent 60%),
+                        radial-gradient(1.4px 1.4px at 34% 12%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 48% 68%, rgba(255, 200, 180, 0.6), transparent 60%),
+                        radial-gradient(1.6px 1.6px at 62% 28%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 76% 82%, rgba(255, 220, 200, 0.7), transparent 60%),
+                        radial-gradient(1.2px 1.2px at 88% 44%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 15% 88%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 55% 52%, rgba(255, 220, 200, 0.6), transparent 60%),
+                        radial-gradient(1.4px 1.4px at 82% 12%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 5% 55%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 42% 90%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 96% 62%, rgba(255, 200, 180, 0.7), transparent 60%),
+                        radial-gradient(1px 1px at 30% 22%, #fff, transparent 60%);
+                    opacity: 0.55;
+                    animation: stoneStars 8s ease-in-out infinite alternate;
+                }
+
+                @keyframes stoneStars {
+                    0%   { opacity: 0.4; }
+                    100% { opacity: 0.75; }
+                }
+
+                /* Soft red nebula glow top-left + violet bottom-right */
+                .project-stones::after {
+                    content: "";
+                    position: absolute;
+                    inset: -10%;
+                    background:
+                        radial-gradient(circle at 15% 25%, rgba(255, 60, 20, 0.16) 0%, transparent 45%),
+                        radial-gradient(circle at 85% 75%, rgba(180, 80, 255, 0.10) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 100%, rgba(76, 201, 240, 0.06) 0%, transparent 55%);
+                    filter: blur(60px);
+                    opacity: 0.9;
+                }
+
+                /* Individual floating stones */
+                .stone {
+                    position: absolute;
+                    background:
+                        radial-gradient(
+                            circle at 32% 30%,
+                            rgba(120, 50, 30, 0.9) 0%,
+                            rgba(60, 20, 15, 0.95) 35%,
+                            rgba(18, 5, 5, 1) 75%
+                        );
+
+                    /* Irregular rock silhouette */
+                    border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
+
+                    box-shadow:
+                        inset -14px -14px 30px rgba(0, 0, 0, 0.85),
+                        inset 12px 12px 24px rgba(255, 120, 60, 0.12),
+                        0 0 50px rgba(255, 60, 20, 0.15),
+                        0 0 100px rgba(255, 40, 10, 0.08);
+
+                    filter: blur(0.5px);
+                    opacity: 0.65;
+
+                    animation: stoneDrift 40s ease-in-out infinite;
+                }
+
+                .stone-1 {
+                    width: 220px; height: 200px;
+                    top: 8%;
+                    left: 4%;
+                    animation-delay: 0s;
+                }
+
+                .stone-2 {
+                    width: 90px; height: 100px;
+                    top: 62%;
+                    left: 12%;
+                    border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%;
+                    animation-delay: -8s;
+                    opacity: 0.5;
+                }
+
+                .stone-3 {
+                    width: 140px; height: 130px;
+                    top: 20%;
+                    right: 8%;
+                    border-radius: 55% 45% 65% 35% / 40% 60% 40% 60%;
+                    animation-delay: -16s;
+                    opacity: 0.55;
+                }
+
+                .stone-4 {
+                    width: 260px; height: 240px;
+                    bottom: -6%;
+                    right: 20%;
+                    border-radius: 58% 42% 50% 50% / 55% 45% 55% 45%;
+                    animation-delay: -24s;
+                    opacity: 0.4;
+                    filter: blur(1.5px);
+                }
+
+                .stone-5 {
+                    width: 70px; height: 80px;
+                    top: 45%;
+                    right: 32%;
+                    border-radius: 40% 60% 55% 45% / 55% 45% 60% 40%;
+                    animation-delay: -12s;
+                    opacity: 0.45;
+                }
+
+                .stone-6 {
+                    width: 110px; height: 100px;
+                    bottom: 18%;
+                    left: 28%;
+                    border-radius: 62% 38% 45% 55% / 48% 52% 50% 50%;
+                    animation-delay: -30s;
+                    opacity: 0.35;
+                    filter: blur(1.5px);
+                }
+
+                @keyframes stoneDrift {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                    25%      { transform: translate(10px, -14px) rotate(3deg); }
+                    50%      { transform: translate(-6px, -22px) rotate(-2deg); }
+                    75%      { transform: translate(-14px, -8px) rotate(2deg); }
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .stone,
+                    .project-stones::before {
+                        animation: none;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .stone-1, .stone-4 { opacity: 0.35; }
+                    .stone-2, .stone-3, .stone-5, .stone-6 { display: none; }
+                }
+
+                /* =========================================================
+                   MODAL SECTIONS
                    ========================================================= */
 
                 .modal-section { margin-top: 26px; }
@@ -1067,7 +1217,6 @@ const Project = () => {
                 .modal-section--solution .modal-section-body { border-left: 3px solid rgba(74, 222, 128, 0.55); }
                 .modal-section--expected .modal-section-body { border-left: 3px solid rgba(192, 132, 252, 0.55); }
 
-                /* ---------- Demo credentials ---------- */
                 .project-modal-demo {
                     margin-top: 26px;
                     padding: 18px;
@@ -1209,7 +1358,6 @@ const Project = () => {
                 @media (max-width: 1024px) {
                     .carousel-card { flex: 0 0 340px; height: 480px; }
                     .carousel-track { height: 600px; }
-                    .carousel-spacer { flex: 0 0 calc(50% - 170px); }
                 }
 
                 @media (max-width: 768px) {
@@ -1221,7 +1369,6 @@ const Project = () => {
                     }
 
                     .carousel-card { flex: 0 0 300px; height: 440px; }
-                    .carousel-spacer { flex: 0 0 calc(50% - 150px); }
 
                     .carousel-arrow {
                         width: 42px; height: 42px;
@@ -1237,20 +1384,12 @@ const Project = () => {
                 @media (max-width: 640px) {
                     .carousel-track { height: 520px; }
                     .carousel-card { flex: 0 0 280px; height: 420px; }
-
-                    .carousel-arrow { display: none; } /* swipe is natural on mobile */
-
+                    .carousel-arrow { display: none; }
                     .carousel-dots { margin-top: 4px; }
                 }
 
-                /* =========================================================
-                   REDUCED MOTION
-                   ========================================================= */
-
                 @media (prefers-reduced-motion: reduce) {
-                    .carousel-track {
-                        scroll-behavior: auto;
-                    }
+                    .carousel-track { scroll-behavior: auto; }
                     .project-card-3d .project-card-inner,
                     .carousel-card .project-image img,
                     .carousel-card .project-card-glare,
@@ -1262,6 +1401,17 @@ const Project = () => {
             `}</style>
 
             <section id="work" ref={sectionRef} className="projects-section">
+
+                {/* ---------- Stone-in-space background ---------- */}
+                <div className="project-stones" aria-hidden="true">
+                    <span className="stone stone-1" />
+                    <span className="stone stone-2" />
+                    <span className="stone stone-3" />
+                    <span className="stone stone-4" />
+                    <span className="stone stone-5" />
+                    <span className="stone stone-6" />
+                </div>
+
                 <div className="projects-layout">
 
                     <div className="projects-head">

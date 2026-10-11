@@ -414,15 +414,21 @@ const ProjectCarousel = ({ onOpenProject }) => {
         setTimeout(() => { dragState.current.moved = false; }, 0);
     };
 
-    /* Vertical wheel → horizontal scroll */
-    const onWheel = (e) => {
-        const track = trackRef.current;
-        if (!track) return;
+    /* ---------- Vertical wheel → horizontal scroll (non-passive) ---------- */
+useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const handleWheel = (e) => {
         if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
             e.preventDefault();
             track.scrollLeft += e.deltaY;
         }
     };
+
+    track.addEventListener("wheel", handleWheel, { passive: false });
+    return () => track.removeEventListener("wheel", handleWheel);
+}, []);
 
     return (
         <div className="carousel-wrapper">
@@ -443,7 +449,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
                 onMouseMove={onMouseMove}
                 onMouseUp={onMouseUp}
                 onMouseLeave={onMouseUp}
-                onWheel={onWheel}
             >
                 {projects.map((project, index) => (
                     <ProjectCard

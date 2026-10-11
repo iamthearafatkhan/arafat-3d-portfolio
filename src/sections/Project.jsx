@@ -172,18 +172,20 @@ const ProjectModal = ({ project, onClose }) => {
                                 <span>{project.demo.notice || "Live demo credentials"}</span>
                             </div>
 
-                            <div className="project-modal-demo-accounts">
-                                {project.demo.accounts.map((acc) => (
-                                    <div key={acc.role} className="project-modal-demo-account">
-                                        <div className="demo-role">{acc.role}</div>
-                                        <DemoCredential label="Email" value={acc.email} />
-                                        <DemoCredential label="Password" value={acc.password} />
-                                        {acc.capabilities && (
-                                            <div className="demo-cap">{acc.capabilities}</div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
+                            {project.demo.accounts && project.demo.accounts.length > 0 && (
+                                <div className="project-modal-demo-accounts">
+                                    {project.demo.accounts.map((acc) => (
+                                        <div key={acc.role} className="project-modal-demo-account">
+                                            <div className="demo-role">{acc.role}</div>
+                                            <DemoCredential label="Email" value={acc.email} />
+                                            <DemoCredential label="Password" value={acc.password} />
+                                            {acc.capabilities && (
+                                                <div className="demo-cap">{acc.capabilities}</div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
 
                             {project.demo.tip && (
                                 <div className="project-modal-demo-tip">ⓘ {project.demo.tip}</div>
@@ -210,7 +212,7 @@ const ProjectModal = ({ project, onClose }) => {
 };
 
 /* =========================================================
-   PROJECT CARD
+   PROJECT CARD — 3D tilt
    ========================================================= */
 
 const ProjectCard = ({ project, index, onOpen, isDragging }) => {
@@ -284,7 +286,9 @@ const ProjectCard = ({ project, index, onOpen, isDragging }) => {
                                     </span>
                                 ))}
                                 {project.tools.length > 5 && (
-                                    <span className="project-tool project-tool-more">+{project.tools.length - 5}</span>
+                                    <span className="project-tool project-tool-more">
+                                        +{project.tools.length - 5}
+                                    </span>
                                 )}
                             </div>
                         </div>
@@ -308,7 +312,7 @@ const ProjectCard = ({ project, index, onOpen, isDragging }) => {
 };
 
 /* =========================================================
-   CAROUSEL — left-to-right, first card at the left edge
+   CAROUSEL
    ========================================================= */
 
 const ProjectCarousel = ({ onOpenProject }) => {
@@ -329,7 +333,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
         const paddingLeft = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
         const trackRect = track.getBoundingClientRect();
         const cardRect = card.getBoundingClientRect();
-
         const target = track.scrollLeft + (cardRect.left - trackRect.left) - paddingLeft;
 
         track.scrollTo({ left: target, behavior: "smooth" });
@@ -347,13 +350,12 @@ const ProjectCarousel = ({ onOpenProject }) => {
         scrollToIndex(next);
     }, [activeIndex, scrollToIndex]);
 
-    /* Track active card from scroll position */
+    /* Track active card via scroll position */
     useEffect(() => {
         const track = trackRef.current;
         if (!track) return;
 
         let raf = 0;
-
         const onScroll = () => {
             cancelAnimationFrame(raf);
             raf = requestAnimationFrame(() => {
@@ -365,8 +367,7 @@ const ProjectCarousel = ({ onOpenProject }) => {
                 let closestDist = Infinity;
 
                 cards.forEach((card, i) => {
-                    const cardLeft = card.offsetLeft;
-                    const dist = Math.abs(cardLeft - anchor);
+                    const dist = Math.abs(card.offsetLeft - anchor);
                     if (dist < closestDist) {
                         closestDist = dist;
                         closest = i;
@@ -414,21 +415,21 @@ const ProjectCarousel = ({ onOpenProject }) => {
         setTimeout(() => { dragState.current.moved = false; }, 0);
     };
 
-    /* ---------- Vertical wheel → horizontal scroll (non-passive) ---------- */
-useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
+    /* Vertical wheel → horizontal scroll (non-passive listener) */
+    useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
 
-    const handleWheel = (e) => {
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-            e.preventDefault();
-            track.scrollLeft += e.deltaY;
-        }
-    };
+        const handleWheel = (e) => {
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                e.preventDefault();
+                track.scrollLeft += e.deltaY;
+            }
+        };
 
-    track.addEventListener("wheel", handleWheel, { passive: false });
-    return () => track.removeEventListener("wheel", handleWheel);
-}, []);
+        track.addEventListener("wheel", handleWheel, { passive: false });
+        return () => track.removeEventListener("wheel", handleWheel);
+    }, []);
 
     return (
         <div className="carousel-wrapper">
@@ -537,13 +538,10 @@ const Project = () => {
         <>
             <style>{`
                 /* =========================================================
-                   PROJECT CAROUSEL — left-to-right snap scroll
+                   PROJECT CAROUSEL — futuristic cyber cards (blue glow)
                    ========================================================= */
 
-                .carousel-wrapper {
-                    position: relative;
-                    width: 100%;
-                }
+                .carousel-wrapper { position: relative; width: 100%; }
 
                 /* ---------- Track ---------- */
                 .carousel-track {
@@ -558,16 +556,13 @@ const Project = () => {
                     scroll-snap-type: x mandatory;
                     scroll-behavior: smooth;
 
-                    /* First card starts at this offset — no blank left gap */
                     scroll-padding-left: max(24px, 4vw);
                     scroll-padding-right: max(24px, 4vw);
 
                     padding: 60px 0 40px;
-
-                    height: 620px;
+                    height: 640px;
 
                     cursor: grab;
-
                     scrollbar-width: none;
                     -ms-overflow-style: none;
 
@@ -583,94 +578,50 @@ const Project = () => {
                     scroll-snap-type: none;
                 }
 
-                /* ---------- Cards ---------- */
+                /* ---------- Card shell ---------- */
                 .carousel-card {
-                    flex: 0 0 380px;
-                    height: 500px;
-
-                    /* 🔧 start alignment — first card at left edge */
+                    flex: 0 0 400px;
+                    height: 520px;
                     scroll-snap-align: start;
                     scroll-snap-stop: always;
-
                     position: relative;
                     cursor: pointer;
                     user-select: none;
                     -webkit-user-drag: none;
                 }
 
-                /* Coming-soon card */
-                .carousel-card--coming {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: default;
-
-                    background: linear-gradient(135deg, rgba(30, 4, 4, 0.7) 0%, rgba(8, 1, 1, 0.8) 100%);
-                    border: 1px dashed rgba(255, 60, 20, 0.35);
-                    border-radius: 18px;
-                }
-
-                .carousel-card--coming .project-coming-inner {
-                    padding: 30px;
-                    text-align: center;
-                }
-
-                .carousel-card--coming .project-coming-dot {
-                    width: 10px; height: 10px;
-                    border-radius: 50%;
-                    margin: 0 auto 20px;
-                    background: #ff4b1f;
-                    box-shadow: 0 0 20px rgba(255, 75, 31, 0.9);
-                    animation: dotPulse 1.6s ease-in-out infinite;
-                }
-
-                .carousel-card--coming .project-coming-label {
-                    font-family: "Orbitron", sans-serif;
-                    font-size: 10px;
-                    letter-spacing: 0.2em;
-                    text-transform: uppercase;
-                    color: rgba(255, 255, 255, 0.35);
-                    margin-bottom: 16px;
-                }
-
-                .carousel-card--coming .project-coming-title {
-                    margin: 0 0 12px;
-                    font-family: "Orbitron", sans-serif;
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    color: #ffffff;
-                    text-shadow: 0 0 20px rgba(255, 60, 20, 0.3);
-                }
-
-                .carousel-card--coming .project-coming-text {
-                    margin: 0;
-                    font-family: "Rajdhani", sans-serif;
-                    font-size: 0.9rem;
-                    line-height: 1.6;
-                    color: rgba(255, 255, 255, 0.5);
-                }
-
-                /* ---------- 3D inner ---------- */
+                /* The 3D inner is the actual visible card */
                 .project-card-3d .project-card-inner {
                     position: relative;
                     width: 100%;
                     height: 100%;
-                    border-radius: 18px;
-                    overflow: hidden;
 
                     display: flex;
                     flex-direction: column;
+                    overflow: hidden;
 
-                    background: linear-gradient(135deg, rgba(40, 5, 5, 0.88) 0%, rgba(12, 2, 2, 0.94) 100%);
-                    border: 1px solid rgba(255, 60, 20, 0.28);
+                    /* Futuristic corner cut */
+                    clip-path: polygon(
+                        0 0,
+                        calc(100% - 26px) 0,
+                        100% 26px,
+                        100% 100%,
+                        26px 100%,
+                        0 calc(100% - 26px)
+                    );
+
+                    background:
+                        linear-gradient(135deg, rgba(15, 3, 3, 0.94) 0%, rgba(8, 2, 8, 0.96) 100%);
+
+                    border: 1px solid rgba(120, 170, 255, 0.28);
 
                     backdrop-filter: blur(14px);
                     -webkit-backdrop-filter: blur(14px);
 
                     box-shadow:
-                        inset 0 0 40px rgba(255, 60, 20, 0.06),
-                        0 8px 30px rgba(0, 0, 0, 0.55),
-                        0 0 60px rgba(255, 40, 10, 0.05);
+                        inset 0 0 40px rgba(60, 120, 255, 0.06),
+                        0 8px 30px rgba(0, 0, 0, 0.6),
+                        0 0 60px rgba(60, 120, 255, 0.08);
 
                     transform:
                         rotateX(var(--tilt-x, 0deg))
@@ -678,33 +629,72 @@ const Project = () => {
 
                     transform-style: preserve-3d;
 
-                    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                                border-color 0.35s ease,
-                                box-shadow 0.35s ease;
+                    transition:
+                        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                        border-color 0.35s ease,
+                        box-shadow 0.35s ease;
                 }
 
+                /* Deep blue hover glow */
                 .carousel-card:hover .project-card-inner {
-                    border-color: rgba(255, 90, 40, 0.75);
+                    border-color: rgba(120, 190, 255, 0.85);
                     box-shadow:
-                        inset 0 0 60px rgba(255, 60, 20, 0.16),
-                        0 24px 60px rgba(255, 40, 10, 0.25),
-                        0 0 100px rgba(255, 40, 10, 0.15);
+                        inset 0 0 60px rgba(60, 140, 255, 0.18),
+                        0 24px 60px rgba(0, 60, 180, 0.35),
+                        0 0 120px rgba(60, 140, 255, 0.25);
                 }
 
+                /* Cyan corner accent */
+                .carousel-card .project-card-inner::before {
+                    content: "";
+                    position: absolute;
+                    top: 0; right: 0;
+                    width: 60px; height: 60px;
+                    background: linear-gradient(
+                        225deg,
+                        rgba(120, 200, 255, 0.65) 0%,
+                        rgba(120, 200, 255, 0.0) 55%
+                    );
+                    clip-path: polygon(0 0, 100% 0, 100% 100%);
+                    pointer-events: none;
+                    z-index: 3;
+                }
+
+                /* Cyan bottom accent line */
+                .carousel-card .project-card-inner::after {
+                    content: "";
+                    position: absolute;
+                    left: 22px; right: 22px; bottom: 0;
+                    height: 2px;
+                    background: linear-gradient(
+                        90deg,
+                        transparent 0%,
+                        #4cc9f0 50%,
+                        transparent 100%
+                    );
+                    opacity: 0;
+                    transition: opacity 0.4s ease;
+                    pointer-events: none;
+                    z-index: 3;
+                }
+
+                .carousel-card:hover .project-card-inner::after { opacity: 1; }
+
+                /* ---------- Image ---------- */
                 .carousel-card .project-image {
                     position: relative;
                     width: 100%;
-                    aspect-ratio: 16 / 10;
+                    aspect-ratio: 16 / 11;
                     overflow: hidden;
-                    background: #0a0202;
-                    border-bottom: 1px solid rgba(255, 60, 20, 0.18);
+                    background: #050202;
+                    border-bottom: 1px solid rgba(120, 170, 255, 0.18);
                     flex-shrink: 0;
                 }
 
                 .carousel-card .project-image img {
                     width: 100%; height: 100%;
                     object-fit: cover;
-                    object-position: center top;
+                    object-position: center center;
                     display: block;
                     pointer-events: none;
                     transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -719,29 +709,31 @@ const Project = () => {
                     pointer-events: none;
                     background: linear-gradient(
                         to bottom,
-                        rgba(0, 0, 0, 0.35) 0%,
-                        transparent 25%,
-                        transparent 75%,
-                        rgba(10, 2, 2, 0.6) 100%
+                        rgba(0, 0, 0, 0.25) 0%,
+                        transparent 30%,
+                        transparent 70%,
+                        rgba(5, 2, 5, 0.75) 100%
                     );
                 }
 
                 .carousel-card .project-year {
                     position: absolute;
-                    top: 12px; right: 12px;
+                    top: 14px; right: 14px;
                     z-index: 2;
-                    padding: 4px 10px;
+                    padding: 5px 12px;
                     font-family: "Orbitron", sans-serif;
                     font-size: 10px;
                     font-weight: 600;
                     letter-spacing: 0.15em;
-                    color: #ffb89c;
-                    background: rgba(10, 2, 2, 0.85);
-                    border: 1px solid rgba(255, 90, 40, 0.45);
+                    color: #9ecfff;
+                    background: rgba(5, 10, 25, 0.85);
+                    border: 1px solid rgba(120, 180, 255, 0.45);
                     border-radius: 6px;
                     backdrop-filter: blur(8px);
+                    box-shadow: 0 0 12px rgba(80, 160, 255, 0.35);
                 }
 
+                /* Cyan glare */
                 .carousel-card .project-card-glare {
                     position: absolute;
                     inset: 0;
@@ -749,7 +741,7 @@ const Project = () => {
                     z-index: 4;
                     background: radial-gradient(
                         circle 260px at var(--glow-x, 50%) var(--glow-y, 50%),
-                        rgba(255, 200, 180, 0.16) 0%,
+                        rgba(150, 210, 255, 0.18) 0%,
                         transparent 60%
                     );
                     opacity: 0;
@@ -759,8 +751,9 @@ const Project = () => {
 
                 .carousel-card:hover .project-card-glare { opacity: 1; }
 
+                /* ---------- Body ---------- */
                 .carousel-card .project-body {
-                    padding: 22px 24px 24px;
+                    padding: 24px 26px 26px;
                     display: flex;
                     flex-direction: column;
                     flex: 1;
@@ -776,14 +769,14 @@ const Project = () => {
                     font-size: 9px;
                     letter-spacing: 0.18em;
                     text-transform: uppercase;
-                    color: rgba(255, 255, 255, 0.42);
+                    color: rgba(180, 210, 255, 0.55);
                 }
 
                 .carousel-card .project-dot {
                     width: 6px; height: 6px;
                     border-radius: 50%;
-                    background: #ff4b1f;
-                    box-shadow: 0 0 12px rgba(255, 75, 31, 0.9);
+                    background: #4cc9f0;
+                    box-shadow: 0 0 12px rgba(76, 201, 240, 0.95);
                     animation: dotPulse 2s ease-in-out infinite;
                 }
 
@@ -794,7 +787,7 @@ const Project = () => {
                     font-weight: 600;
                     line-height: 1.35;
                     color: #ffffff;
-                    text-shadow: 0 0 20px rgba(255, 60, 20, 0.20);
+                    text-shadow: 0 0 20px rgba(120, 180, 255, 0.25);
                     display: -webkit-box;
                     -webkit-line-clamp: 3;
                     -webkit-box-orient: vertical;
@@ -806,7 +799,7 @@ const Project = () => {
                     font-family: "Rajdhani", sans-serif;
                     font-size: 0.92rem;
                     line-height: 1.55;
-                    color: rgba(255, 255, 255, 0.58);
+                    color: rgba(220, 235, 255, 0.62);
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
@@ -818,7 +811,7 @@ const Project = () => {
                 .carousel-card .project-tools {
                     margin-top: 14px;
                     padding-top: 14px;
-                    border-top: 1px solid rgba(255, 60, 20, 0.12);
+                    border-top: 1px solid rgba(120, 170, 255, 0.15);
                 }
 
                 .carousel-card .project-tools-label {
@@ -826,7 +819,7 @@ const Project = () => {
                     font-size: 9px;
                     letter-spacing: 0.22em;
                     text-transform: uppercase;
-                    color: rgba(255, 255, 255, 0.38);
+                    color: rgba(180, 210, 255, 0.5);
                     margin-bottom: 8px;
                 }
 
@@ -844,13 +837,13 @@ const Project = () => {
                     height: 30px;
                     padding: 0;
                     border-radius: 8px;
-                    background: rgba(30, 4, 4, 0.6);
-                    border: 1px solid rgba(255, 60, 20, 0.22);
+                    background: rgba(10, 15, 30, 0.7);
+                    border: 1px solid rgba(120, 170, 255, 0.25);
                     transition: border-color 0.3s ease, transform 0.3s ease;
                 }
 
                 .carousel-card .project-tool:hover {
-                    border-color: rgba(255, 90, 40, 0.7);
+                    border-color: rgba(120, 200, 255, 0.8);
                     transform: translateY(-1px);
                 }
 
@@ -864,7 +857,7 @@ const Project = () => {
                 .carousel-card .project-tool-icon img {
                     width: 100%; height: 100%;
                     object-fit: contain;
-                    filter: brightness(0) invert(1);
+                    filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(120, 200, 255, 0.4));
                 }
 
                 .project-tool-more {
@@ -875,9 +868,9 @@ const Project = () => {
                     font-family: "Orbitron", sans-serif;
                     font-size: 10px;
                     font-weight: 700;
-                    color: #ffb89c;
-                    background: rgba(255, 60, 20, 0.15);
-                    border: 1px solid rgba(255, 90, 40, 0.4);
+                    color: #9ecfff;
+                    background: rgba(60, 140, 255, 0.15);
+                    border: 1px solid rgba(120, 170, 255, 0.4);
                     border-radius: 8px;
                 }
 
@@ -885,7 +878,7 @@ const Project = () => {
                     display: inline-flex;
                     align-items: center;
                     gap: 8px;
-                    margin-top: 12px;
+                    margin-top: 14px;
                     padding: 0;
                     background: transparent;
                     border: none;
@@ -895,72 +888,104 @@ const Project = () => {
                     font-weight: 600;
                     letter-spacing: 0.15em;
                     text-transform: uppercase;
-                    color: #ff8c42;
+                    color: #4cc9f0;
                     transition: color 0.3s ease, gap 0.3s ease;
                 }
 
-                .carousel-card .project-see-more:hover {
+                .carousel-card .project-see-more:hover { color: #ffffff; gap: 12px; }
+
+                .carousel-card .project-see-more svg { transition: transform 0.3s ease; }
+                .carousel-card .project-see-more:hover svg { transform: translateX(3px); }
+
+                /* ---------- Coming soon card ---------- */
+                .carousel-card--coming {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: default;
+                    background: linear-gradient(135deg, rgba(10, 15, 30, 0.75) 0%, rgba(4, 6, 15, 0.85) 100%);
+                    border: 1px dashed rgba(120, 170, 255, 0.35);
+                    clip-path: polygon(
+                        0 0,
+                        calc(100% - 26px) 0,
+                        100% 26px,
+                        100% 100%,
+                        26px 100%,
+                        0 calc(100% - 26px)
+                    );
+                }
+
+                .carousel-card--coming .project-coming-inner { padding: 30px; text-align: center; }
+
+                .carousel-card--coming .project-coming-dot {
+                    width: 10px; height: 10px;
+                    border-radius: 50%;
+                    margin: 0 auto 20px;
+                    background: #4cc9f0;
+                    box-shadow: 0 0 20px rgba(76, 201, 240, 0.95);
+                    animation: dotPulse 1.6s ease-in-out infinite;
+                }
+
+                .carousel-card--coming .project-coming-label {
+                    font-family: "Orbitron", sans-serif;
+                    font-size: 10px;
+                    letter-spacing: 0.2em;
+                    text-transform: uppercase;
+                    color: rgba(180, 210, 255, 0.45);
+                    margin-bottom: 16px;
+                }
+
+                .carousel-card--coming .project-coming-title {
+                    margin: 0 0 12px;
+                    font-family: "Orbitron", sans-serif;
+                    font-size: 1.1rem;
+                    font-weight: 600;
                     color: #ffffff;
-                    gap: 12px;
+                    text-shadow: 0 0 20px rgba(120, 180, 255, 0.35);
                 }
 
-                .carousel-card .project-see-more svg {
-                    transition: transform 0.3s ease;
+                .carousel-card--coming .project-coming-text {
+                    margin: 0;
+                    font-family: "Rajdhani", sans-serif;
+                    font-size: 0.9rem;
+                    line-height: 1.6;
+                    color: rgba(220, 235, 255, 0.55);
                 }
 
-                .carousel-card .project-see-more:hover svg {
-                    transform: translateX(3px);
-                }
-
-                /* =========================================================
-                   CONTROLS
-                   ========================================================= */
-
+                /* ---------- Controls ---------- */
                 .carousel-arrow {
                     position: absolute;
                     top: 50%;
                     transform: translateY(-50%);
                     z-index: 20;
-
-                    width: 54px;
-                    height: 54px;
-
+                    width: 54px; height: 54px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-
                     border-radius: 50%;
-                    border: 1px solid rgba(255, 120, 60, 0.5);
-                    background: linear-gradient(135deg, rgba(40, 5, 5, 0.9) 0%, rgba(12, 2, 2, 0.95) 100%);
-
-                    color: #ff8c42;
+                    border: 1px solid rgba(120, 180, 255, 0.5);
+                    background: linear-gradient(135deg, rgba(10, 15, 30, 0.9) 0%, rgba(5, 8, 18, 0.95) 100%);
+                    color: #4cc9f0;
                     font-family: "Orbitron", sans-serif;
                     font-size: 26px;
                     line-height: 1;
-
                     cursor: pointer;
                     backdrop-filter: blur(10px);
-
                     box-shadow:
-                        inset 0 0 20px rgba(255, 60, 20, 0.12),
-                        0 0 20px rgba(255, 60, 20, 0.15);
-
+                        inset 0 0 20px rgba(80, 160, 255, 0.15),
+                        0 0 20px rgba(80, 160, 255, 0.2);
                     transition: all 0.3s ease;
                 }
 
                 .carousel-arrow:hover:not(:disabled) {
-                    border-color: rgba(255, 140, 80, 0.95);
+                    border-color: rgba(120, 200, 255, 0.95);
                     box-shadow:
-                        inset 0 0 30px rgba(255, 80, 32, 0.25),
-                        0 0 30px rgba(255, 80, 32, 0.55);
+                        inset 0 0 30px rgba(80, 160, 255, 0.3),
+                        0 0 40px rgba(80, 180, 255, 0.6);
                     transform: translateY(-50%) scale(1.08);
                 }
 
-                .carousel-arrow:disabled {
-                    opacity: 0.25;
-                    cursor: not-allowed;
-                }
-
+                .carousel-arrow:disabled { opacity: 0.25; cursor: not-allowed; }
                 .carousel-arrow-prev { left: -10px; }
                 .carousel-arrow-next { right: -10px; }
 
@@ -978,26 +1003,25 @@ const Project = () => {
                 }
 
                 .carousel-dot {
-                    width: 8px;
-                    height: 8px;
+                    width: 8px; height: 8px;
                     padding: 0;
                     border-radius: 999px;
-                    border: 1px solid rgba(255, 120, 60, 0.4);
-                    background: rgba(255, 120, 60, 0.22);
+                    border: 1px solid rgba(120, 180, 255, 0.45);
+                    background: rgba(80, 160, 255, 0.22);
                     cursor: pointer;
                     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
                 }
 
                 .carousel-dot:hover {
-                    background: rgba(255, 140, 80, 0.55);
+                    background: rgba(120, 200, 255, 0.6);
                     transform: scale(1.2);
                 }
 
                 .carousel-dot.is-active {
                     width: 32px;
-                    background: linear-gradient(90deg, #ff5020, #ffb89c);
-                    border-color: rgba(255, 140, 80, 0.95);
-                    box-shadow: 0 0 16px rgba(255, 80, 32, 0.7);
+                    background: linear-gradient(90deg, #4cc9f0, #a78bfa);
+                    border-color: rgba(120, 200, 255, 0.95);
+                    box-shadow: 0 0 20px rgba(80, 180, 255, 0.85);
                 }
 
                 .carousel-hint {
@@ -1007,7 +1031,18 @@ const Project = () => {
                     font-size: 9px;
                     letter-spacing: 0.28em;
                     text-transform: uppercase;
-                    color: rgba(255, 220, 200, 0.35);
+                    color: rgba(180, 210, 255, 0.4);
+                }
+
+                /* ---------- Modal image full fit ---------- */
+                .project-modal-image {
+                    aspect-ratio: 16 / 9 !important;
+                }
+
+                .project-modal-image img {
+                    object-fit: contain !important;
+                    object-position: center center !important;
+                    background: #050202;
                 }
 
                 /* =========================================================
@@ -1019,7 +1054,6 @@ const Project = () => {
                     overflow: hidden;
                 }
 
-                /* Base layer: star field + nebula behind everything */
                 .project-stones {
                     position: absolute;
                     inset: 0;
@@ -1028,7 +1062,6 @@ const Project = () => {
                     overflow: hidden;
                 }
 
-                /* Distant star field */
                 .project-stones::before {
                     content: "";
                     position: absolute;
@@ -1057,7 +1090,6 @@ const Project = () => {
                     100% { opacity: 0.75; }
                 }
 
-                /* Soft red nebula glow top-left + violet bottom-right */
                 .project-stones::after {
                     content: "";
                     position: absolute;
@@ -1070,7 +1102,6 @@ const Project = () => {
                     opacity: 0.9;
                 }
 
-                /* Individual floating stones */
                 .stone {
                     position: absolute;
                     background:
@@ -1080,75 +1111,23 @@ const Project = () => {
                             rgba(60, 20, 15, 0.95) 35%,
                             rgba(18, 5, 5, 1) 75%
                         );
-
-                    /* Irregular rock silhouette */
                     border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
-
                     box-shadow:
                         inset -14px -14px 30px rgba(0, 0, 0, 0.85),
                         inset 12px 12px 24px rgba(255, 120, 60, 0.12),
                         0 0 50px rgba(255, 60, 20, 0.15),
                         0 0 100px rgba(255, 40, 10, 0.08);
-
                     filter: blur(0.5px);
                     opacity: 0.65;
-
                     animation: stoneDrift 40s ease-in-out infinite;
                 }
 
-                .stone-1 {
-                    width: 220px; height: 200px;
-                    top: 8%;
-                    left: 4%;
-                    animation-delay: 0s;
-                }
-
-                .stone-2 {
-                    width: 90px; height: 100px;
-                    top: 62%;
-                    left: 12%;
-                    border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%;
-                    animation-delay: -8s;
-                    opacity: 0.5;
-                }
-
-                .stone-3 {
-                    width: 140px; height: 130px;
-                    top: 20%;
-                    right: 8%;
-                    border-radius: 55% 45% 65% 35% / 40% 60% 40% 60%;
-                    animation-delay: -16s;
-                    opacity: 0.55;
-                }
-
-                .stone-4 {
-                    width: 260px; height: 240px;
-                    bottom: -6%;
-                    right: 20%;
-                    border-radius: 58% 42% 50% 50% / 55% 45% 55% 45%;
-                    animation-delay: -24s;
-                    opacity: 0.4;
-                    filter: blur(1.5px);
-                }
-
-                .stone-5 {
-                    width: 70px; height: 80px;
-                    top: 45%;
-                    right: 32%;
-                    border-radius: 40% 60% 55% 45% / 55% 45% 60% 40%;
-                    animation-delay: -12s;
-                    opacity: 0.45;
-                }
-
-                .stone-6 {
-                    width: 110px; height: 100px;
-                    bottom: 18%;
-                    left: 28%;
-                    border-radius: 62% 38% 45% 55% / 48% 52% 50% 50%;
-                    animation-delay: -30s;
-                    opacity: 0.35;
-                    filter: blur(1.5px);
-                }
+                .stone-1 { width: 220px; height: 200px; top: 8%;  left: 4%;   animation-delay: 0s; }
+                .stone-2 { width: 90px;  height: 100px; top: 62%; left: 12%;  animation-delay: -8s;  opacity: 0.5; border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
+                .stone-3 { width: 140px; height: 130px; top: 20%; right: 8%;  animation-delay: -16s; opacity: 0.55; border-radius: 55% 45% 65% 35% / 40% 60% 40% 60%; }
+                .stone-4 { width: 260px; height: 240px; bottom: -6%; right: 20%; animation-delay: -24s; opacity: 0.4; filter: blur(1.5px); border-radius: 58% 42% 50% 50% / 55% 45% 55% 45%; }
+                .stone-5 { width: 70px;  height: 80px;  top: 45%; right: 32%; animation-delay: -12s; opacity: 0.45; border-radius: 40% 60% 55% 45% / 55% 45% 60% 40%; }
+                .stone-6 { width: 110px; height: 100px; bottom: 18%; left: 28%; animation-delay: -30s; opacity: 0.35; filter: blur(1.5px); border-radius: 62% 38% 45% 55% / 48% 52% 50% 50%; }
 
                 @keyframes stoneDrift {
                     0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -1222,6 +1201,7 @@ const Project = () => {
                 .modal-section--solution .modal-section-body { border-left: 3px solid rgba(74, 222, 128, 0.55); }
                 .modal-section--expected .modal-section-body { border-left: 3px solid rgba(192, 132, 252, 0.55); }
 
+                /* ---------- Demo credentials ---------- */
                 .project-modal-demo {
                     margin-top: 26px;
                     padding: 18px;
@@ -1361,36 +1341,29 @@ const Project = () => {
                    ========================================================= */
 
                 @media (max-width: 1024px) {
-                    .carousel-card { flex: 0 0 340px; height: 480px; }
-                    .carousel-track { height: 600px; }
+                    .carousel-card { flex: 0 0 360px; height: 500px; }
+                    .carousel-track { height: 620px; }
                 }
 
                 @media (max-width: 768px) {
                     .carousel-track {
                         gap: 18px;
                         padding: 40px 0 30px;
-                        height: 540px;
+                        height: 560px;
                         cursor: default;
                     }
-
-                    .carousel-card { flex: 0 0 300px; height: 440px; }
-
-                    .carousel-arrow {
-                        width: 42px; height: 42px;
-                        font-size: 20px;
-                    }
+                    .carousel-card { flex: 0 0 320px; height: 460px; }
+                    .carousel-arrow { width: 42px; height: 42px; font-size: 20px; }
                     .carousel-arrow-prev { left: 4px; }
                     .carousel-arrow-next { right: 4px; }
-
                     .carousel-card .project-title { font-size: 0.92rem; }
                     .carousel-card .project-description { font-size: 0.88rem; }
                 }
 
                 @media (max-width: 640px) {
-                    .carousel-track { height: 520px; }
-                    .carousel-card { flex: 0 0 280px; height: 420px; }
+                    .carousel-track { height: 540px; }
+                    .carousel-card { flex: 0 0 300px; height: 440px; }
                     .carousel-arrow { display: none; }
-                    .carousel-dots { margin-top: 4px; }
                 }
 
                 @media (prefers-reduced-motion: reduce) {

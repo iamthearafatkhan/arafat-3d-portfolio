@@ -68,7 +68,7 @@ export const projects = [
     ],
     github: "https://github.com/iamthearafatkhan/dlr-pcvw",
     website: "https://acnegrad-ai.streamlit.app/",
-}
+},
    {
     title: "DataForge: Web-Based Data Cleaning, SQL & Analytics Platform",
     shortDescription: "A full-stack web platform where anyone can upload a CSV, Excel, or JSON file and clean it, impute missing values per column, visualize it, query it with SQL, build pivot tables, compute Excel-style formulas, and export the result.",

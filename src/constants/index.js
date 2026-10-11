@@ -60,9 +60,9 @@ export const projects = [
     tags: ["Few-Shot Learning", "Medical Imaging", "Deep Learning", "Computer Vision", "PyTorch", "Python"],
     tools: [
         { name: "Python", icon: "/images/tools/python.svg" },
-        { name: "PyTorch", icon: "/images/tools/pytorch.svg" },
+        { name: "PyTorch", icon: "/images/tools/PyTorch.svg" },
         { name: "EfficientNet-B0", icon: "/images/tools/efficientnet.svg" },
-        { name: "Scikit-Learn", icon: "/images/tools/scikitlearn.svg" },
+        { name: "Scikit-Learn", icon: "/images/tools/scikit-learn.svg" },
         { name: "NumPy", icon: "/images/tools/numpy.svg" },
         { name: "CUDA", icon: "/images/tools/cuda.svg" },
     ],
@@ -87,8 +87,8 @@ export const projects = [
     tools: [
         { name: "Flask", icon: "/images/tools/flask.svg" },
         { name: "Python", icon: "/images/tools/python.svg" },
-        { name: "pandas", icon: "/images/tools/pandas.svg" },
-        { name: "scikit-learn", icon: "/images/tools/scikitlearn.svg" },
+        { name: "pandas", icon: "/images/tools/Pandas.svg" },
+        { name: "scikit-learn", icon: "/images/tools/scikit-learn.svg" },
         { name: "DuckDB", icon: "/images/tools/duckdb.svg" },
         { name: "Plotly", icon: "/images/tools/plotly.svg" },
         { name: "PyArrow", icon: "/images/tools/pyarrow.svg" },

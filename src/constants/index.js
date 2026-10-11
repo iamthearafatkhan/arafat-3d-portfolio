@@ -44,21 +44,31 @@ export const counterItems = [
 
 export const projects = [
     {
-        title: "DLR-PCVW: A Lesion-Aware Distribution-Weighted Framework for Few-Shot Dermatological Severity",
-        shortDescription: "An acne severity model using distribution-aware learning on top of an EfficientNet-B0 backbone.",
-        longDescription: "DLR-PCVW is a framework for few-shot dermatological severity scoring. It combines a lightweight EfficientNet-B0 backbone with a two-head regressor that predicts both the mean severity score and its variance. The variance is used to weight the loss during training, so the model learns to trust confident samples more and down-weight ambiguous lesions. The pipeline includes custom preprocessing, augmentation tuned for dermatological images, and a Streamlit demo for single-image inference.",
-        image: "/images/project1.png",
-        year: "2026",
-        tags: ["Deep Learning", "Computer Vision", "Healthcare"],
-        tools: [
-            { name: "PyTorch", icon: "/images/tools/PyTorch.svg" },
-            { name: "NumPy", icon: "/images/tools/numpy.svg" },
-            { name: "OpenCV", icon: "/images/tools/OpenCV.svg" },
-            { name: "EfficientNet-B0", icon: "/images/tools/model.svg" },
-        ],
-        github: "https://github.com/iamthearafatkhan/DLR-PCVW-Acne-severity-classifier-using-few-shot",
-        website: "https://acnegrad-ai.streamlit.app/",
+    title: "DLR-PCVW: A Lesion-Aware Distribution-Weighted Framework for Few-Shot Dermatological Severity Assessment",
+    shortDescription: "A novel few-shot learning framework designed for dermatological severity assessment (such as acne grading) under limited-data conditions, utilizing distribution-aware prototype construction, self-conditional FiLM calibration, and multi-head ordinal consistency learning.",
+    longDescription: "DLR-PCVW is a specialized few-shot learning framework developed to tackle the challenges of fine-grained medical image classification when annotated data is scarce[cite: 12]. The pipeline processes facial or skin images using an EfficientNet-B0 backbone feature extractor[cite: 25, 26]. It incorporates a self-conditional Feature-wise Linear Modulation (FiLM) module for adaptive channel-wise feature recalibration[cite: 25, 37], followed by a sigmoid-based lesion response weighting mechanism to emphasize clinically significant regions like lesions, spread, and density[cite: 25, 26, 38]. Unlike conventional prototype-based methods that rely strictly on simple feature averaging, the framework constructs distribution-aware class prototypes by jointly modeling weighted mean and variance representations combined with learnable Per-Channel Variance Weighting (PCVW)[cite: 12, 25, 28]. To maintain ordinal relationships between adjacent severity grades, it leverages Gaussian Label Distribution Learning (LDL) and multi-head consistency regularization[cite: 26, 33, 36]. The framework was rigorously evaluated using episodic validation across multiple few-shot settings on benchmarks like Acne04, AGC, Mendeley, and ISIC datasets[cite: 12, 16, 48].",
+    problem: "Dermatological severity assessment is clinically vital yet highly challenging due to fine-grained visual differences between adjacent grades, high intra-class variation, and the heavy reliance of conventional deep learning models on large-scale annotated datasets[cite: 14, 15]. In medical imaging, acquiring expert labels is costly, time-consuming, and constrained by privacy regulations[cite: 14, 15]. Standard few-shot learning techniques utilize simple mean-based prototype averaging, failing to capture critical distribution characteristics such as lesion spread, spatial irregularity, and density, while completely ignoring ordinal relationships among severity classes[cite: 15, 20].",
+    solution: "DLR-PCVW solves this end-to-end within an episodic metric-learning paradigm[cite: 25]. First, EfficientNet-B0 extracts hierarchical feature maps which are calibrated via self-conditional FiLM[cite: 25, 26, 37]. Second, a sigmoid-based lesion scorer highlights localized lesion patterns[cite: 25, 26, 38]. Third, distribution pooling combines weighted mean (intensity) and weighted variance (spread) vectors via the Per-Channel Variance Weighting (PCVW) mechanism[cite: 25, 28, 40]. Fourth, prototypes are stabilized using Exponential Moving Average (EMA) and semantic adjustments[cite: 25, 29, 31]. Fifth, an ordinal-aware multi-head consistency learning objective with Gaussian Label Distribution Learning (LDL) is enforced to ensure smooth transitions between neighboring severity levels[cite: 26, 33, 36]. Sixth, classification is finalized using temperature-scaled cosine similarity matching[cite: 20, 32].",
+    expected: "A robust, annotation-efficient alternative for dermatological severity grading that achieves superior accuracy under low-data constraints (outperforming strong baselines by up to 10.10 percentage points on the Acne04 dataset)[cite: 12]. The architecture provides stable convergence, cross-domain generalization across independent clinical repositories (AGC, Mendeley, ISIC), and interpretable visual outputs like lesion-attention heatmaps and activation overlays for clinical decision-support[cite: 12, 16, 69, 70].",
+    demo: {
+        notice: "Research prototype with an interactive prediction interface supporting dynamic K-shot selection, ensemble inference, and lesion-attention visualizations[cite: 73, 74].",
+        accounts: [],
+        tip: "Explore multi-shot configurations (1-shot, 3-shot, 5-shot, 10-shot) and inspect prototype similarity breakdowns alongside automated lesion-attention heatmaps[cite: 12, 73, 74].",
     },
+    image: "/images/dlr-pcvw.png",
+    year: "2026",
+    tags: ["Few-Shot Learning", "Medical Imaging", "Deep Learning", "Computer Vision", "PyTorch", "Python"],
+    tools: [
+        { name: "Python", icon: "/images/tools/python.svg" },
+        { name: "PyTorch", icon: "/images/tools/pytorch.svg" },
+        { name: "EfficientNet-B0", icon: "/images/tools/efficientnet.svg" },
+        { name: "Scikit-Learn", icon: "/images/tools/scikitlearn.svg" },
+        { name: "NumPy", icon: "/images/tools/numpy.svg" },
+        { name: "CUDA", icon: "/images/tools/cuda.svg" },
+    ],
+    github: "https://github.com/iamthearafatkhan/dlr-pcvw",
+    website: "https://acnegrad-ai.streamlit.app/",
+}
    {
     title: "DataForge: Web-Based Data Cleaning, SQL & Analytics Platform",
     shortDescription: "A full-stack web platform where anyone can upload a CSV, Excel, or JSON file and clean it, impute missing values per column, visualize it, query it with SQL, build pivot tables, compute Excel-style formulas, and export the result.",

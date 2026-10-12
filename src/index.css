@@ -503,7 +503,7 @@ section {
 }
 
 
-/* ---------- HERO LAYOUT — balanced for HR reading ───────── */
+/* ---------- HERO LAYOUT — fixed alignment so image block starts near top ───────── */
 
 .hero-layout {
     position: relative;
@@ -515,13 +515,13 @@ section {
 
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(420px, 0.95fr);
-    align-items: center;
+    /* FIXED: changed from align-items: center to align-items: start to remove the huge gap above the image frame */
+    align-items: start;
 
-    /* wider gap so the two columns don't crowd each other on laptops */
     gap: clamp(40px, 5vw, 72px);
 
-    /* REDUCED TOP PADDING TO CLOSE THE GAP UNDER NAVBAR */
-    padding: 95px 6vw 60px;
+    /* Controlled top padding so navbar never overlaps content */
+    padding: 105px 6vw 60px;
 }
 
 .hero-content {
@@ -885,9 +885,8 @@ section {
     position: relative;
     width: 100%;
 
-    /* frame height reduced — image fills more, no floating feel */
-    height: min(600px, 66vh);
-    min-height: 480px;
+    height: min(640px, 70vh);
+    min-height: 500px;
 
     display: flex;
     align-items: center;
@@ -982,10 +981,7 @@ section {
 
 .hero-human-image {
     position: absolute;
-
-    /* lifted 6% — head sits higher, aligns with ARAFAT baseline */
     bottom: 6%;
-
     left: 50%;
     transform: translateX(-50%);
     width: min(650px, 92%);
@@ -1022,8 +1018,6 @@ section {
 
 .hero-robo-image {
     position: absolute;
-
-    /* matches the human image lift of 6% */
     inset: 0 0 6% 0;
 
     width: 100%;
@@ -1508,13 +1502,13 @@ section {
 
 
 /* =========================================================
-   ABOUT
+   ABOUT — UNIFORM SECTION SPACING
    ========================================================= */
 
 .about-section {
     position: relative;
     width: 100%;
-    padding: 60px 0 0;
+    padding: 100px 0;
     overflow: hidden;
 }
 
@@ -1741,13 +1735,13 @@ section {
 
 
 /* =========================================================
-   PROJECTS
+   PROJECTS — UNIFORM SECTION SPACING
    ========================================================= */
 
 .projects-section {
     position: relative;
     width: 100%;
-    padding: 120px 0 60px;
+    padding: 100px 0;
     overflow: hidden;
 }
 
@@ -2456,13 +2450,13 @@ section {
 
 
 /* =========================================================
-   EDUCATION
+   EDUCATION — UNIFORM SECTION SPACING
    ========================================================= */
 
 .education-section {
     position: relative;
     width: 100%;
-    padding: 120px 0 40px;
+    padding: 100px 0;
     overflow: hidden;
 }
 
@@ -2704,13 +2698,13 @@ section {
 
 
 /* =========================================================
-   SKILLS
+   SKILLS — UNIFORM SECTION SPACING
    ========================================================= */
 
 .skills-section {
     position: relative;
     width: 100%;
-    padding: 120px 0 60px;
+    padding: 100px 0;
     overflow: hidden;
 }
 
@@ -3144,13 +3138,13 @@ section {
 
 
 /* =========================================================
-   CERTIFICATES
+   CERTIFICATES — UNIFORM SECTION SPACING
    ========================================================= */
 
 .certs-section {
     position: relative;
     width: 100%;
-    padding: 120px 0 60px;
+    padding: 100px 0;
     overflow: hidden;
 }
 
@@ -3515,13 +3509,13 @@ section {
 
 
 /* =========================================================
-   FOOTER
+   FOOTER — UNIFORM SECTION SPACING
    ========================================================= */
 
 .footer-section {
     position: relative;
     width: 100%;
-    margin-top: 120px;
+    margin-top: 0;
     padding: 100px 6vw 40px;
     overflow: hidden;
 
@@ -4107,16 +4101,16 @@ section {
     }
 
     .hero-visual {
-        height: 620px;
-        min-height: 500px;
+        height: 520px;
+        min-height: 420px;
         max-width: 700px;
         margin: 0 auto;
     }
 
     .hero-name-index { display: none; }
 
-    .counter-section { padding: 60px 0 35px; }
-    .about-section { padding: 60px 0 40px; }
+    .counter-section { padding: 40px 0; }
+    .about-section { padding: 100px 0; }
 
     .about-layout {
         grid-template-columns: 1fr;
@@ -4127,7 +4121,7 @@ section {
 
     .education-section,
     .skills-section,
-    .certs-section { padding: 90px 0 40px; }
+    .certs-section { padding: 100px 0; }
 
     .footer-layout { gap: 24px; }
 }
@@ -4145,7 +4139,7 @@ section {
     .hero-title-second { font-size: 1.35rem; }
     .hero-description { font-size: 1rem; max-width: 500px; }
 
-    .hero-visual { height: 440px; min-height: 380px; }
+    .hero-visual { height: 420px; min-height: 360px; }
 
     .hero-human-image,
     .hero-robo-image { width: 105%; height: 92%; }
@@ -4192,18 +4186,23 @@ section {
     .hero-name { font-size: 3rem; }
     .hero-title { font-size: 1.45rem; }
     .hero-title-second { font-size: 1.15rem; }
-    .hero-visual { height: 420px; }
+    .hero-visual { height: 380px; }
     .hero-image-hud { display: none; }
     .visual-label { font-size: 7px; }
     .cyber-button { width: 200px; }
     .hero-cv-inner { width: 200px; }
 
-    .counter-section { padding: 50px 0 30px; }
+    .counter-section { padding: 30px 0; }
     .counter-grid { grid-template-columns: 1fr; gap: 14px; }
     .counter-card { padding: 24px 22px; }
     .counter-number { font-size: 2.4rem; }
 
-    .about-section { padding: 40px 0 0; }
+    .about-section,
+    .projects-section,
+    .education-section,
+    .skills-section,
+    .certs-section { padding: 70px 0; }
+
     .about-layout { padding: 0 20px; gap: 40px; }
     .about-name {
         margin-bottom: 18px;
@@ -4216,7 +4215,6 @@ section {
     .about-card { padding: 18px 18px; }
     .about-card-value { font-size: 1rem; }
 
-    .projects-section { padding: 70px 0 30px; }
     .projects-layout { padding: 0 20px; }
     .projects-grid { grid-template-columns: 1fr; gap: 24px; }
     .projects-head { margin-bottom: 40px; }
@@ -4232,10 +4230,6 @@ section {
     .project-modal-description { font-size: 1rem; line-height: 1.65; }
     .project-modal-actions { flex-direction: column; }
     .project-modal-btn { width: 100%; justify-content: center; }
-
-    .education-section,
-    .skills-section,
-    .certs-section { padding: 70px 0 30px; }
 
     .education-layout,
     .skills-layout,
@@ -4267,7 +4261,7 @@ section {
     .cert-modal { max-height: 94vh; }
     .cert-modal-body { padding: 20px 22px 24px; }
 
-    .footer-section { padding: 70px 20px 30px; margin-top: 80px; }
+    .footer-section { padding: 70px 20px 30px; }
     .footer-name-text { font-size: clamp(2rem, 12vw, 3rem); }
     .footer-tagline {
         font-size: 0.85rem;

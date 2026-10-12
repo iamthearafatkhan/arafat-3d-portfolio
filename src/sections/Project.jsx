@@ -212,10 +212,10 @@ const ProjectModal = ({ project, onClose }) => {
 };
 
 /* =========================================================
-   PROJECT CARD — 3D tilt
+   PROJECT CARD
    ========================================================= */
 
-const ProjectCard = ({ project, index, onOpen, isDragging }) => {
+const ProjectCard = ({ project, index, onOpen, isDragging, dragStateRef }) => {
     const cardRef = useRef(null);
 
     const handleMouseMove = (e) => {
@@ -239,15 +239,20 @@ const ProjectCard = ({ project, index, onOpen, isDragging }) => {
         el.style.setProperty("--tilt-y", "0deg");
     };
 
+    /* ✅ CORRECTED: click checks ref, not state. Ref updates sync, so a drag
+       suppresses the modal instead of opening it. */
+    const handleClick = () => {
+        if (dragStateRef.current.moved) return;
+        onOpen(project);
+    };
+
     return (
         <article
             ref={cardRef}
             className="project-card-3d carousel-card"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onClick={() => {
-                if (!isDragging) onOpen(project);
-            }}
+            onClick={handleClick}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
@@ -319,7 +324,14 @@ const ProjectCarousel = ({ onOpenProject }) => {
     const trackRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
-    const dragState = useRef({ startX: 0, scrollStart: 0, moved: false });
+
+    /* ✅ dragState uses a ref so updates are synchronous */
+    const dragState = useRef({
+        startX: 0,
+        scrollStart: 0,
+        moved: false,
+        pointerId: null,
+    });
 
     /* Scroll a specific card to the left edge */
     const scrollToIndex = useCallback((i) => {
@@ -385,37 +397,55 @@ const ProjectCarousel = ({ onOpenProject }) => {
         };
     }, []);
 
-    /* Drag-to-scroll */
-    const onMouseDown = (e) => {
+    /* ✅ Pointer-based drag — works on mouse AND touch.
+       Uses a ref for the "moved" flag so the click handler sees it. */
+    const onPointerDown = (e) => {
         const track = trackRef.current;
         if (!track) return;
+
+        /* Only left mouse button for mouse input */
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+
         dragState.current = {
-            startX: e.pageX,
+            startX: e.clientX,
             scrollStart: track.scrollLeft,
             moved: false,
+            pointerId: e.pointerId,
         };
         setIsDragging(false);
     };
 
-    const onMouseMove = (e) => {
+    const onPointerMove = (e) => {
         const track = trackRef.current;
-        if (!track || e.buttons !== 1) return;
-        const dx = e.pageX - dragState.current.startX;
-        if (Math.abs(dx) > 4 && !dragState.current.moved) {
+        if (!track) return;
+        if (dragState.current.pointerId !== e.pointerId) return;
+
+        const dx = e.clientX - dragState.current.startX;
+
+        /* ✅ 8px threshold — forgiving for shaky hands */
+        if (Math.abs(dx) > 8 && !dragState.current.moved) {
             dragState.current.moved = true;
             setIsDragging(true);
         }
+
         if (dragState.current.moved) {
             track.scrollLeft = dragState.current.scrollStart - dx;
         }
     };
 
-    const onMouseUp = () => {
+    const onPointerUp = (e) => {
+        if (dragState.current.pointerId !== e.pointerId) return;
+        dragState.current.pointerId = null;
         setIsDragging(false);
-        setTimeout(() => { dragState.current.moved = false; }, 0);
+
+        /* Reset moved on the NEXT tick so click (which fires right after)
+           still sees moved === true and skips the modal. */
+        setTimeout(() => {
+            dragState.current.moved = false;
+        }, 0);
     };
 
-    /* Vertical wheel → horizontal scroll (non-passive listener) */
+    /* Vertical wheel → horizontal scroll */
     useEffect(() => {
         const track = trackRef.current;
         if (!track) return;
@@ -446,10 +476,11 @@ const ProjectCarousel = ({ onOpenProject }) => {
             <div
                 ref={trackRef}
                 className={`carousel-track ${isDragging ? "is-dragging" : ""}`}
-                onMouseDown={onMouseDown}
-                onMouseMove={onMouseMove}
-                onMouseUp={onMouseUp}
-                onMouseLeave={onMouseUp}
+                onPointerDown={onPointerDown}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
+                onPointerCancel={onPointerUp}
+                onPointerLeave={onPointerUp}
             >
                 {projects.map((project, index) => (
                     <ProjectCard
@@ -458,6 +489,7 @@ const ProjectCarousel = ({ onOpenProject }) => {
                         index={index}
                         onOpen={onOpenProject}
                         isDragging={isDragging}
+                        dragStateRef={dragState}
                     />
                 ))}
 
@@ -543,7 +575,6 @@ const Project = () => {
 
                 .carousel-wrapper { position: relative; width: 100%; }
 
-                /* ---------- Track ---------- */
                 .carousel-track {
                     position: relative;
                     display: flex;
@@ -553,8 +584,10 @@ const Project = () => {
                     overflow-x: auto;
                     overflow-y: hidden;
 
-                    scroll-snap-type: x mandatory;
+                    /* ✅ proximity instead of mandatory — smoother, less snappy */
+                    scroll-snap-type: x proximity;
                     scroll-behavior: smooth;
+                    overscroll-behavior-x: contain;
 
                     scroll-padding-left: max(24px, 4vw);
                     scroll-padding-right: max(24px, 4vw);
@@ -568,6 +601,12 @@ const Project = () => {
 
                     perspective: 1600px;
                     perspective-origin: 50% 50%;
+
+                    /* Prevent text selection during drag */
+                    user-select: none;
+                    -webkit-user-select: none;
+
+                    touch-action: pan-x;   /* allow horizontal touch scroll */
                 }
 
                 .carousel-track::-webkit-scrollbar { display: none; }
@@ -578,19 +617,18 @@ const Project = () => {
                     scroll-snap-type: none;
                 }
 
-                /* ---------- Card shell ---------- */
                 .carousel-card {
                     flex: 0 0 400px;
                     height: 520px;
                     scroll-snap-align: start;
-                    scroll-snap-stop: always;
+                    scroll-snap-stop: normal;
                     position: relative;
                     cursor: pointer;
                     user-select: none;
                     -webkit-user-drag: none;
                 }
 
-                /* The 3D inner is the actual visible card */
+                /* ---------- 3D inner ---------- */
                 .project-card-3d .project-card-inner {
                     position: relative;
                     width: 100%;
@@ -600,7 +638,6 @@ const Project = () => {
                     flex-direction: column;
                     overflow: hidden;
 
-                    /* Futuristic corner cut */
                     clip-path: polygon(
                         0 0,
                         calc(100% - 26px) 0,
@@ -635,7 +672,6 @@ const Project = () => {
                         box-shadow 0.35s ease;
                 }
 
-                /* Deep blue hover glow */
                 .carousel-card:hover .project-card-inner {
                     border-color: rgba(120, 190, 255, 0.85);
                     box-shadow:
@@ -644,7 +680,6 @@ const Project = () => {
                         0 0 120px rgba(60, 140, 255, 0.25);
                 }
 
-                /* Cyan corner accent */
                 .carousel-card .project-card-inner::before {
                     content: "";
                     position: absolute;
@@ -660,7 +695,6 @@ const Project = () => {
                     z-index: 3;
                 }
 
-                /* Cyan bottom accent line */
                 .carousel-card .project-card-inner::after {
                     content: "";
                     position: absolute;
@@ -733,7 +767,6 @@ const Project = () => {
                     box-shadow: 0 0 12px rgba(80, 160, 255, 0.35);
                 }
 
-                /* Cyan glare */
                 .carousel-card .project-card-glare {
                     position: absolute;
                     inset: 0;
@@ -1034,15 +1067,31 @@ const Project = () => {
                     color: rgba(180, 210, 255, 0.4);
                 }
 
-                /* ---------- Modal image full fit ---------- */
+                /* =========================================================
+                   MODAL IMAGE — full natural size
+                   ========================================================= */
+
                 .project-modal-image {
-                    aspect-ratio: 16 / 9 !important;
+                    position: relative;
+                    width: 100%;
+                    aspect-ratio: auto !important;   /* ✅ remove aspect lock */
+                    max-height: 55vh !important;
+                    display: flex !important;
+                    align-items: center;
+                    justify-content: center;
+                    background: #050202;
+                    border-bottom: 1px solid rgba(255, 60, 20, 0.25);
+                    overflow: hidden;
                 }
 
                 .project-modal-image img {
+                    width: auto !important;          /* ✅ natural size */
+                    height: auto !important;
+                    max-width: 100% !important;
+                    max-height: 55vh !important;
                     object-fit: contain !important;
                     object-position: center center !important;
-                    background: #050202;
+                    display: block !important;
                 }
 
                 /* =========================================================
@@ -1380,7 +1429,6 @@ const Project = () => {
 
             <section id="work" ref={sectionRef} className="projects-section">
 
-                {/* ---------- Stone-in-space background ---------- */}
                 <div className="project-stones" aria-hidden="true">
                     <span className="stone stone-1" />
                     <span className="stone stone-2" />

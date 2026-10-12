@@ -517,11 +517,11 @@ section {
     grid-template-columns: minmax(0, 1fr) minmax(420px, 0.95fr);
     align-items: center;
 
-    /* 🔧 wider gap so the two columns don't crowd each other on laptops */
+    /* wider gap so the two columns don't crowd each other on laptops */
     gap: clamp(40px, 5vw, 72px);
 
-    /* 🔧 extra top padding so navbar never overlaps content */
-    padding: 130px 6vw 90px;
+    /* REDUCED TOP PADDING TO CLOSE THE GAP UNDER NAVBAR */
+    padding: 95px 6vw 60px;
 }
 
 .hero-content {
@@ -885,7 +885,7 @@ section {
     position: relative;
     width: 100%;
 
-    /* 🔧 frame height reduced — image fills more, no floating feel */
+    /* frame height reduced — image fills more, no floating feel */
     height: min(600px, 66vh);
     min-height: 480px;
 
@@ -983,7 +983,7 @@ section {
 .hero-human-image {
     position: absolute;
 
-    /* 🔧 lifted 6% — head sits higher, aligns with ARAFAT baseline */
+    /* lifted 6% — head sits higher, aligns with ARAFAT baseline */
     bottom: 6%;
 
     left: 50%;
@@ -1023,7 +1023,7 @@ section {
 .hero-robo-image {
     position: absolute;
 
-    /* 🔧 matches the human image lift of 6% */
+    /* matches the human image lift of 6% */
     inset: 0 0 6% 0;
 
     width: 100%;

@@ -18,6 +18,9 @@ const Education = () => {
                 /* =========================================================
                    GALAXY BACKGROUND CSS (Shared across sections)
                    ========================================================= */
+                .education-section {
+                    background-color: #000000 !important; /* Pure Matte Black */
+                }
                 .galaxy-bg {
                     position: absolute;
                     inset: 0;
@@ -42,7 +45,6 @@ const Education = () => {
                     background-size: 500px 500px;
                     opacity: 1;
                     will-change: background-position;
-                    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
                 }
                 .starfield-back { animation: starfieldMove 60s linear infinite; }
                 .starfield-front {
@@ -55,33 +57,32 @@ const Education = () => {
                         radial-gradient(4px 4px at 80% 80%, #fff, transparent 60%),
                         radial-gradient(5px 5px at 10% 90%, #fff, transparent 60%),
                         radial-gradient(5px 5px at 90% 10%, #fff, transparent 60%);
-                    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 1));
                 }
                 @keyframes starfieldMove { 0% { background-position: 0 0; } 100% { background-position: -500px 500px; } }
                 @keyframes starfieldMoveReverse { 0% { background-position: 0 0; } 100% { background-position: 350px -350px; } }
                 .galaxy-bg::after {
                     content: ""; position: absolute; inset: -20%;
                     background:
-                        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.10) 0%, transparent 40%),
-                        radial-gradient(circle at 82% 30%, rgba(255, 255, 255, 0.06) 0%, transparent 40%),
-                        radial-gradient(circle at 25% 78%, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
-                        radial-gradient(circle at 75% 85%, rgba(255, 255, 255, 0.06) 0%, transparent 45%),
-                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+                        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 82% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
+                        radial-gradient(circle at 25% 78%, rgba(255, 255, 255, 0.04) 0%, transparent 45%),
+                        radial-gradient(circle at 75% 85%, rgba(255, 255, 255, 0.03) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 60%);
                     filter: blur(60px);
                     animation: nebulaDrift 30s ease-in-out infinite alternate;
                 }
                 @keyframes nebulaDrift { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-3%, -2%) scale(1.04); } 100% { transform: translate(2%, 3%) scale(1.02); } }
                 .galaxy-band {
                     position: absolute; top: 40%; left: -20%; width: 140%; height: 60%; pointer-events: none;
-                    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 65%);
+                    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 30%, transparent 65%);
                     filter: blur(50px); transform: rotate(-12deg);
                     animation: bandPulse 12s ease-in-out infinite alternate;
                 }
                 @keyframes bandPulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
-                .galaxy-orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(40px); mix-blend-mode: screen; }
-                .orb-1 { width: 400px; height: 400px; top: -80px; left: -100px; background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 65%); animation: orbFloat 26s ease-in-out infinite alternate; }
-                .orb-2 { width: 500px; height: 500px; bottom: -150px; right: -120px; background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, transparent 65%); animation: orbFloat 32s ease-in-out infinite alternate-reverse; }
-                .orb-3 { width: 320px; height: 320px; top: 40%; right: 30%; background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 65%); animation: orbFloat 38s ease-in-out infinite alternate; }
+                .galaxy-orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(40px); }
+                .orb-1 { width: 400px; height: 400px; top: -80px; left: -100px; background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 65%); animation: orbFloat 26s ease-in-out infinite alternate; }
+                .orb-2 { width: 500px; height: 500px; bottom: -150px; right: -120px; background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 65%); animation: orbFloat 32s ease-in-out infinite alternate-reverse; }
+                .orb-3 { width: 320px; height: 320px; top: 40%; right: 30%; background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 65%); animation: orbFloat 38s ease-in-out infinite alternate; }
                 @keyframes orbFloat { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, -40px); } }
                 @media (prefers-reduced-motion: reduce) {
                     .starfield-layer, .galaxy-bg::after, .galaxy-band, .galaxy-orb { animation: none; }

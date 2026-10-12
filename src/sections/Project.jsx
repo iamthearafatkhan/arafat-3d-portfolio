@@ -239,8 +239,6 @@ const ProjectCard = ({ project, index, onOpen, isDragging, dragStateRef }) => {
         el.style.setProperty("--tilt-y", "0deg");
     };
 
-    /* ✅ CORRECTED: click checks ref, not state. Ref updates sync, so a drag
-       suppresses the modal instead of opening it. */
     const handleClick = () => {
         if (dragStateRef.current.moved) return;
         onOpen(project);
@@ -325,7 +323,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
 
-    /* ✅ dragState uses a ref so updates are synchronous */
     const dragState = useRef({
         startX: 0,
         scrollStart: 0,
@@ -333,7 +330,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
         pointerId: null,
     });
 
-    /* Scroll a specific card to the left edge */
     const scrollToIndex = useCallback((i) => {
         const track = trackRef.current;
         if (!track) return;
@@ -397,13 +393,10 @@ const ProjectCarousel = ({ onOpenProject }) => {
         };
     }, []);
 
-    /* ✅ Pointer-based drag — works on mouse AND touch.
-       Uses a ref for the "moved" flag so the click handler sees it. */
+    /* Pointer-based drag — mouse + touch */
     const onPointerDown = (e) => {
         const track = trackRef.current;
         if (!track) return;
-
-        /* Only left mouse button for mouse input */
         if (e.pointerType === "mouse" && e.button !== 0) return;
 
         dragState.current = {
@@ -422,7 +415,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
 
         const dx = e.clientX - dragState.current.startX;
 
-        /* ✅ 8px threshold — forgiving for shaky hands */
         if (Math.abs(dx) > 8 && !dragState.current.moved) {
             dragState.current.moved = true;
             setIsDragging(true);
@@ -438,23 +430,29 @@ const ProjectCarousel = ({ onOpenProject }) => {
         dragState.current.pointerId = null;
         setIsDragging(false);
 
-        /* Reset moved on the NEXT tick so click (which fires right after)
-           still sees moved === true and skips the modal. */
         setTimeout(() => {
             dragState.current.moved = false;
         }, 0);
     };
 
-    /* Vertical wheel → horizontal scroll */
+    /* ✅ CORRECTED WHEEL HANDLER
+       - Horizontal trackpad swipe (deltaX > deltaY) → carousel scroll
+       - Shift + wheel → carousel scroll
+       - Plain vertical wheel → let page scroll normally (no preventDefault) */
     useEffect(() => {
         const track = trackRef.current;
         if (!track) return;
 
         const handleWheel = (e) => {
-            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+            const isHorizontalSwipe = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+            const isShiftWheel = e.shiftKey;
+
+            if (isHorizontalSwipe || isShiftWheel) {
                 e.preventDefault();
-                track.scrollLeft += e.deltaY;
+                const amount = isShiftWheel ? e.deltaY : e.deltaX;
+                track.scrollLeft += amount;
             }
+            /* Otherwise → vertical scroll passes through to the page */
         };
 
         track.addEventListener("wheel", handleWheel, { passive: false });
@@ -570,10 +568,165 @@ const Project = () => {
         <>
             <style>{`
                 /* =========================================================
-                   PROJECT CAROUSEL — futuristic cyber cards (blue glow)
+                   PROJECT SECTION — modern galaxy backdrop
                    ========================================================= */
 
-                .carousel-wrapper { position: relative; width: 100%; }
+                .projects-section {
+                    position: relative;
+                    width: 100%;
+                    padding: 120px 0 60px;
+                    overflow: hidden;
+                    background:
+                        radial-gradient(ellipse at 20% 0%, rgba(80, 40, 180, 0.22) 0%, transparent 55%),
+                        radial-gradient(ellipse at 80% 100%, rgba(220, 40, 100, 0.18) 0%, transparent 55%),
+                        radial-gradient(ellipse at 50% 50%, rgba(30, 40, 120, 0.20) 0%, transparent 70%),
+                        linear-gradient(180deg, #05010d 0%, #020005 100%);
+                }
+
+                /* ---------- Galaxy background layers ---------- */
+                .galaxy-bg {
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                    z-index: 0;
+                    overflow: hidden;
+                }
+
+                /* Twinkling star field */
+                .galaxy-bg::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background-image:
+                        radial-gradient(1px 1px at 6% 14%, #fff, transparent 60%),
+                        radial-gradient(1.4px 1.4px at 18% 38%, rgba(200, 220, 255, 0.9), transparent 60%),
+                        radial-gradient(1px 1px at 32% 8%, #fff, transparent 60%),
+                        radial-gradient(1.6px 1.6px at 44% 62%, rgba(255, 220, 240, 0.85), transparent 60%),
+                        radial-gradient(1px 1px at 58% 24%, #fff, transparent 60%),
+                        radial-gradient(1.4px 1.4px at 72% 78%, rgba(200, 220, 255, 0.85), transparent 60%),
+                        radial-gradient(1px 1px at 82% 44%, #fff, transparent 60%),
+                        radial-gradient(1.6px 1.6px at 90% 12%, rgba(255, 220, 240, 0.9), transparent 60%),
+                        radial-gradient(1px 1px at 12% 88%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 26% 56%, rgba(200, 220, 255, 0.7), transparent 60%),
+                        radial-gradient(1.4px 1.4px at 50% 90%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 66% 52%, rgba(255, 220, 240, 0.75), transparent 60%),
+                        radial-gradient(1.6px 1.6px at 78% 8%, #fff, transparent 60%),
+                        radial-gradient(1px 1px at 96% 70%, #fff, transparent 60%);
+                    opacity: 0.75;
+                    animation: galaxyTwinkle 6s ease-in-out infinite alternate;
+                }
+
+                @keyframes galaxyTwinkle {
+                    0%   { opacity: 0.55; }
+                    100% { opacity: 0.95; }
+                }
+
+                /* Colourful nebula clouds */
+                .galaxy-bg::after {
+                    content: "";
+                    position: absolute;
+                    inset: -20%;
+                    background:
+                        radial-gradient(circle at 18% 22%, rgba(140, 60, 255, 0.32) 0%, transparent 40%),
+                        radial-gradient(circle at 82% 30%, rgba(60, 140, 255, 0.28) 0%, transparent 40%),
+                        radial-gradient(circle at 25% 78%, rgba(255, 60, 140, 0.22) 0%, transparent 45%),
+                        radial-gradient(circle at 75% 85%, rgba(180, 40, 220, 0.24) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 50%, rgba(80, 40, 200, 0.15) 0%, transparent 60%);
+                    filter: blur(60px);
+                    animation: nebulaDrift 30s ease-in-out infinite alternate;
+                }
+
+                @keyframes nebulaDrift {
+                    0%   { transform: translate(0, 0) scale(1); }
+                    50%  { transform: translate(-3%, -2%) scale(1.04); }
+                    100% { transform: translate(2%, 3%) scale(1.02); }
+                }
+
+                /* Faint galaxy band across the section */
+                .galaxy-band {
+                    position: absolute;
+                    top: 40%;
+                    left: -20%;
+                    width: 140%;
+                    height: 60%;
+                    pointer-events: none;
+
+                    background:
+                        radial-gradient(
+                            ellipse at center,
+                            rgba(200, 160, 255, 0.12) 0%,
+                            rgba(140, 80, 220, 0.06) 30%,
+                            transparent 65%
+                        );
+
+                    filter: blur(50px);
+                    transform: rotate(-12deg);
+                    animation: bandPulse 12s ease-in-out infinite alternate;
+                }
+
+                @keyframes bandPulse {
+                    0%   { opacity: 0.7; }
+                    100% { opacity: 1;   }
+                }
+
+                /* Slow drifting orbs for depth */
+                .galaxy-orb {
+                    position: absolute;
+                    border-radius: 50%;
+                    pointer-events: none;
+                    filter: blur(40px);
+                    mix-blend-mode: screen;
+                }
+
+                .orb-1 {
+                    width: 400px; height: 400px;
+                    top: -80px; left: -100px;
+                    background: radial-gradient(circle, rgba(140, 80, 255, 0.5) 0%, transparent 65%);
+                    animation: orbFloat 26s ease-in-out infinite alternate;
+                }
+
+                .orb-2 {
+                    width: 500px; height: 500px;
+                    bottom: -150px; right: -120px;
+                    background: radial-gradient(circle, rgba(255, 60, 140, 0.35) 0%, transparent 65%);
+                    animation: orbFloat 32s ease-in-out infinite alternate-reverse;
+                }
+
+                .orb-3 {
+                    width: 320px; height: 320px;
+                    top: 40%; right: 30%;
+                    background: radial-gradient(circle, rgba(60, 140, 255, 0.35) 0%, transparent 65%);
+                    animation: orbFloat 38s ease-in-out infinite alternate;
+                }
+
+                @keyframes orbFloat {
+                    0%   { transform: translate(0, 0); }
+                    100% { transform: translate(30px, -40px); }
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .galaxy-bg::before,
+                    .galaxy-bg::after,
+                    .galaxy-band,
+                    .galaxy-orb {
+                        animation: none;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .orb-1, .orb-2 { opacity: 0.5; }
+                    .orb-3 { display: none; }
+                }
+
+                /* =========================================================
+                   CAROUSEL
+                   ========================================================= */
+
+                .carousel-wrapper {
+                    position: relative;
+                    width: 100%;
+                    z-index: 1;
+                }
 
                 .carousel-track {
                     position: relative;
@@ -584,7 +737,6 @@ const Project = () => {
                     overflow-x: auto;
                     overflow-y: hidden;
 
-                    /* ✅ proximity instead of mandatory — smoother, less snappy */
                     scroll-snap-type: x proximity;
                     scroll-behavior: smooth;
                     overscroll-behavior-x: contain;
@@ -602,11 +754,10 @@ const Project = () => {
                     perspective: 1600px;
                     perspective-origin: 50% 50%;
 
-                    /* Prevent text selection during drag */
                     user-select: none;
                     -webkit-user-select: none;
 
-                    touch-action: pan-x;   /* allow horizontal touch scroll */
+                    touch-action: pan-x;
                 }
 
                 .carousel-track::-webkit-scrollbar { display: none; }
@@ -628,7 +779,6 @@ const Project = () => {
                     -webkit-user-drag: none;
                 }
 
-                /* ---------- 3D inner ---------- */
                 .project-card-3d .project-card-inner {
                     position: relative;
                     width: 100%;
@@ -648,17 +798,17 @@ const Project = () => {
                     );
 
                     background:
-                        linear-gradient(135deg, rgba(15, 3, 3, 0.94) 0%, rgba(8, 2, 8, 0.96) 100%);
+                        linear-gradient(135deg, rgba(15, 5, 30, 0.9) 0%, rgba(8, 2, 20, 0.95) 100%);
 
-                    border: 1px solid rgba(120, 170, 255, 0.28);
+                    border: 1px solid rgba(140, 170, 255, 0.3);
 
                     backdrop-filter: blur(14px);
                     -webkit-backdrop-filter: blur(14px);
 
                     box-shadow:
-                        inset 0 0 40px rgba(60, 120, 255, 0.06),
+                        inset 0 0 40px rgba(100, 130, 255, 0.08),
                         0 8px 30px rgba(0, 0, 0, 0.6),
-                        0 0 60px rgba(60, 120, 255, 0.08);
+                        0 0 60px rgba(100, 130, 255, 0.1);
 
                     transform:
                         rotateX(var(--tilt-x, 0deg))
@@ -673,11 +823,11 @@ const Project = () => {
                 }
 
                 .carousel-card:hover .project-card-inner {
-                    border-color: rgba(120, 190, 255, 0.85);
+                    border-color: rgba(160, 190, 255, 0.9);
                     box-shadow:
-                        inset 0 0 60px rgba(60, 140, 255, 0.18),
-                        0 24px 60px rgba(0, 60, 180, 0.35),
-                        0 0 120px rgba(60, 140, 255, 0.25);
+                        inset 0 0 60px rgba(100, 140, 255, 0.22),
+                        0 24px 60px rgba(60, 80, 200, 0.4),
+                        0 0 120px rgba(140, 100, 255, 0.3);
                 }
 
                 .carousel-card .project-card-inner::before {
@@ -687,8 +837,8 @@ const Project = () => {
                     width: 60px; height: 60px;
                     background: linear-gradient(
                         225deg,
-                        rgba(120, 200, 255, 0.65) 0%,
-                        rgba(120, 200, 255, 0.0) 55%
+                        rgba(180, 140, 255, 0.7) 0%,
+                        rgba(180, 140, 255, 0.0) 55%
                     );
                     clip-path: polygon(0 0, 100% 0, 100% 100%);
                     pointer-events: none;
@@ -703,7 +853,7 @@ const Project = () => {
                     background: linear-gradient(
                         90deg,
                         transparent 0%,
-                        #4cc9f0 50%,
+                        #8ec5ff 50%,
                         transparent 100%
                     );
                     opacity: 0;
@@ -714,14 +864,13 @@ const Project = () => {
 
                 .carousel-card:hover .project-card-inner::after { opacity: 1; }
 
-                /* ---------- Image ---------- */
                 .carousel-card .project-image {
                     position: relative;
                     width: 100%;
                     aspect-ratio: 16 / 11;
                     overflow: hidden;
                     background: #050202;
-                    border-bottom: 1px solid rgba(120, 170, 255, 0.18);
+                    border-bottom: 1px solid rgba(140, 170, 255, 0.2);
                     flex-shrink: 0;
                 }
 
@@ -743,10 +892,10 @@ const Project = () => {
                     pointer-events: none;
                     background: linear-gradient(
                         to bottom,
-                        rgba(0, 0, 0, 0.25) 0%,
+                        rgba(0, 0, 0, 0.3) 0%,
                         transparent 30%,
                         transparent 70%,
-                        rgba(5, 2, 5, 0.75) 100%
+                        rgba(8, 2, 20, 0.8) 100%
                     );
                 }
 
@@ -759,12 +908,12 @@ const Project = () => {
                     font-size: 10px;
                     font-weight: 600;
                     letter-spacing: 0.15em;
-                    color: #9ecfff;
-                    background: rgba(5, 10, 25, 0.85);
-                    border: 1px solid rgba(120, 180, 255, 0.45);
+                    color: #c9b6ff;
+                    background: rgba(8, 4, 25, 0.85);
+                    border: 1px solid rgba(160, 140, 255, 0.5);
                     border-radius: 6px;
                     backdrop-filter: blur(8px);
-                    box-shadow: 0 0 12px rgba(80, 160, 255, 0.35);
+                    box-shadow: 0 0 12px rgba(140, 100, 255, 0.4);
                 }
 
                 .carousel-card .project-card-glare {
@@ -774,7 +923,7 @@ const Project = () => {
                     z-index: 4;
                     background: radial-gradient(
                         circle 260px at var(--glow-x, 50%) var(--glow-y, 50%),
-                        rgba(150, 210, 255, 0.18) 0%,
+                        rgba(180, 200, 255, 0.2) 0%,
                         transparent 60%
                     );
                     opacity: 0;
@@ -784,7 +933,6 @@ const Project = () => {
 
                 .carousel-card:hover .project-card-glare { opacity: 1; }
 
-                /* ---------- Body ---------- */
                 .carousel-card .project-body {
                     padding: 24px 26px 26px;
                     display: flex;
@@ -802,14 +950,14 @@ const Project = () => {
                     font-size: 9px;
                     letter-spacing: 0.18em;
                     text-transform: uppercase;
-                    color: rgba(180, 210, 255, 0.55);
+                    color: rgba(180, 200, 255, 0.6);
                 }
 
                 .carousel-card .project-dot {
                     width: 6px; height: 6px;
                     border-radius: 50%;
-                    background: #4cc9f0;
-                    box-shadow: 0 0 12px rgba(76, 201, 240, 0.95);
+                    background: #8ec5ff;
+                    box-shadow: 0 0 12px rgba(140, 200, 255, 0.95);
                     animation: dotPulse 2s ease-in-out infinite;
                 }
 
@@ -820,7 +968,7 @@ const Project = () => {
                     font-weight: 600;
                     line-height: 1.35;
                     color: #ffffff;
-                    text-shadow: 0 0 20px rgba(120, 180, 255, 0.25);
+                    text-shadow: 0 0 20px rgba(140, 180, 255, 0.3);
                     display: -webkit-box;
                     -webkit-line-clamp: 3;
                     -webkit-box-orient: vertical;
@@ -832,7 +980,7 @@ const Project = () => {
                     font-family: "Rajdhani", sans-serif;
                     font-size: 0.92rem;
                     line-height: 1.55;
-                    color: rgba(220, 235, 255, 0.62);
+                    color: rgba(220, 230, 255, 0.65);
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
@@ -844,7 +992,7 @@ const Project = () => {
                 .carousel-card .project-tools {
                     margin-top: 14px;
                     padding-top: 14px;
-                    border-top: 1px solid rgba(120, 170, 255, 0.15);
+                    border-top: 1px solid rgba(140, 170, 255, 0.18);
                 }
 
                 .carousel-card .project-tools-label {
@@ -852,7 +1000,7 @@ const Project = () => {
                     font-size: 9px;
                     letter-spacing: 0.22em;
                     text-transform: uppercase;
-                    color: rgba(180, 210, 255, 0.5);
+                    color: rgba(180, 200, 255, 0.55);
                     margin-bottom: 8px;
                 }
 
@@ -870,13 +1018,13 @@ const Project = () => {
                     height: 30px;
                     padding: 0;
                     border-radius: 8px;
-                    background: rgba(10, 15, 30, 0.7);
-                    border: 1px solid rgba(120, 170, 255, 0.25);
+                    background: rgba(15, 15, 40, 0.7);
+                    border: 1px solid rgba(140, 170, 255, 0.3);
                     transition: border-color 0.3s ease, transform 0.3s ease;
                 }
 
                 .carousel-card .project-tool:hover {
-                    border-color: rgba(120, 200, 255, 0.8);
+                    border-color: rgba(160, 200, 255, 0.9);
                     transform: translateY(-1px);
                 }
 
@@ -890,7 +1038,7 @@ const Project = () => {
                 .carousel-card .project-tool-icon img {
                     width: 100%; height: 100%;
                     object-fit: contain;
-                    filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(120, 200, 255, 0.4));
+                    filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(140, 200, 255, 0.5));
                 }
 
                 .project-tool-more {
@@ -901,9 +1049,9 @@ const Project = () => {
                     font-family: "Orbitron", sans-serif;
                     font-size: 10px;
                     font-weight: 700;
-                    color: #9ecfff;
-                    background: rgba(60, 140, 255, 0.15);
-                    border: 1px solid rgba(120, 170, 255, 0.4);
+                    color: #c9b6ff;
+                    background: rgba(100, 140, 255, 0.18);
+                    border: 1px solid rgba(140, 170, 255, 0.45);
                     border-radius: 8px;
                 }
 
@@ -921,7 +1069,7 @@ const Project = () => {
                     font-weight: 600;
                     letter-spacing: 0.15em;
                     text-transform: uppercase;
-                    color: #4cc9f0;
+                    color: #8ec5ff;
                     transition: color 0.3s ease, gap 0.3s ease;
                 }
 
@@ -936,8 +1084,8 @@ const Project = () => {
                     align-items: center;
                     justify-content: center;
                     cursor: default;
-                    background: linear-gradient(135deg, rgba(10, 15, 30, 0.75) 0%, rgba(4, 6, 15, 0.85) 100%);
-                    border: 1px dashed rgba(120, 170, 255, 0.35);
+                    background: linear-gradient(135deg, rgba(15, 10, 35, 0.8) 0%, rgba(6, 4, 15, 0.85) 100%);
+                    border: 1px dashed rgba(140, 170, 255, 0.4);
                     clip-path: polygon(
                         0 0,
                         calc(100% - 26px) 0,
@@ -954,8 +1102,8 @@ const Project = () => {
                     width: 10px; height: 10px;
                     border-radius: 50%;
                     margin: 0 auto 20px;
-                    background: #4cc9f0;
-                    box-shadow: 0 0 20px rgba(76, 201, 240, 0.95);
+                    background: #8ec5ff;
+                    box-shadow: 0 0 20px rgba(140, 200, 255, 0.95);
                     animation: dotPulse 1.6s ease-in-out infinite;
                 }
 
@@ -964,7 +1112,7 @@ const Project = () => {
                     font-size: 10px;
                     letter-spacing: 0.2em;
                     text-transform: uppercase;
-                    color: rgba(180, 210, 255, 0.45);
+                    color: rgba(180, 200, 255, 0.5);
                     margin-bottom: 16px;
                 }
 
@@ -974,7 +1122,7 @@ const Project = () => {
                     font-size: 1.1rem;
                     font-weight: 600;
                     color: #ffffff;
-                    text-shadow: 0 0 20px rgba(120, 180, 255, 0.35);
+                    text-shadow: 0 0 20px rgba(140, 180, 255, 0.4);
                 }
 
                 .carousel-card--coming .project-coming-text {
@@ -982,7 +1130,7 @@ const Project = () => {
                     font-family: "Rajdhani", sans-serif;
                     font-size: 0.9rem;
                     line-height: 1.6;
-                    color: rgba(220, 235, 255, 0.55);
+                    color: rgba(220, 230, 255, 0.6);
                 }
 
                 /* ---------- Controls ---------- */
@@ -996,25 +1144,25 @@ const Project = () => {
                     align-items: center;
                     justify-content: center;
                     border-radius: 50%;
-                    border: 1px solid rgba(120, 180, 255, 0.5);
-                    background: linear-gradient(135deg, rgba(10, 15, 30, 0.9) 0%, rgba(5, 8, 18, 0.95) 100%);
-                    color: #4cc9f0;
+                    border: 1px solid rgba(140, 170, 255, 0.55);
+                    background: linear-gradient(135deg, rgba(15, 15, 40, 0.9) 0%, rgba(6, 6, 20, 0.95) 100%);
+                    color: #8ec5ff;
                     font-family: "Orbitron", sans-serif;
                     font-size: 26px;
                     line-height: 1;
                     cursor: pointer;
                     backdrop-filter: blur(10px);
                     box-shadow:
-                        inset 0 0 20px rgba(80, 160, 255, 0.15),
-                        0 0 20px rgba(80, 160, 255, 0.2);
+                        inset 0 0 20px rgba(100, 140, 255, 0.18),
+                        0 0 20px rgba(100, 140, 255, 0.25);
                     transition: all 0.3s ease;
                 }
 
                 .carousel-arrow:hover:not(:disabled) {
-                    border-color: rgba(120, 200, 255, 0.95);
+                    border-color: rgba(160, 200, 255, 0.95);
                     box-shadow:
-                        inset 0 0 30px rgba(80, 160, 255, 0.3),
-                        0 0 40px rgba(80, 180, 255, 0.6);
+                        inset 0 0 30px rgba(100, 140, 255, 0.35),
+                        0 0 40px rgba(140, 180, 255, 0.65);
                     transform: translateY(-50%) scale(1.08);
                 }
 
@@ -1039,22 +1187,22 @@ const Project = () => {
                     width: 8px; height: 8px;
                     padding: 0;
                     border-radius: 999px;
-                    border: 1px solid rgba(120, 180, 255, 0.45);
-                    background: rgba(80, 160, 255, 0.22);
+                    border: 1px solid rgba(140, 170, 255, 0.5);
+                    background: rgba(100, 140, 255, 0.25);
                     cursor: pointer;
                     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
                 }
 
                 .carousel-dot:hover {
-                    background: rgba(120, 200, 255, 0.6);
+                    background: rgba(140, 200, 255, 0.65);
                     transform: scale(1.2);
                 }
 
                 .carousel-dot.is-active {
                     width: 32px;
-                    background: linear-gradient(90deg, #4cc9f0, #a78bfa);
-                    border-color: rgba(120, 200, 255, 0.95);
-                    box-shadow: 0 0 20px rgba(80, 180, 255, 0.85);
+                    background: linear-gradient(90deg, #8ec5ff, #c9b6ff);
+                    border-color: rgba(160, 200, 255, 0.95);
+                    box-shadow: 0 0 20px rgba(140, 180, 255, 0.9);
                 }
 
                 .carousel-hint {
@@ -1064,7 +1212,7 @@ const Project = () => {
                     font-size: 9px;
                     letter-spacing: 0.28em;
                     text-transform: uppercase;
-                    color: rgba(180, 210, 255, 0.4);
+                    color: rgba(180, 200, 255, 0.45);
                 }
 
                 /* =========================================================
@@ -1074,7 +1222,7 @@ const Project = () => {
                 .project-modal-image {
                     position: relative;
                     width: 100%;
-                    aspect-ratio: auto !important;   /* ✅ remove aspect lock */
+                    aspect-ratio: auto !important;
                     max-height: 55vh !important;
                     display: flex !important;
                     align-items: center;
@@ -1085,116 +1233,13 @@ const Project = () => {
                 }
 
                 .project-modal-image img {
-                    width: auto !important;          /* ✅ natural size */
+                    width: auto !important;
                     height: auto !important;
                     max-width: 100% !important;
                     max-height: 55vh !important;
                     object-fit: contain !important;
                     object-position: center center !important;
                     display: block !important;
-                }
-
-                /* =========================================================
-                   STONE-IN-SPACE BACKGROUND
-                   ========================================================= */
-
-                .projects-section {
-                    position: relative;
-                    overflow: hidden;
-                }
-
-                .project-stones {
-                    position: absolute;
-                    inset: 0;
-                    pointer-events: none;
-                    z-index: 0;
-                    overflow: hidden;
-                }
-
-                .project-stones::before {
-                    content: "";
-                    position: absolute;
-                    inset: 0;
-                    background-image:
-                        radial-gradient(1px 1px at 8% 18%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 22% 42%, rgba(255, 220, 200, 0.7), transparent 60%),
-                        radial-gradient(1.4px 1.4px at 34% 12%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 48% 68%, rgba(255, 200, 180, 0.6), transparent 60%),
-                        radial-gradient(1.6px 1.6px at 62% 28%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 76% 82%, rgba(255, 220, 200, 0.7), transparent 60%),
-                        radial-gradient(1.2px 1.2px at 88% 44%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 15% 88%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 55% 52%, rgba(255, 220, 200, 0.6), transparent 60%),
-                        radial-gradient(1.4px 1.4px at 82% 12%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 5% 55%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 42% 90%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 96% 62%, rgba(255, 200, 180, 0.7), transparent 60%),
-                        radial-gradient(1px 1px at 30% 22%, #fff, transparent 60%);
-                    opacity: 0.55;
-                    animation: stoneStars 8s ease-in-out infinite alternate;
-                }
-
-                @keyframes stoneStars {
-                    0%   { opacity: 0.4; }
-                    100% { opacity: 0.75; }
-                }
-
-                .project-stones::after {
-                    content: "";
-                    position: absolute;
-                    inset: -10%;
-                    background:
-                        radial-gradient(circle at 15% 25%, rgba(255, 60, 20, 0.16) 0%, transparent 45%),
-                        radial-gradient(circle at 85% 75%, rgba(180, 80, 255, 0.10) 0%, transparent 45%),
-                        radial-gradient(circle at 50% 100%, rgba(76, 201, 240, 0.06) 0%, transparent 55%);
-                    filter: blur(60px);
-                    opacity: 0.9;
-                }
-
-                .stone {
-                    position: absolute;
-                    background:
-                        radial-gradient(
-                            circle at 32% 30%,
-                            rgba(120, 50, 30, 0.9) 0%,
-                            rgba(60, 20, 15, 0.95) 35%,
-                            rgba(18, 5, 5, 1) 75%
-                        );
-                    border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
-                    box-shadow:
-                        inset -14px -14px 30px rgba(0, 0, 0, 0.85),
-                        inset 12px 12px 24px rgba(255, 120, 60, 0.12),
-                        0 0 50px rgba(255, 60, 20, 0.15),
-                        0 0 100px rgba(255, 40, 10, 0.08);
-                    filter: blur(0.5px);
-                    opacity: 0.65;
-                    animation: stoneDrift 40s ease-in-out infinite;
-                }
-
-                .stone-1 { width: 220px; height: 200px; top: 8%;  left: 4%;   animation-delay: 0s; }
-                .stone-2 { width: 90px;  height: 100px; top: 62%; left: 12%;  animation-delay: -8s;  opacity: 0.5; border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
-                .stone-3 { width: 140px; height: 130px; top: 20%; right: 8%;  animation-delay: -16s; opacity: 0.55; border-radius: 55% 45% 65% 35% / 40% 60% 40% 60%; }
-                .stone-4 { width: 260px; height: 240px; bottom: -6%; right: 20%; animation-delay: -24s; opacity: 0.4; filter: blur(1.5px); border-radius: 58% 42% 50% 50% / 55% 45% 55% 45%; }
-                .stone-5 { width: 70px;  height: 80px;  top: 45%; right: 32%; animation-delay: -12s; opacity: 0.45; border-radius: 40% 60% 55% 45% / 55% 45% 60% 40%; }
-                .stone-6 { width: 110px; height: 100px; bottom: 18%; left: 28%; animation-delay: -30s; opacity: 0.35; filter: blur(1.5px); border-radius: 62% 38% 45% 55% / 48% 52% 50% 50%; }
-
-                @keyframes stoneDrift {
-                    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-                    25%      { transform: translate(10px, -14px) rotate(3deg); }
-                    50%      { transform: translate(-6px, -22px) rotate(-2deg); }
-                    75%      { transform: translate(-14px, -8px) rotate(2deg); }
-                }
-
-                @media (prefers-reduced-motion: reduce) {
-                    .stone,
-                    .project-stones::before {
-                        animation: none;
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .stone-1, .stone-4 { opacity: 0.35; }
-                    .stone-2, .stone-3, .stone-5, .stone-6 { display: none; }
                 }
 
                 /* =========================================================
@@ -1250,7 +1295,6 @@ const Project = () => {
                 .modal-section--solution .modal-section-body { border-left: 3px solid rgba(74, 222, 128, 0.55); }
                 .modal-section--expected .modal-section-body { border-left: 3px solid rgba(192, 132, 252, 0.55); }
 
-                /* ---------- Demo credentials ---------- */
                 .project-modal-demo {
                     margin-top: 26px;
                     padding: 18px;
@@ -1429,13 +1473,12 @@ const Project = () => {
 
             <section id="work" ref={sectionRef} className="projects-section">
 
-                <div className="project-stones" aria-hidden="true">
-                    <span className="stone stone-1" />
-                    <span className="stone stone-2" />
-                    <span className="stone stone-3" />
-                    <span className="stone stone-4" />
-                    <span className="stone stone-5" />
-                    <span className="stone stone-6" />
+                {/* ---------- Modern galaxy background ---------- */}
+                <div className="galaxy-bg" aria-hidden="true">
+                    <span className="galaxy-band" />
+                    <span className="galaxy-orb orb-1" />
+                    <span className="galaxy-orb orb-2" />
+                    <span className="galaxy-orb orb-3" />
                 </div>
 
                 <div className="projects-layout">

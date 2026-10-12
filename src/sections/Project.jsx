@@ -12,38 +12,83 @@ gsap.registerPlugin(ScrollTrigger);
    ========================================================= */
 
 const GithubIcon = () => (
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
-        <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56C20.22 21.39 23.5 17.08 23.5 12 23.5 5.73 18.27.5 12 .5Z" />
-    </svg>
+  <svg
+    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56C20.22 21.39 23.5 17.08 23.5 12 23.5 5.73 18.27.5 12 .5Z" />
+  </svg>
 );
 
 const ExternalIcon = () => (
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-        <polyline points="15 3 21 3 21 9" />
-        <line x1="10" y1="14" x2="21" y2="3" />
-    </svg>
+  <svg
+    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+    <polyline points="15 3 21 3 21 9" />
+    <line x1="10" y1="14" x2="21" y2="3" />
+  </svg>
 );
 
 const CloseIcon = () => (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-        <line x1="6" y1="6" x2="18" y2="18" />
-        <line x1="18" y1="6" x2="6" y2="18" />
-    </svg>
+  <svg
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <line x1="6" y1="6" x2="18" y2="18" />
+    <line x1="18" y1="6" x2="6" y2="18" />
+  </svg>
 );
 
 const ArrowIcon = () => (
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <line x1="5" y1="12" x2="19" y2="12" />
-        <polyline points="12 5 19 12 12 19" />
-    </svg>
+  <svg
+    viewBox="0 0 24 24"
+    width="14"
+    height="14"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
 );
 
 const CopyIcon = () => (
-    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-    </svg>
+  <svg
+    viewBox="0 0 24 24"
+    width="12"
+    height="12"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+  </svg>
 );
 
 /* =========================================================
@@ -51,30 +96,28 @@ const CopyIcon = () => (
    ========================================================= */
 
 const DemoCredential = ({ label, value }) => {
-    const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-    const handleCopy = async () => {
-        try {
-            await navigator.clipboard.writeText(value);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1500);
-        } catch {}
-    };
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {}
+  };
 
-    return (
-        <button
-            type="button"
-            className={`demo-cred-row ${copied ? "is-copied" : ""}`}
-            onClick={handleCopy}
-            aria-label={`Copy ${label}: ${value}`}
-        >
-            <span className="demo-cred-label">{label}</span>
-            <code className="demo-cred-value">{value}</code>
-            <span className="demo-cred-copy">
-                {copied ? "✓" : <CopyIcon />}
-            </span>
-        </button>
-    );
+  return (
+    <button
+      type="button"
+      className={`demo-cred-row ${copied ? "is-copied" : ""}`}
+      onClick={handleCopy}
+      aria-label={`Copy ${label}: ${value}`}
+    >
+      <span className="demo-cred-label">{label}</span>
+      <code className="demo-cred-value">{value}</code>
+      <span className="demo-cred-copy">{copied ? "✓" : <CopyIcon />}</span>
+    </button>
+  );
 };
 
 /* =========================================================
@@ -82,13 +125,13 @@ const DemoCredential = ({ label, value }) => {
    ========================================================= */
 
 const ModalSection = ({ label, children, tone = "default" }) => (
-    <div className={`modal-section modal-section--${tone}`}>
-        <div className="modal-section-label">
-            <span className="modal-section-dot" />
-            <span>{label}</span>
-        </div>
-        <div className="modal-section-body">{children}</div>
+  <div className={`modal-section modal-section--${tone}`}>
+    <div className="modal-section-label">
+      <span className="modal-section-dot" />
+      <span>{label}</span>
     </div>
+    <div className="modal-section-body">{children}</div>
+  </div>
 );
 
 /* =========================================================
@@ -96,119 +139,163 @@ const ModalSection = ({ label, children, tone = "default" }) => (
    ========================================================= */
 
 const ProjectModal = ({ project, onClose }) => {
-    useEffect(() => {
-        const prev = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
-        return () => { document.body.style.overflow = prev; };
-    }, []);
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
 
-    useEffect(() => {
-        const onKey = (e) => { if (e.key === "Escape") onClose(); };
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [onClose]);
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
-    if (!project) return null;
+  if (!project) return null;
 
-    return (
-        <div className="project-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
-            <div className="project-modal" onClick={(e) => e.stopPropagation()}>
-                <button type="button" className="project-modal-close" onClick={onClose} aria-label="Close">
-                    <CloseIcon />
-                </button>
+  return (
+    <div
+      className="project-modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="project-modal" onClick={(e) => e.stopPropagation()}>
+        <button
+          type="button"
+          className="project-modal-close"
+          onClick={onClose}
+          aria-label="Close"
+        >
+          <CloseIcon />
+        </button>
 
-                <div className="project-modal-image">
-                    <img src={project.image} alt={project.title} />
-                    {project.year && <span className="project-modal-year">{project.year}</span>}
-                </div>
-
-                <div className="project-modal-body">
-                    {project.tags?.length > 0 && (
-                        <div className="project-modal-tags">
-                            {project.tags.map((tag) => (
-                                <span key={tag} className="project-modal-tag">{tag}</span>
-                            ))}
-                        </div>
-                    )}
-
-                    {project.tools?.length > 0 && (
-                        <div className="project-modal-tools">
-                            <div className="project-modal-tools-label">Built with</div>
-                            <div className="project-modal-tools-list">
-                                {project.tools.map((tool) => (
-                                    <span key={tool.name} className="project-modal-tool" title={tool.name}>
-                                        <span className="project-modal-tool-icon"><img src={tool.icon} alt="" /></span>
-                                        <span className="project-modal-tool-name">{tool.name}</span>
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    <h2 className="project-modal-title">{project.title}</h2>
-
-                    {(project.longDescription || project.shortDescription) && (
-                        <p className="project-modal-description">
-                            {project.longDescription || project.shortDescription}
-                        </p>
-                    )}
-
-                    {project.problem && (
-                        <ModalSection label="The Problem" tone="problem">{project.problem}</ModalSection>
-                    )}
-
-                    {project.solution && (
-                        <ModalSection label="The Solution" tone="solution">{project.solution}</ModalSection>
-                    )}
-
-                    {project.expected && (
-                        <ModalSection label="Expected Impact" tone="expected">{project.expected}</ModalSection>
-                    )}
-
-                    {project.demo && (
-                        <div className="project-modal-demo">
-                            <div className="project-modal-demo-head">
-                                <span className="project-modal-demo-dot" />
-                                <span>{project.demo.notice || "Live demo credentials"}</span>
-                            </div>
-
-                            {project.demo.accounts && project.demo.accounts.length > 0 && (
-                                <div className="project-modal-demo-accounts">
-                                    {project.demo.accounts.map((acc) => (
-                                        <div key={acc.role} className="project-modal-demo-account">
-                                            <div className="demo-role">{acc.role}</div>
-                                            <DemoCredential label="Email" value={acc.email} />
-                                            <DemoCredential label="Password" value={acc.password} />
-                                            {acc.capabilities && (
-                                                <div className="demo-cap">{acc.capabilities}</div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {project.demo.tip && (
-                                <div className="project-modal-demo-tip">ⓘ {project.demo.tip}</div>
-                            )}
-                        </div>
-                    )}
-
-                    <div className="project-modal-actions">
-                        {project.github && (
-                            <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-modal-btn project-modal-btn-primary">
-                                <GithubIcon /><span>View Repository</span>
-                            </a>
-                        )}
-                        {project.website && (
-                            <a href={project.website} target="_blank" rel="noopener noreferrer" className="project-modal-btn">
-                                <ExternalIcon /><span>Open Live Site</span>
-                            </a>
-                        )}
-                    </div>
-                </div>
-            </div>
+        <div className="project-modal-image">
+          <img src={project.image} alt={project.title} />
+          {project.year && (
+            <span className="project-modal-year">{project.year}</span>
+          )}
         </div>
-    );
+
+        <div className="project-modal-body">
+          {project.tags?.length > 0 && (
+            <div className="project-modal-tags">
+              {project.tags.map((tag) => (
+                <span key={tag} className="project-modal-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {project.tools?.length > 0 && (
+            <div className="project-modal-tools">
+              <div className="project-modal-tools-label">Built with</div>
+              <div className="project-modal-tools-list">
+                {project.tools.map((tool) => (
+                  <span
+                    key={tool.name}
+                    className="project-modal-tool"
+                    title={tool.name}
+                  >
+                    <span className="project-modal-tool-icon">
+                      <img src={tool.icon} alt="" />
+                    </span>
+                    <span className="project-modal-tool-name">{tool.name}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <h2 className="project-modal-title">{project.title}</h2>
+
+          {(project.longDescription || project.shortDescription) && (
+            <p className="project-modal-description">
+              {project.longDescription || project.shortDescription}
+            </p>
+          )}
+
+          {project.problem && (
+            <ModalSection label="The Problem" tone="problem">
+              {project.problem}
+            </ModalSection>
+          )}
+
+          {project.solution && (
+            <ModalSection label="The Solution" tone="solution">
+              {project.solution}
+            </ModalSection>
+          )}
+
+          {project.expected && (
+            <ModalSection label="Expected Impact" tone="expected">
+              {project.expected}
+            </ModalSection>
+          )}
+
+          {project.demo && (
+            <div className="project-modal-demo">
+              <div className="project-modal-demo-head">
+                <span className="project-modal-demo-dot" />
+                <span>{project.demo.notice || "Live demo credentials"}</span>
+              </div>
+
+              {project.demo.accounts && project.demo.accounts.length > 0 && (
+                <div className="project-modal-demo-accounts">
+                  {project.demo.accounts.map((acc) => (
+                    <div key={acc.role} className="project-modal-demo-account">
+                      <div className="demo-role">{acc.role}</div>
+                      <DemoCredential label="Email" value={acc.email} />
+                      <DemoCredential label="Password" value={acc.password} />
+                      {acc.capabilities && (
+                        <div className="demo-cap">{acc.capabilities}</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {project.demo.tip && (
+                <div className="project-modal-demo-tip">
+                  ⓘ {project.demo.tip}
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="project-modal-actions">
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-modal-btn project-modal-btn-primary"
+              >
+                <GithubIcon />
+                <span>View Repository</span>
+              </a>
+            )}
+            {project.website && (
+              <a
+                href={project.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-modal-btn"
+              >
+                <ExternalIcon />
+                <span>Open Live Site</span>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 /* =========================================================
@@ -216,102 +303,109 @@ const ProjectModal = ({ project, onClose }) => {
    ========================================================= */
 
 const ProjectCard = ({ project, index, onOpen, isDragging, dragStateRef }) => {
-    const cardRef = useRef(null);
+  const cardRef = useRef(null);
 
-    const handleMouseMove = (e) => {
-        if (isDragging) return;
-        const el = cardRef.current;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
+  const handleMouseMove = (e) => {
+    if (isDragging) return;
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
 
-        el.style.setProperty("--tilt-x", `${(y - 0.5) * -8}deg`);
-        el.style.setProperty("--tilt-y", `${(x - 0.5) * 10}deg`);
-        el.style.setProperty("--glow-x", `${x * 100}%`);
-        el.style.setProperty("--glow-y", `${y * 100}%`);
-    };
+    // Enhanced 3D tilt angles for a more dramatic effect
+    el.style.setProperty("--tilt-x", `${(y - 0.5) * -15}deg`);
+    el.style.setProperty("--tilt-y", `${(x - 0.5) * 15}deg`);
+    el.style.setProperty("--glow-x", `${x * 100}%`);
+    el.style.setProperty("--glow-y", `${y * 100}%`);
+  };
 
-    const handleMouseLeave = () => {
-        const el = cardRef.current;
-        if (!el) return;
-        el.style.setProperty("--tilt-x", "0deg");
-        el.style.setProperty("--tilt-y", "0deg");
-    };
+  const handleMouseLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty("--tilt-x", "0deg");
+    el.style.setProperty("--tilt-y", "0deg");
+  };
 
-    const handleClick = () => {
-        if (dragStateRef.current.moved) return;
-        onOpen(project);
-    };
+  const handleClick = () => {
+    if (dragStateRef.current.moved) return;
+    onOpen(project);
+  };
 
-    return (
-        <article
-            ref={cardRef}
-            className="project-card-3d carousel-card"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            onClick={handleClick}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onOpen(project);
-                }
-            }}
-        >
-            <div className="project-card-inner">
-                <div className="project-image">
-                    <img src={project.image} alt={project.title} draggable="false" />
-                    {project.year && <span className="project-year">{project.year}</span>}
-                    <span className="project-card-glare" aria-hidden="true" />
-                </div>
+  return (
+    <article
+      ref={cardRef}
+      className="project-card-3d carousel-card"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen(project);
+        }
+      }}
+    >
+      <div className="project-card-inner">
+        <div className="project-image">
+          <img src={project.image} alt={project.title} draggable="false" />
+          {project.year && <span className="project-year">{project.year}</span>}
+          <span className="project-card-glare" aria-hidden="true" />
+        </div>
 
-                <div className="project-body">
-                    <div className="project-index">
-                        <span className="project-dot" />
-                        <span>// {String(index + 1).padStart(2, "0")}</span>
-                    </div>
+        <div className="project-body">
+          <div className="project-index">
+            <span className="project-dot" />
+            <span>// {String(index + 1).padStart(2, "0")}</span>
+          </div>
 
-                    <h3 className="project-title">{project.title}</h3>
+          <h3 className="project-title">{project.title}</h3>
 
-                    <p className="project-description">
-                        {project.shortDescription || project.description}
-                    </p>
+          <p className="project-description">
+            {project.shortDescription || project.description}
+          </p>
 
-                    {project.tools?.length > 0 && (
-                        <div className="project-tools">
-                            <div className="project-tools-label">Tools</div>
-                            <div className="project-tools-list">
-                                {project.tools.slice(0, 5).map((tool) => (
-                                    <span key={tool.name} className="project-tool" title={tool.name}>
-                                        <span className="project-tool-icon"><img src={tool.icon} alt="" /></span>
-                                    </span>
-                                ))}
-                                {project.tools.length > 5 && (
-                                    <span className="project-tool project-tool-more">
-                                        +{project.tools.length - 5}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    <button
-                        type="button"
-                        className="project-see-more"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onOpen(project);
-                        }}
-                    >
-                        <span>See More</span>
-                        <ArrowIcon />
-                    </button>
-                </div>
+          {project.tools?.length > 0 && (
+            <div className="project-tools">
+              <div className="project-tools-label">Tools</div>
+              <div className="project-tools-list">
+                {project.tools.slice(0, 5).map((tool) => (
+                  <span
+                    key={tool.name}
+                    className="project-tool"
+                    title={tool.name}
+                  >
+                    <span className="project-tool-icon">
+                      <img src={tool.icon} alt="" />
+                    </span>
+                  </span>
+                ))}
+                {project.tools.length > 5 && (
+                  <span className="project-tool project-tool-more">
+                    +{project.tools.length - 5}
+                  </span>
+                )}
+              </div>
             </div>
-        </article>
-    );
+          )}
+
+          <button
+            type="button"
+            className="project-see-more"
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpen(project);
+            }}
+          >
+            <span>See More</span>
+            <ArrowIcon />
+          </button>
+        </div>
+      </div>
+    </article>
+  );
 };
 
 /* =========================================================
@@ -319,223 +413,220 @@ const ProjectCard = ({ project, index, onOpen, isDragging, dragStateRef }) => {
    ========================================================= */
 
 const ProjectCarousel = ({ onOpenProject }) => {
-    const trackRef = useRef(null);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [isDragging, setIsDragging] = useState(false);
+  const trackRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
-    const dragState = useRef({
-        startX: 0,
-        scrollStart: 0,
-        moved: false,
-        pointerId: null,
-    });
+  const dragState = useRef({
+    startX: 0,
+    scrollStart: 0,
+    moved: false,
+    pointerId: null,
+  });
 
-    const scrollToIndex = useCallback((i) => {
-        const track = trackRef.current;
-        if (!track) return;
+  const scrollToIndex = useCallback((i) => {
+    const track = trackRef.current;
+    if (!track) return;
 
+    const cards = track.querySelectorAll(".carousel-card");
+    const card = cards[i];
+    if (!card) return;
+
+    const paddingLeft =
+      parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+    const trackRect = track.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const target =
+      track.scrollLeft + (cardRect.left - trackRect.left) - paddingLeft;
+
+    track.scrollTo({ left: target, behavior: "smooth" });
+  }, []);
+
+  const goPrev = useCallback(() => {
+    const next = Math.max(0, activeIndex - 1);
+    setActiveIndex(next);
+    scrollToIndex(next);
+  }, [activeIndex, scrollToIndex]);
+
+  const goNext = useCallback(() => {
+    const next = Math.min(projects.length - 1, activeIndex + 1);
+    setActiveIndex(next);
+    scrollToIndex(next);
+  }, [activeIndex, scrollToIndex]);
+
+  /* Track active card via scroll position */
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
         const cards = track.querySelectorAll(".carousel-card");
-        const card = cards[i];
-        if (!card) return;
+        const paddingLeft =
+          parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
+        const anchor = track.scrollLeft + paddingLeft;
 
-        const paddingLeft = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
-        const trackRect = track.getBoundingClientRect();
-        const cardRect = card.getBoundingClientRect();
-        const target = track.scrollLeft + (cardRect.left - trackRect.left) - paddingLeft;
+        let closest = 0;
+        let closestDist = Infinity;
 
-        track.scrollTo({ left: target, behavior: "smooth" });
-    }, []);
+        cards.forEach((card, i) => {
+          const dist = Math.abs(card.offsetLeft - anchor);
+          if (dist < closestDist) {
+            closestDist = dist;
+            closest = i;
+          }
+        });
 
-    const goPrev = useCallback(() => {
-        const next = Math.max(0, activeIndex - 1);
-        setActiveIndex(next);
-        scrollToIndex(next);
-    }, [activeIndex, scrollToIndex]);
-
-    const goNext = useCallback(() => {
-        const next = Math.min(projects.length - 1, activeIndex + 1);
-        setActiveIndex(next);
-        scrollToIndex(next);
-    }, [activeIndex, scrollToIndex]);
-
-    /* Track active card via scroll position */
-    useEffect(() => {
-        const track = trackRef.current;
-        if (!track) return;
-
-        let raf = 0;
-        const onScroll = () => {
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(() => {
-                const cards = track.querySelectorAll(".carousel-card");
-                const paddingLeft = parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
-                const anchor = track.scrollLeft + paddingLeft;
-
-                let closest = 0;
-                let closestDist = Infinity;
-
-                cards.forEach((card, i) => {
-                    const dist = Math.abs(card.offsetLeft - anchor);
-                    if (dist < closestDist) {
-                        closestDist = dist;
-                        closest = i;
-                    }
-                });
-
-                setActiveIndex(closest);
-            });
-        };
-
-        track.addEventListener("scroll", onScroll, { passive: true });
-        return () => {
-            track.removeEventListener("scroll", onScroll);
-            cancelAnimationFrame(raf);
-        };
-    }, []);
-
-    /* Pointer-based drag — mouse + touch */
-    const onPointerDown = (e) => {
-        const track = trackRef.current;
-        if (!track) return;
-        if (e.pointerType === "mouse" && e.button !== 0) return;
-
-        dragState.current = {
-            startX: e.clientX,
-            scrollStart: track.scrollLeft,
-            moved: false,
-            pointerId: e.pointerId,
-        };
-        setIsDragging(false);
+        setActiveIndex(closest);
+      });
     };
 
-    const onPointerMove = (e) => {
-        const track = trackRef.current;
-        if (!track) return;
-        if (dragState.current.pointerId !== e.pointerId) return;
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      track.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
-        const dx = e.clientX - dragState.current.startX;
+  /* Pointer-based drag — mouse + touch */
+  const onPointerDown = (e) => {
+    const track = trackRef.current;
+    if (!track) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
 
-        if (Math.abs(dx) > 8 && !dragState.current.moved) {
-            dragState.current.moved = true;
-            setIsDragging(true);
-        }
+    dragState.current = {
+      startX: e.clientX,
+      scrollStart: track.scrollLeft,
+      moved: false,
+      pointerId: e.pointerId,
+    };
+    setIsDragging(false);
+  };
 
-        if (dragState.current.moved) {
-            track.scrollLeft = dragState.current.scrollStart - dx;
-        }
+  const onPointerMove = (e) => {
+    const track = trackRef.current;
+    if (!track) return;
+    if (dragState.current.pointerId !== e.pointerId) return;
+
+    const dx = e.clientX - dragState.current.startX;
+
+    if (Math.abs(dx) > 8 && !dragState.current.moved) {
+      dragState.current.moved = true;
+      setIsDragging(true);
+    }
+
+    if (dragState.current.moved) {
+      track.scrollLeft = dragState.current.scrollStart - dx;
+    }
+  };
+
+  const onPointerUp = (e) => {
+    if (dragState.current.pointerId !== e.pointerId) return;
+    dragState.current.pointerId = null;
+    setIsDragging(false);
+
+    setTimeout(() => {
+      dragState.current.moved = false;
+    }, 0);
+  };
+
+  /* Wheel handler */
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const handleWheel = (e) => {
+      const isHorizontalSwipe = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      const isShiftWheel = e.shiftKey;
+
+      if (isHorizontalSwipe || isShiftWheel) {
+        e.preventDefault();
+        const amount = isShiftWheel ? e.deltaY : e.deltaX;
+        track.scrollLeft += amount;
+      }
     };
 
-    const onPointerUp = (e) => {
-        if (dragState.current.pointerId !== e.pointerId) return;
-        dragState.current.pointerId = null;
-        setIsDragging(false);
+    track.addEventListener("wheel", handleWheel, { passive: false });
+    return () => track.removeEventListener("wheel", handleWheel);
+  }, []);
 
-        setTimeout(() => {
-            dragState.current.moved = false;
-        }, 0);
-    };
+  return (
+    <div className="carousel-wrapper">
+      <button
+        type="button"
+        className="carousel-arrow carousel-arrow-prev"
+        onClick={goPrev}
+        disabled={activeIndex === 0}
+        aria-label="Previous project"
+      >
+        ‹
+      </button>
 
-    /* ✅ CORRECTED WHEEL HANDLER
-       - Horizontal trackpad swipe (deltaX > deltaY) → carousel scroll
-       - Shift + wheel → carousel scroll
-       - Plain vertical wheel → let page scroll normally (no preventDefault) */
-    useEffect(() => {
-        const track = trackRef.current;
-        if (!track) return;
+      <div
+        ref={trackRef}
+        className={`carousel-track ${isDragging ? "is-dragging" : ""}`}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        onPointerLeave={onPointerUp}
+      >
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={project.title}
+            project={project}
+            index={index}
+            onOpen={onOpenProject}
+            isDragging={isDragging}
+            dragStateRef={dragState}
+          />
+        ))}
 
-        const handleWheel = (e) => {
-            const isHorizontalSwipe = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-            const isShiftWheel = e.shiftKey;
-
-            if (isHorizontalSwipe || isShiftWheel) {
-                e.preventDefault();
-                const amount = isShiftWheel ? e.deltaY : e.deltaX;
-                track.scrollLeft += amount;
-            }
-            /* Otherwise → vertical scroll passes through to the page */
-        };
-
-        track.addEventListener("wheel", handleWheel, { passive: false });
-        return () => track.removeEventListener("wheel", handleWheel);
-    }, []);
-
-    return (
-        <div className="carousel-wrapper">
-            <button
-                type="button"
-                className="carousel-arrow carousel-arrow-prev"
-                onClick={goPrev}
-                disabled={activeIndex === 0}
-                aria-label="Previous project"
-            >
-                ‹
-            </button>
-
-            <div
-                ref={trackRef}
-                className={`carousel-track ${isDragging ? "is-dragging" : ""}`}
-                onPointerDown={onPointerDown}
-                onPointerMove={onPointerMove}
-                onPointerUp={onPointerUp}
-                onPointerCancel={onPointerUp}
-                onPointerLeave={onPointerUp}
-            >
-                {projects.map((project, index) => (
-                    <ProjectCard
-                        key={project.title}
-                        project={project}
-                        index={index}
-                        onOpen={onOpenProject}
-                        isDragging={isDragging}
-                        dragStateRef={dragState}
-                    />
-                ))}
-
-                <article className="carousel-card carousel-card--coming">
-                    <div className="project-coming-inner">
-                        <div className="project-coming-dot" />
-                        <div className="project-coming-label">
-                            // {String(projects.length + 1).padStart(2, "0")}
-                        </div>
-                        <h3 className="project-coming-title">More coming soon</h3>
-                        <p className="project-coming-text">
-                            Currently experimenting with multimodal models
-                            and retrieval-augmented generation.
-                        </p>
-                    </div>
-                </article>
+        <article className="carousel-card carousel-card--coming">
+          <div className="project-coming-inner">
+            <div className="project-coming-dot" />
+            <div className="project-coming-label">
+              // {String(projects.length + 1).padStart(2, "0")}
             </div>
-
-            <button
-                type="button"
-                className="carousel-arrow carousel-arrow-next"
-                onClick={goNext}
-                disabled={activeIndex === projects.length - 1}
-                aria-label="Next project"
-            >
-                ›
-            </button>
-
-            <div className="carousel-dots">
-                {projects.map((p, i) => (
-                    <button
-                        key={p.title}
-                        type="button"
-                        className={`carousel-dot ${i === activeIndex ? "is-active" : ""}`}
-                        onClick={() => {
-                            setActiveIndex(i);
-                            scrollToIndex(i);
-                        }}
-                        aria-label={`Go to project ${i + 1}`}
-                    />
-                ))}
-            </div>
-
-            <p className="carousel-hint">
-                Drag · Scroll · Use arrow keys
+            <h3 className="project-coming-title">More coming soon</h3>
+            <p className="project-coming-text">
+              Currently experimenting with multimodal models and
+              retrieval-augmented generation.
             </p>
-        </div>
-    );
+          </div>
+        </article>
+      </div>
+
+      <button
+        type="button"
+        className="carousel-arrow carousel-arrow-next"
+        onClick={goNext}
+        disabled={activeIndex === projects.length - 1}
+        aria-label="Next project"
+      >
+        ›
+      </button>
+
+      <div className="carousel-dots">
+        {projects.map((p, i) => (
+          <button
+            key={p.title}
+            type="button"
+            className={`carousel-dot ${i === activeIndex ? "is-active" : ""}`}
+            onClick={() => {
+              setActiveIndex(i);
+              scrollToIndex(i);
+            }}
+            aria-label={`Go to project ${i + 1}`}
+          />
+        ))}
+      </div>
+
+      <p className="carousel-hint">Drag · Scroll · Use arrow keys</p>
+    </div>
+  );
 };
 
 /* =========================================================
@@ -543,30 +634,30 @@ const ProjectCarousel = ({ onOpenProject }) => {
    ========================================================= */
 
 const Project = () => {
-    const sectionRef = useRef(null);
-    const [activeProject, setActiveProject] = useState(null);
+  const sectionRef = useRef(null);
+  const [activeProject, setActiveProject] = useState(null);
 
-    useGSAP(
-        () => {
-            gsap.from(".carousel-wrapper", {
-                y: 60,
-                opacity: 0,
-                duration: 1,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top 78%",
-                    once: true,
-                    invalidateOnRefresh: true,
-                },
-            });
+  useGSAP(
+    () => {
+      gsap.from(".carousel-wrapper", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 78%",
+          once: true,
+          invalidateOnRefresh: true,
         },
-        { scope: sectionRef }
-    );
+      });
+    },
+    { scope: sectionRef },
+  );
 
-    return (
-        <>
-            <style>{`
+  return (
+    <>
+      <style>{`
                 /* =========================================================
                    PROJECT SECTION — modern galaxy backdrop
                    ========================================================= */
@@ -592,33 +683,46 @@ const Project = () => {
                     overflow: hidden;
                 }
 
-                /* Twinkling star field */
-                .galaxy-bg::before {
-                    content: "";
+                /* Starfield layers for parallax effect */
+                .starfield-layer {
                     position: absolute;
                     inset: 0;
                     background-image:
-                        radial-gradient(1px 1px at 6% 14%, #fff, transparent 60%),
-                        radial-gradient(1.4px 1.4px at 18% 38%, rgba(200, 220, 255, 0.9), transparent 60%),
-                        radial-gradient(1px 1px at 32% 8%, #fff, transparent 60%),
-                        radial-gradient(1.6px 1.6px at 44% 62%, rgba(255, 220, 240, 0.85), transparent 60%),
-                        radial-gradient(1px 1px at 58% 24%, #fff, transparent 60%),
-                        radial-gradient(1.4px 1.4px at 72% 78%, rgba(200, 220, 255, 0.85), transparent 60%),
-                        radial-gradient(1px 1px at 82% 44%, #fff, transparent 60%),
-                        radial-gradient(1.6px 1.6px at 90% 12%, rgba(255, 220, 240, 0.9), transparent 60%),
-                        radial-gradient(1px 1px at 12% 88%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 26% 56%, rgba(200, 220, 255, 0.7), transparent 60%),
-                        radial-gradient(1.4px 1.4px at 50% 90%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 66% 52%, rgba(255, 220, 240, 0.75), transparent 60%),
-                        radial-gradient(1.6px 1.6px at 78% 8%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 96% 70%, #fff, transparent 60%);
-                    opacity: 0.75;
-                    animation: galaxyTwinkle 6s ease-in-out infinite alternate;
+                        radial-gradient(1px 1px at 10% 10%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1.5px 1.5px at 30% 40%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 60% 20%, #c9b6ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(2px 2px at 80% 70%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 15% 80%, #8ec5ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1.5px 1.5px at 45% 90%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 75% 30%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(2px 2px at 95% 50%, #c9b6ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 5% 55%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1.5px 1.5px at 50% 5%, #8ec5ff, rgba(255,255,255,0) 60%);
+                    background-size: 400px 400px;
+                    opacity: 0.9;
+                    will-change: background-position;
                 }
 
-                @keyframes galaxyTwinkle {
-                    0%   { opacity: 0.55; }
-                    100% { opacity: 0.95; }
+                /* Layer 1: Slow moving, larger stars */
+                .starfield-back {
+                    animation: starfieldMove 40s linear infinite;
+                }
+
+                /* Layer 2: Fast moving, smaller stars (opposite direction) */
+                .starfield-front {
+                    background-size: 250px 250px;
+                    opacity: 0.6;
+                    animation: starfieldMoveReverse 25s linear infinite;
+                }
+
+                @keyframes starfieldMove {
+                    0% { background-position: 0 0; }
+                    100% { background-position: -400px 400px; }
+                }
+
+                @keyframes starfieldMoveReverse {
+                    0% { background-position: 0 0; }
+                    100% { background-position: 250px -250px; }
                 }
 
                 /* Colourful nebula clouds */
@@ -705,7 +809,7 @@ const Project = () => {
                 }
 
                 @media (prefers-reduced-motion: reduce) {
-                    .galaxy-bg::before,
+                    .starfield-layer,
                     .galaxy-bg::after,
                     .galaxy-band,
                     .galaxy-orb {
@@ -777,6 +881,22 @@ const Project = () => {
                     cursor: pointer;
                     user-select: none;
                     -webkit-user-drag: none;
+                    
+                    /* Floating animation applies to the whole card */
+                    animation: cardFloat 6s ease-in-out infinite;
+                }
+
+                /* Stagger the float animation */
+                .carousel-card:nth-child(even) { animation-delay: -3s; }
+                .carousel-card:nth-child(3n) { animation-delay: -1.5s; }
+
+                .carousel-card:hover {
+                    animation-play-state: paused;
+                }
+
+                @keyframes cardFloat {
+                    0%, 100% { transform: translateY(0); }
+                    50%      { transform: translateY(-12px); }
                 }
 
                 .project-card-3d .project-card-inner {
@@ -798,7 +918,7 @@ const Project = () => {
                     );
 
                     background:
-                        linear-gradient(135deg, rgba(15, 5, 30, 0.9) 0%, rgba(8, 2, 20, 0.95) 100%);
+                        linear-gradient(135deg, rgba(15, 5, 30, 0.95) 0%, rgba(8, 2, 20, 0.98) 100%);
 
                     border: 1px solid rgba(140, 170, 255, 0.3);
 
@@ -810,24 +930,33 @@ const Project = () => {
                         0 8px 30px rgba(0, 0, 0, 0.6),
                         0 0 60px rgba(100, 130, 255, 0.1);
 
-                    transform:
-                        rotateX(var(--tilt-x, 0deg))
-                        rotateY(var(--tilt-y, 0deg));
+                    /* Enhanced 3D transform using perspective from the parent */
+                    transform: 
+                        rotateX(var(--tilt-x, 0deg)) 
+                        rotateY(var(--tilt-y, 0deg)) 
+                        translateZ(0px);
 
                     transform-style: preserve-3d;
 
-                    transition:
-                        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                    transition: 
+                        transform 0.15s ease-out,
                         border-color 0.35s ease,
                         box-shadow 0.35s ease;
                 }
 
                 .carousel-card:hover .project-card-inner {
-                    border-color: rgba(160, 190, 255, 0.9);
+                    border-color: rgba(160, 190, 255, 0.95);
+                    
+                    /* Pop out effect on hover */
+                    transform: 
+                        rotateX(var(--tilt-x, 0deg)) 
+                        rotateY(var(--tilt-y, 0deg)) 
+                        translateZ(30px);
+
                     box-shadow:
-                        inset 0 0 60px rgba(100, 140, 255, 0.22),
-                        0 24px 60px rgba(60, 80, 200, 0.4),
-                        0 0 120px rgba(140, 100, 255, 0.3);
+                        inset 0 0 60px rgba(100, 140, 255, 0.25),
+                        0 30px 60px rgba(60, 80, 200, 0.5),
+                        0 0 120px rgba(140, 100, 255, 0.4);
                 }
 
                 .carousel-card .project-card-inner::before {
@@ -837,7 +966,7 @@ const Project = () => {
                     width: 60px; height: 60px;
                     background: linear-gradient(
                         225deg,
-                        rgba(180, 140, 255, 0.7) 0%,
+                        rgba(180, 140, 255, 0.8) 0%,
                         rgba(180, 140, 255, 0.0) 55%
                     );
                     clip-path: polygon(0 0, 100% 0, 100% 100%);
@@ -923,7 +1052,7 @@ const Project = () => {
                     z-index: 4;
                     background: radial-gradient(
                         circle 260px at var(--glow-x, 50%) var(--glow-y, 50%),
-                        rgba(180, 200, 255, 0.2) 0%,
+                        rgba(180, 200, 255, 0.25) 0%,
                         transparent 60%
                     );
                     opacity: 0;
@@ -1461,56 +1590,57 @@ const Project = () => {
 
                 @media (prefers-reduced-motion: reduce) {
                     .carousel-track { scroll-behavior: auto; }
+                    .carousel-card,
                     .project-card-3d .project-card-inner,
                     .carousel-card .project-image img,
                     .carousel-card .project-card-glare,
                     .carousel-arrow,
                     .carousel-dot {
+                        animation: none;
                         transition: none;
                     }
                 }
             `}</style>
 
-            <section id="work" ref={sectionRef} className="projects-section">
+      <section id="work" ref={sectionRef} className="projects-section">
+        {/* ---------- Modern galaxy background ---------- */}
+        <div className="galaxy-bg" aria-hidden="true">
+          {/* Two layers of moving stars for parallax */}
+          <div className="starfield-layer starfield-back" />
+          <div className="starfield-layer starfield-front" />
 
-                {/* ---------- Modern galaxy background ---------- */}
-                <div className="galaxy-bg" aria-hidden="true">
-                    <span className="galaxy-band" />
-                    <span className="galaxy-orb orb-1" />
-                    <span className="galaxy-orb orb-2" />
-                    <span className="galaxy-orb orb-3" />
-                </div>
+          <span className="galaxy-band" />
+          <span className="galaxy-orb orb-1" />
+          <span className="galaxy-orb orb-2" />
+          <span className="galaxy-orb orb-3" />
+        </div>
 
-                <div className="projects-layout">
+        <div className="projects-layout">
+          <div className="projects-head">
+            <div className="projects-kicker">
+              <span className="projects-kicker-line" />
+              <span>PROJECTS</span>
+            </div>
 
-                    <div className="projects-head">
-                        <div className="projects-kicker">
-                            <span className="projects-kicker-line" />
-                            <span>PROJECTS</span>
-                        </div>
+            <h2 className="projects-heading">
+              Selected
+              <span className="projects-heading-accent"> work </span>&
+              experiments.
+            </h2>
+          </div>
 
-                        <h2 className="projects-heading">
-                            Selected
-                            <span className="projects-heading-accent">
-                                {" "}work{" "}
-                            </span>
-                            & experiments.
-                        </h2>
-                    </div>
+          <ProjectCarousel onOpenProject={setActiveProject} />
+        </div>
+      </section>
 
-                    <ProjectCarousel onOpenProject={setActiveProject} />
-
-                </div>
-            </section>
-
-            {activeProject && (
-                <ProjectModal
-                    project={activeProject}
-                    onClose={() => setActiveProject(null)}
-                />
-            )}
-        </>
-    );
+      {activeProject && (
+        <ProjectModal
+          project={activeProject}
+          onClose={() => setActiveProject(null)}
+        />
+      )}
+    </>
+  );
 };
 
 export default Project;

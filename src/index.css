@@ -503,7 +503,7 @@ section {
 }
 
 
-/* ---------- HERO LAYOUT — fixed alignment so image block starts near top ───────── */
+/* ---------- HERO LAYOUT — FIXED ALIGNMENT --------- */
 
 .hero-layout {
     position: relative;
@@ -515,22 +515,22 @@ section {
 
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(420px, 0.95fr);
-    /* FIXED: changed from align-items: center to align-items: start to remove the huge gap above the image frame */
-    align-items: start;
+    align-items: start; /* Keeps content at the top */
 
     gap: clamp(40px, 5vw, 72px);
 
-    /* Controlled top padding so navbar never overlaps content */
-    padding: 105px 6vw 60px;
+    /* Reduced top padding to close the gap with the navbar */
+    padding: 85px 6vw 60px;
 }
 
 .hero-content {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Changed from center to pull text up */
     max-width: 720px;
     z-index: 10;
+    padding-top: 20px; /* Slight top padding for visual balance */
 }
 
 .hero-kicker {
@@ -879,14 +879,15 @@ section {
 .hero-cv-button:hover .hero-cv-icon { transform: translateY(2px); }
 
 
-/* ---------- HERO VISUAL — tuned for balance ---------- */
+/* ---------- HERO VISUAL — FIXED HEIGHT TO REDUCE GAP ---------- */
 
 .hero-visual {
     position: relative;
     width: 100%;
 
-    height: min(640px, 70vh);
-    min-height: 500px;
+    /* Reduced height to pull the portrait up */
+    height: min(520px, 60vh);
+    min-height: 400px;
 
     display: flex;
     align-items: center;
@@ -1502,13 +1503,13 @@ section {
 
 
 /* =========================================================
-   ABOUT — UNIFORM SECTION SPACING
+   ABOUT — UNIFORM SECTION SPACING (REDUCED)
    ========================================================= */
 
 .about-section {
     position: relative;
     width: 100%;
-    padding: 100px 0;
+    padding: 80px 0; /* Reduced from 100px */
     overflow: hidden;
 }
 
@@ -1735,13 +1736,13 @@ section {
 
 
 /* =========================================================
-   PROJECTS — UNIFORM SECTION SPACING
+   PROJECTS — UNIFORM SECTION SPACING (REDUCED)
    ========================================================= */
 
 .projects-section {
     position: relative;
     width: 100%;
-    padding: 100px 0;
+    padding: 80px 0; /* Reduced from 100px */
     overflow: hidden;
 }
 
@@ -2450,13 +2451,13 @@ section {
 
 
 /* =========================================================
-   EDUCATION — UNIFORM SECTION SPACING
+   EDUCATION — UNIFORM SECTION SPACING (REDUCED)
    ========================================================= */
 
 .education-section {
     position: relative;
     width: 100%;
-    padding: 100px 0;
+    padding: 80px 0; /* Reduced from 100px */
     overflow: hidden;
 }
 
@@ -2698,13 +2699,13 @@ section {
 
 
 /* =========================================================
-   SKILLS — UNIFORM SECTION SPACING
+   SKILLS — UNIFORM SECTION SPACING (REDUCED)
    ========================================================= */
 
 .skills-section {
     position: relative;
     width: 100%;
-    padding: 100px 0;
+    padding: 80px 0; /* Reduced from 100px */
     overflow: hidden;
 }
 
@@ -3138,13 +3139,13 @@ section {
 
 
 /* =========================================================
-   CERTIFICATES — UNIFORM SECTION SPACING
+   CERTIFICATES — UNIFORM SECTION SPACING (REDUCED)
    ========================================================= */
 
 .certs-section {
     position: relative;
     width: 100%;
-    padding: 100px 0;
+    padding: 80px 0; /* Reduced from 100px */
     overflow: hidden;
 }
 
@@ -3509,14 +3510,14 @@ section {
 
 
 /* =========================================================
-   FOOTER — UNIFORM SECTION SPACING
+   FOOTER — UNIFORM SECTION SPACING (REDUCED)
    ========================================================= */
 
 .footer-section {
     position: relative;
     width: 100%;
     margin-top: 0;
-    padding: 100px 6vw 40px;
+    padding: 80px 6vw 40px; /* Reduced from 100px */
     overflow: hidden;
 
     border-top: 1px solid rgba(255, 60, 20, 0.2);
@@ -4078,7 +4079,7 @@ section {
 @media (max-width: 1024px) {
     .hero-layout {
         grid-template-columns: 1fr;
-        padding: 130px 6vw 70px;
+        padding: 110px 6vw 70px; /* Adjusted top padding */
         text-align: center;
         gap: 40px;
     }
@@ -4087,6 +4088,7 @@ section {
         align-items: center;
         max-width: 850px;
         margin: 0 auto;
+        padding-top: 0;
     }
 
     .hero-kicker,
@@ -4101,8 +4103,8 @@ section {
     }
 
     .hero-visual {
-        height: 520px;
-        min-height: 420px;
+        height: 450px; /* Reduced from 520px */
+        min-height: 380px;
         max-width: 700px;
         margin: 0 auto;
     }
@@ -4110,7 +4112,7 @@ section {
     .hero-name-index { display: none; }
 
     .counter-section { padding: 40px 0; }
-    .about-section { padding: 100px 0; }
+    .about-section { padding: 80px 0; }
 
     .about-layout {
         grid-template-columns: 1fr;
@@ -4121,7 +4123,7 @@ section {
 
     .education-section,
     .skills-section,
-    .certs-section { padding: 100px 0; }
+    .certs-section { padding: 80px 0; }
 
     .footer-layout { gap: 24px; }
 }
@@ -4130,7 +4132,7 @@ section {
 
 @media (max-width: 768px) {
     .hero-layout {
-        padding: 110px 20px 50px;
+        padding: 95px 20px 50px; /* Adjusted top padding */
         gap: 10px;
     }
 
@@ -4139,7 +4141,7 @@ section {
     .hero-title-second { font-size: 1.35rem; }
     .hero-description { font-size: 1rem; max-width: 500px; }
 
-    .hero-visual { height: 420px; min-height: 360px; }
+    .hero-visual { height: 380px; min-height: 320px; } /* Reduced further */
 
     .hero-human-image,
     .hero-robo-image { width: 105%; height: 92%; }
@@ -4186,7 +4188,7 @@ section {
     .hero-name { font-size: 3rem; }
     .hero-title { font-size: 1.45rem; }
     .hero-title-second { font-size: 1.15rem; }
-    .hero-visual { height: 380px; }
+    .hero-visual { height: 340px; } /* Reduced further */
     .hero-image-hud { display: none; }
     .visual-label { font-size: 7px; }
     .cyber-button { width: 200px; }
@@ -4201,7 +4203,7 @@ section {
     .projects-section,
     .education-section,
     .skills-section,
-    .certs-section { padding: 70px 0; }
+    .certs-section { padding: 50px 0; } /* Reduced to 50px for mobile */
 
     .about-layout { padding: 0 20px; gap: 40px; }
     .about-name {
@@ -4261,7 +4263,7 @@ section {
     .cert-modal { max-height: 94vh; }
     .cert-modal-body { padding: 20px 22px 24px; }
 
-    .footer-section { padding: 70px 20px 30px; }
+    .footer-section { padding: 50px 20px 30px; } /* Reduced to 50px */
     .footer-name-text { font-size: clamp(2rem, 12vw, 3rem); }
     .footer-tagline {
         font-size: 0.85rem;

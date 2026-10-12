@@ -226,8 +226,9 @@ const ProjectCard = ({ project, index, onOpen, isDragging, dragStateRef }) => {
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
 
-        el.style.setProperty("--tilt-x", `${(y - 0.5) * -8}deg`);
-        el.style.setProperty("--tilt-y", `${(x - 0.5) * 10}deg`);
+        // Enhanced 3D tilt angles for a more dramatic effect
+        el.style.setProperty("--tilt-x", `${(y - 0.5) * -15}deg`);
+        el.style.setProperty("--tilt-y", `${(x - 0.5) * 15}deg`);
         el.style.setProperty("--glow-x", `${x * 100}%`);
         el.style.setProperty("--glow-y", `${y * 100}%`);
     };
@@ -435,10 +436,7 @@ const ProjectCarousel = ({ onOpenProject }) => {
         }, 0);
     };
 
-    /* ✅ CORRECTED WHEEL HANDLER
-       - Horizontal trackpad swipe (deltaX > deltaY) → carousel scroll
-       - Shift + wheel → carousel scroll
-       - Plain vertical wheel → let page scroll normally (no preventDefault) */
+    /* Wheel handler */
     useEffect(() => {
         const track = trackRef.current;
         if (!track) return;
@@ -452,7 +450,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
                 const amount = isShiftWheel ? e.deltaY : e.deltaX;
                 track.scrollLeft += amount;
             }
-            /* Otherwise → vertical scroll passes through to the page */
         };
 
         track.addEventListener("wheel", handleWheel, { passive: false });
@@ -592,33 +589,46 @@ const Project = () => {
                     overflow: hidden;
                 }
 
-                /* Twinkling star field */
-                .galaxy-bg::before {
-                    content: "";
+                /* Starfield layers for parallax effect */
+                .starfield-layer {
                     position: absolute;
                     inset: 0;
                     background-image:
-                        radial-gradient(1px 1px at 6% 14%, #fff, transparent 60%),
-                        radial-gradient(1.4px 1.4px at 18% 38%, rgba(200, 220, 255, 0.9), transparent 60%),
-                        radial-gradient(1px 1px at 32% 8%, #fff, transparent 60%),
-                        radial-gradient(1.6px 1.6px at 44% 62%, rgba(255, 220, 240, 0.85), transparent 60%),
-                        radial-gradient(1px 1px at 58% 24%, #fff, transparent 60%),
-                        radial-gradient(1.4px 1.4px at 72% 78%, rgba(200, 220, 255, 0.85), transparent 60%),
-                        radial-gradient(1px 1px at 82% 44%, #fff, transparent 60%),
-                        radial-gradient(1.6px 1.6px at 90% 12%, rgba(255, 220, 240, 0.9), transparent 60%),
-                        radial-gradient(1px 1px at 12% 88%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 26% 56%, rgba(200, 220, 255, 0.7), transparent 60%),
-                        radial-gradient(1.4px 1.4px at 50% 90%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 66% 52%, rgba(255, 220, 240, 0.75), transparent 60%),
-                        radial-gradient(1.6px 1.6px at 78% 8%, #fff, transparent 60%),
-                        radial-gradient(1px 1px at 96% 70%, #fff, transparent 60%);
-                    opacity: 0.75;
-                    animation: galaxyTwinkle 6s ease-in-out infinite alternate;
+                        radial-gradient(1px 1px at 10% 10%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1.5px 1.5px at 30% 40%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 60% 20%, #c9b6ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(2px 2px at 80% 70%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 15% 80%, #8ec5ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1.5px 1.5px at 45% 90%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 75% 30%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(2px 2px at 95% 50%, #c9b6ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1px 1px at 5% 55%, #fff, rgba(255,255,255,0) 60%),
+                        radial-gradient(1.5px 1.5px at 50% 5%, #8ec5ff, rgba(255,255,255,0) 60%);
+                    background-size: 400px 400px;
+                    opacity: 0.9;
+                    will-change: background-position;
                 }
 
-                @keyframes galaxyTwinkle {
-                    0%   { opacity: 0.55; }
-                    100% { opacity: 0.95; }
+                /* Layer 1: Slow moving, larger stars */
+                .starfield-back {
+                    animation: starfieldMove 40s linear infinite;
+                }
+
+                /* Layer 2: Fast moving, smaller stars (opposite direction) */
+                .starfield-front {
+                    background-size: 250px 250px;
+                    opacity: 0.6;
+                    animation: starfieldMoveReverse 25s linear infinite;
+                }
+
+                @keyframes starfieldMove {
+                    0% { background-position: 0 0; }
+                    100% { background-position: -400px 400px; }
+                }
+
+                @keyframes starfieldMoveReverse {
+                    0% { background-position: 0 0; }
+                    100% { background-position: 250px -250px; }
                 }
 
                 /* Colourful nebula clouds */
@@ -705,7 +715,7 @@ const Project = () => {
                 }
 
                 @media (prefers-reduced-motion: reduce) {
-                    .galaxy-bg::before,
+                    .starfield-layer,
                     .galaxy-bg::after,
                     .galaxy-band,
                     .galaxy-orb {
@@ -777,6 +787,22 @@ const Project = () => {
                     cursor: pointer;
                     user-select: none;
                     -webkit-user-drag: none;
+                    
+                    /* Floating animation applies to the whole card */
+                    animation: cardFloat 6s ease-in-out infinite;
+                }
+
+                /* Stagger the float animation */
+                .carousel-card:nth-child(even) { animation-delay: -3s; }
+                .carousel-card:nth-child(3n) { animation-delay: -1.5s; }
+
+                .carousel-card:hover {
+                    animation-play-state: paused;
+                }
+
+                @keyframes cardFloat {
+                    0%, 100% { transform: translateY(0); }
+                    50%      { transform: translateY(-12px); }
                 }
 
                 .project-card-3d .project-card-inner {
@@ -798,7 +824,7 @@ const Project = () => {
                     );
 
                     background:
-                        linear-gradient(135deg, rgba(15, 5, 30, 0.9) 0%, rgba(8, 2, 20, 0.95) 100%);
+                        linear-gradient(135deg, rgba(15, 5, 30, 0.95) 0%, rgba(8, 2, 20, 0.98) 100%);
 
                     border: 1px solid rgba(140, 170, 255, 0.3);
 
@@ -810,24 +836,33 @@ const Project = () => {
                         0 8px 30px rgba(0, 0, 0, 0.6),
                         0 0 60px rgba(100, 130, 255, 0.1);
 
-                    transform:
-                        rotateX(var(--tilt-x, 0deg))
-                        rotateY(var(--tilt-y, 0deg));
+                    /* Enhanced 3D transform using perspective from the parent */
+                    transform: 
+                        rotateX(var(--tilt-x, 0deg)) 
+                        rotateY(var(--tilt-y, 0deg)) 
+                        translateZ(0px);
 
                     transform-style: preserve-3d;
 
-                    transition:
-                        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                    transition: 
+                        transform 0.15s ease-out,
                         border-color 0.35s ease,
                         box-shadow 0.35s ease;
                 }
 
                 .carousel-card:hover .project-card-inner {
-                    border-color: rgba(160, 190, 255, 0.9);
+                    border-color: rgba(160, 190, 255, 0.95);
+                    
+                    /* Pop out effect on hover */
+                    transform: 
+                        rotateX(var(--tilt-x, 0deg)) 
+                        rotateY(var(--tilt-y, 0deg)) 
+                        translateZ(30px);
+
                     box-shadow:
-                        inset 0 0 60px rgba(100, 140, 255, 0.22),
-                        0 24px 60px rgba(60, 80, 200, 0.4),
-                        0 0 120px rgba(140, 100, 255, 0.3);
+                        inset 0 0 60px rgba(100, 140, 255, 0.25),
+                        0 30px 60px rgba(60, 80, 200, 0.5),
+                        0 0 120px rgba(140, 100, 255, 0.4);
                 }
 
                 .carousel-card .project-card-inner::before {
@@ -837,7 +872,7 @@ const Project = () => {
                     width: 60px; height: 60px;
                     background: linear-gradient(
                         225deg,
-                        rgba(180, 140, 255, 0.7) 0%,
+                        rgba(180, 140, 255, 0.8) 0%,
                         rgba(180, 140, 255, 0.0) 55%
                     );
                     clip-path: polygon(0 0, 100% 0, 100% 100%);
@@ -923,7 +958,7 @@ const Project = () => {
                     z-index: 4;
                     background: radial-gradient(
                         circle 260px at var(--glow-x, 50%) var(--glow-y, 50%),
-                        rgba(180, 200, 255, 0.2) 0%,
+                        rgba(180, 200, 255, 0.25) 0%,
                         transparent 60%
                     );
                     opacity: 0;
@@ -1461,11 +1496,13 @@ const Project = () => {
 
                 @media (prefers-reduced-motion: reduce) {
                     .carousel-track { scroll-behavior: auto; }
+                    .carousel-card,
                     .project-card-3d .project-card-inner,
                     .carousel-card .project-image img,
                     .carousel-card .project-card-glare,
                     .carousel-arrow,
                     .carousel-dot {
+                        animation: none;
                         transition: none;
                     }
                 }
@@ -1475,6 +1512,10 @@ const Project = () => {
 
                 {/* ---------- Modern galaxy background ---------- */}
                 <div className="galaxy-bg" aria-hidden="true">
+                    {/* Two layers of moving stars for parallax */}
+                    <div className="starfield-layer starfield-back" />
+                    <div className="starfield-layer starfield-front" />
+                    
                     <span className="galaxy-band" />
                     <span className="galaxy-orb orb-1" />
                     <span className="galaxy-orb orb-2" />

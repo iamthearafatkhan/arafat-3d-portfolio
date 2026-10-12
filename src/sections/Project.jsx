@@ -453,7 +453,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
     scrollToIndex(next);
   }, [activeIndex, scrollToIndex]);
 
-  /* Track active card via scroll position */
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -489,7 +488,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
     };
   }, []);
 
-  /* Pointer-based drag — mouse + touch */
   const onPointerDown = (e) => {
     const track = trackRef.current;
     if (!track) return;
@@ -531,10 +529,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
     }, 0);
   };
 
-  /* ✅ CORRECTED WHEEL HANDLER
-       - Horizontal trackpad swipe (deltaX > deltaY) → carousel scroll
-       - Shift + wheel → carousel scroll
-       - Plain vertical wheel → let page scroll normally (no preventDefault) */
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -548,7 +542,6 @@ const ProjectCarousel = ({ onOpenProject }) => {
         const amount = isShiftWheel ? e.deltaY : e.deltaX;
         track.scrollLeft += amount;
       }
-      /* Otherwise → vertical scroll passes through to the page */
     };
 
     track.addEventListener("wheel", handleWheel, { passive: false });
@@ -670,7 +663,7 @@ const Project = () => {
                     width: 100%;
                     padding: 120px 0 60px;
                     overflow: hidden;
-                    background: #000000; /* Pure black space */
+                    background-color: #000000 !important; /* Forced Pure Black */
                 }
 
                 /* ---------- Galaxy background layers ---------- */
@@ -689,26 +682,24 @@ const Project = () => {
                     background-image:
                         radial-gradient(3px 3px at 10% 10%, #ffffff, rgba(255,255,255,0) 60%),
                         radial-gradient(4px 4px at 30% 40%, #ffffff, rgba(255,255,255,0) 60%),
-                        radial-gradient(3px 3px at 60% 20%, #e0e0ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(3px 3px at 60% 20%, #ffffff, rgba(255,255,255,0) 60%),
                         radial-gradient(5px 5px at 80% 70%, #ffffff, rgba(255,255,255,0) 60%),
-                        radial-gradient(3px 3px at 15% 80%, #c0c0ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(3px 3px at 15% 80%, #ffffff, rgba(255,255,255,0) 60%),
                         radial-gradient(4px 4px at 45% 90%, #ffffff, rgba(255,255,255,0) 60%),
                         radial-gradient(3px 3px at 75% 30%, #ffffff, rgba(255,255,255,0) 60%),
-                        radial-gradient(5px 5px at 95% 50%, #e0e0ff, rgba(255,255,255,0) 60%),
+                        radial-gradient(5px 5px at 95% 50%, #ffffff, rgba(255,255,255,0) 60%),
                         radial-gradient(3px 3px at 5% 55%, #ffffff, rgba(255,255,255,0) 60%),
-                        radial-gradient(4px 4px at 50% 5%, #c0c0ff, rgba(255,255,255,0) 60%);
+                        radial-gradient(4px 4px at 50% 5%, #ffffff, rgba(255,255,255,0) 60%);
                     background-size: 500px 500px;
                     opacity: 1;
                     will-change: background-position;
-                    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)); /* Glow effect */
+                    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9)); /* White Glow */
                 }
 
-                /* Layer 1: Slow moving, medium stars */
                 .starfield-back {
                     animation: starfieldMove 60s linear infinite;
                 }
 
-                /* Layer 2: Fast moving, larger stars */
                 .starfield-front {
                     background-size: 350px 350px;
                     opacity: 0.9;
@@ -719,7 +710,7 @@ const Project = () => {
                         radial-gradient(4px 4px at 80% 80%, #fff, transparent 60%),
                         radial-gradient(5px 5px at 10% 90%, #fff, transparent 60%),
                         radial-gradient(5px 5px at 90% 10%, #fff, transparent 60%);
-                    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+                    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 1)); /* Stronger White Glow */
                 }
 
                 @keyframes starfieldMove {
@@ -732,17 +723,17 @@ const Project = () => {
                     100% { background-position: 350px -350px; }
                 }
 
-                /* Colourful nebula clouds — REMOVED PURPLE, NOW FAINT WHITE DUST */
+                /* Nebula clouds — PURE WHITE */
                 .galaxy-bg::after {
                     content: "";
                     position: absolute;
                     inset: -20%;
                     background:
-                        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 82% 30%, rgba(200, 200, 255, 0.05) 0%, transparent 40%),
-                        radial-gradient(circle at 25% 78%, rgba(255, 255, 255, 0.06) 0%, transparent 45%),
-                        radial-gradient(circle at 75% 85%, rgba(200, 200, 255, 0.05) 0%, transparent 45%),
-                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+                        radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.10) 0%, transparent 40%),
+                        radial-gradient(circle at 82% 30%, rgba(255, 255, 255, 0.06) 0%, transparent 40%),
+                        radial-gradient(circle at 25% 78%, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
+                        radial-gradient(circle at 75% 85%, rgba(255, 255, 255, 0.06) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
                     filter: blur(60px);
                     animation: nebulaDrift 30s ease-in-out infinite alternate;
                 }
@@ -753,7 +744,7 @@ const Project = () => {
                     100% { transform: translate(2%, 3%) scale(1.02); }
                 }
 
-                /* Faint galaxy band across the section — REMOVED PURPLE */
+                /* Faint galaxy band — PURE WHITE */
                 .galaxy-band {
                     position: absolute;
                     top: 40%;
@@ -765,8 +756,8 @@ const Project = () => {
                     background:
                         radial-gradient(
                             ellipse at center,
-                            rgba(255, 255, 255, 0.08) 0%,
-                            rgba(200, 200, 255, 0.04) 30%,
+                            rgba(255, 255, 255, 0.10) 0%,
+                            rgba(255, 255, 255, 0.05) 30%,
                             transparent 65%
                         );
 
@@ -780,7 +771,7 @@ const Project = () => {
                     100% { opacity: 1;   }
                 }
 
-                /* Slow drifting orbs for depth — REMOVED PURPLE */
+                /* Drifting orbs — PURE WHITE */
                 .galaxy-orb {
                     position: absolute;
                     border-radius: 50%;
@@ -799,7 +790,7 @@ const Project = () => {
                 .orb-2 {
                     width: 500px; height: 500px;
                     bottom: -150px; right: -120px;
-                    background: radial-gradient(circle, rgba(200, 200, 255, 0.1) 0%, transparent 65%);
+                    background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, transparent 65%);
                     animation: orbFloat 32s ease-in-out infinite alternate-reverse;
                 }
 
@@ -889,11 +880,9 @@ const Project = () => {
                     user-select: none;
                     -webkit-user-drag: none;
                     
-                    /* Floating animation applies to the whole card */
                     animation: cardFloat 6s ease-in-out infinite;
                 }
 
-                /* Stagger the float animation */
                 .carousel-card:nth-child(even) { animation-delay: -3s; }
                 .carousel-card:nth-child(3n) { animation-delay: -1.5s; }
 
@@ -937,7 +926,6 @@ const Project = () => {
                         0 8px 30px rgba(0, 0, 0, 0.6),
                         0 0 60px rgba(100, 130, 255, 0.1);
 
-                    /* Enhanced 3D transform using perspective from the parent */
                     transform: 
                         rotateX(var(--tilt-x, 0deg)) 
                         rotateY(var(--tilt-y, 0deg)) 
@@ -954,7 +942,6 @@ const Project = () => {
                 .carousel-card:hover .project-card-inner {
                     border-color: rgba(160, 190, 255, 0.95);
                     
-                    /* Pop out effect on hover */
                     transform: 
                         rotateX(var(--tilt-x, 0deg)) 
                         rotateY(var(--tilt-y, 0deg)) 

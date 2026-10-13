@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <>
-      <CometCursor />
+      {/* REMOVED: <CometCursor /> */}
 
       {loading && <BlackHoleLoader onComplete={handleComplete} />}
 

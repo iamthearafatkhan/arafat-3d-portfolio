@@ -3,6 +3,13 @@ import { educationItems } from "../constants/index.js";
 const Education = () => {
   return (
     <section id="education" className="education-section">
+      {/* Inline keyframes for the background */}
+      <style>{`
+                .education-section {
+                    background-color: #000000 !important; /* Solid Black */
+                }
+            `}</style>
+
       <div className="education-layout">
         {/* ---------- HEADING ---------- */}
         <div className="education-head">

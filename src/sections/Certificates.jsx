@@ -88,6 +88,13 @@ const Certificates = () => {
   return (
     <>
       <section id="certificates" className="certs-section">
+        {/* Inline keyframes for the background */}
+        <style>{`
+                    .certs-section {
+                        background-color: #000000 !important; /* Solid Black */
+                    }
+                `}</style>
+
         <div className="certs-layout">
           {/* ---------- HEADING ---------- */}
           <div className="certs-head">

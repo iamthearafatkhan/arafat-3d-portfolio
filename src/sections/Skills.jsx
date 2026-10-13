@@ -44,6 +44,13 @@ const SkillBubble = ({ skill, index }) => (
 const Skills = () => {
   return (
     <section id="skills" className="skills-section">
+      {/* Inline keyframes for the background */}
+      <style>{`
+                .skills-section {
+                    background-color: #000000 !important; /* Solid Black */
+                }
+            `}</style>
+
       <div className="skills-layout">
         <div className="skills-head">
           <div className="skills-kicker">

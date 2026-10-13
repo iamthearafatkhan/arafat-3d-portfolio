@@ -31,12 +31,12 @@ const interests = [
   "Automation",
 ];
 
-/* Nebula colors — one per card, cycles if more cards are added */
+/* Nebula colors — pure white glows for cards */
 const NEBULA_COLORS = [
-  "rgba(255, 80, 32, 0.55)", // red-orange
-  "rgba(255, 140, 66, 0.5)", // amber
-  "rgba(180, 80, 255, 0.45)", // violet
-  "rgba(255, 60, 20, 0.5)", // deep red
+  "rgba(255, 255, 255, 0.08)", // pure white
+  "rgba(255, 255, 255, 0.06)", // pure white
+  "rgba(255, 255, 255, 0.10)", // pure white
+  "rgba(255, 255, 255, 0.05)", // pure white
 ];
 
 /* Stagger offsets so no two cards float in sync */
@@ -68,6 +68,10 @@ const About = () => {
                     .about-tag-float {
                         animation: none !important;
                     }
+                }
+
+                .about-section {
+                    background-color: #000000 !important; /* Solid Black */
                 }
             `}</style>
 

@@ -1,105 +1,106 @@
-# Arafat Khan — 3D Portfolio
+<div align="center">
+  
+# 🌌 Arafat Khan — 3D Portfolio
 
-An interactive 3D portfolio website for **Md Arafat Hossen Rabby (Arafat Khan)**, showcasing my work in AI/ML, data science, computer vision, and research.
+**An interactive, cinematic 3D portfolio showcasing my work in AI, Machine Learning, and Computer Vision.**
 
-Featuring a cinematic black hole intro, GPU-rendered particle system, cursor-driven image reveal, orbital project carousel, interactive skill bubbles, and animated sections.
+[![Live Demo](https://img.shields.io/badge/Live_Demo-arafatkhan.vercel.app-black?style=for-the-badge&logo=vercel)](https://arafatkhan.vercel.app)
+[![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
+[![Vite](https://img.shields.io/badge/Vite_8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-**Live Demo:** [arafatkhan.vercel.app](https://arafatkhan.vercel.app)
+</div>
 
----
-
-## Table of Contents
-
-* [Tech Stack](#tech-stack)
-* [Features](#features)
-* [Getting Started](#getting-started)
-* [Requirements](#requirements)
-* [Available Scripts](#available-scripts)
-* [Design System](#design-system)
-* [Fonts](#fonts)
-* [Customization](#customization)
-* [Deployment](#deployment)
-* [Author](#author)
-* [License](#license)
-* [Acknowledgments](#acknowledgments)
+<!-- Add a screenshot or GIF of your portfolio here to make it pop! -->
+<!-- <div align="center"><img src="./public/images/preview.gif" alt="Portfolio Preview" width="800" /></div> -->
 
 ---
 
-## Tech Stack
+## 📖 About The Project
 
-| Category             | Technology           |
-| -------------------- | -------------------- |
-| Framework            | React 19             |
-| Build Tool           | Vite 8               |
-| 3D Graphics          | Three.js 0.186       |
-| 3D React Integration | @react-three/fiber 9 |
-| Animation            | GSAP 3               |
-| React Animation      | @gsap/react          |
-| Styling              | Tailwind CSS 4       |
-| Responsive Design    | react-responsive     |
-| Linting              | ESLint 10            |
-| Deployment           | Vercel               |
+Welcome to my 3D interactive portfolio! This isn't a standard website. It features a **cinematic black hole intro**, a **GPU-rendered particle system**, a cursor-driven image reveal, and an orbital project carousel. 
 
----
+It is designed to push the boundaries of web graphics while maintaining a fast, accessible, and responsive user experience.
 
-## Features
-
-* **Cinematic Black Hole Loader:** An animated black hole intro featuring an accretion disk, photon ring, and cinematic split-screen reveal.
-* **Comet Cursor:** A custom canvas-based cursor with a glowing blue comet tail.
-* **Hero Image Reveal:** A cursor-driven image reveal effect with galaxy swirls, stars, and glowing particles.
-* **Animated Word Slider:** A vertical text slider featuring Ideas, Concepts, Designs, Code, and Research.
-* **GPU Particle System:** More than 20,000 particles with individual colors and velocities.
-* **Floating Cyber Buttons:** Animated hero buttons with independent floating motion.
-* **Orbital Project Carousel:** An interactive project showcase with planet-inspired cards rotating along an elliptical orbit.
-* **Interactive Skill Bubbles:** Iridescent skill bubbles that reveal additional information on hover.
-* **Certificate Modals:** Full-screen certificate previews with download links.
-* **CV Modal:** An embedded PDF viewer with a download feature.
-* **Animated Statistics:** Scroll-triggered counters for showcasing portfolio statistics.
-* **Responsive Layout:** Optimized for mobile, tablet, and desktop screens.
-* **Accessibility:** Supports reduced-motion preferences and disables the custom cursor on touch devices.
-* **Session-Aware Intro:** The black hole intro plays once per session and skips during anchor navigation.
+## 📑 Table of Contents
+- [Tech Stack](#-tech-stack)
+- [Key Features](#-key-features)
+- [Getting Started](#-getting-started)
+- [Customization Guide](#-customization-guide)
+- [Deployment](#-deployment)
+- [Connect With Me](#-connect-with-me)
+- [License](#-license)
 
 ---
 
-## Getting Started
+## 🛠 Tech Stack
 
-### 1. Clone the repository
+| Category | Technologies |
+| :--- | :--- |
+| **Core** | React 19, Vite 8 |
+| **3D & Animation** | Three.js, @react-three/fiber, GSAP 3, @gsap/react |
+| **Styling** | Tailwind CSS 4, react-responsive |
+| **Quality** | ESLint 10 |
+| **Deployment** | Vercel |
 
-```bash
-git clone https://github.com/iamthearafatkhan/arafat-3d-portfolio.git
+---
 
-cd arafat-3d-portfolio
-```
+## ✨ Key Features
 
-### 2. Install Node.js
+### 🌌 Visuals & 3D
+- **Cinematic Black Hole Loader:** Animated accretion disk and photon ring with a split-screen reveal.
+- **Comet Cursor:** A custom canvas-based cursor with a glowing blue comet tail.
+- **GPU Particle System:** Over 20,000 particles rendering in real-time.
+- **Hero Image Reveal:** Cursor-driven galaxy swirls with glowing particles.
+- **Orbital Project Carousel:** Planet-inspired cards rotating along an elliptical orbit.
 
-The project requires Node.js 20 or later.
+### ⚡ UX & Functionality
+- **Interactive Skill Bubbles:** Iridescent bubbles that reveal info on hover.
+- **Embedded Modals:** Full-screen PDF CV viewer and certificate previews.
+- **Animated Statistics:** Scroll-triggered counters for portfolio stats.
+- **Accessibility First:** Disables custom cursors on touch devices and respects `prefers-reduced-motion`.
+- **Session-Aware Intro:** Black hole intro plays only once per session.
 
-Check your installed version:
+---
 
-```bash
-node -v
-npm -v
-```
+## 🚀 Getting Started
 
-If you use NVM, you can install Node.js 20:
+### Prerequisites
 
-```bash
-nvm install 20
-nvm use 20
-```
+> [!IMPORTANT]  
+> **Node.js 20+** and **WebGL 2.0** (for 3D rendering) are required.
 
-### 3. Install dependencies
+### Requirements
 
-```bash
-npm install
-```
+| Requirement      | Minimum                        | Recommended                             |
+| ---------------- | ------------------------------ | --------------------------------------- |
+| Node.js          | 20                             | 20 LTS or later                         |
+| npm              | 10                             | 11                                      |
+| Git              | 2.30                           | Latest                                  |
+| RAM              | 4 GB                           | 8 GB                                    |
+| Browser          | Modern browser with WebGL 2    | Latest Chrome, Firefox, Safari, or Edge |
+| Operating System | Windows 10, macOS 11, or Linux | Latest supported version                |
+**Note:** WebGL 2.0 is required for the 3D scenes. Node.js is used during development and the production build; the deployed website consists of static files.
+### Installation
 
-### 4. Start the development server
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/iamthearafatkhan/arafat-3d-portfolio.git
+   cd arafat-3d-portfolio
+   ```
 
-```bash
-npm run dev
-```
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server
+
+   ```bash
+   npm run dev
+   ```
 
 Open the local URL displayed in your terminal, usually:
 
@@ -119,21 +120,6 @@ npm run preview
 
 ---
 
-## Requirements
-
-| Requirement      | Minimum                        | Recommended                             |
-| ---------------- | ------------------------------ | --------------------------------------- |
-| Node.js          | 20                             | 20 LTS or later                         |
-| npm              | 10                             | 11                                      |
-| Git              | 2.30                           | Latest                                  |
-| RAM              | 4 GB                           | 8 GB                                    |
-| Browser          | Modern browser with WebGL 2    | Latest Chrome, Firefox, Safari, or Edge |
-| Operating System | Windows 10, macOS 11, or Linux | Latest supported version                |
-
-**Note:** WebGL 2.0 is required for the 3D scenes. Node.js is used during development and the production build; the deployed website consists of static files.
-
----
-
 ## Available Scripts
 
 | Command           | Description                                    |
@@ -145,7 +131,7 @@ npm run preview
 
 ---
 
-## Design System
+## 🎨 Design System
 
 The portfolio follows a cinematic cyber-galaxy aesthetic, combining dark backgrounds, beetroot-inspired tones, warm accents, metallic gradients, and glowing visual effects.
 
@@ -355,7 +341,7 @@ Remove or comment out the sections you do not want to display.
 
 ---
 
-## Deployment
+## ☁️ Deployment
 
 ### Deploy with Vercel
 
@@ -399,18 +385,18 @@ To use a custom domain, open your Vercel project settings, navigate to **Domains
 
 AI/ML Engineer in Progress | Data Science | Computer Vision | Research
 
-* **Portfolio:** [arafatkhan.vercel.app](https://arafatkhan.vercel.app)
-* **GitHub:** [@iamthearafatkhan](https://github.com/iamthearafatkhan)
-* **LinkedIn:** [linkedin.com/in/iamthearafatkhan](https://linkedin.com/in/iamthearafatkhan/)
-* **X:** [@iamarafatkhan33](https://x.com/iamarafatkhan33)
-* **Facebook:** [iamthearafatkhan](https://facebook.com/iamthearafatkhan)
-* **Email:** [arafathossen21233@gmail.com](mailto:arafathossen21233@gmail.com)
+### 🤝 Connect With Me
 
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/your-username)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/iamthearafatkhan)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://your-portfolio-url.com)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your-email@example.com)
 ---
 
-## License
-
-This is a personal portfolio project and is not licensed for redistribution. You are welcome to explore the source code for learning and inspiration. Please do not republish it as your own portfolio. Attribution is appreciated if you create something inspired by this project.
+## 📄 License
+This is a personal portfolio project.
+The source code is provided for learning and inspiration. Please do not republish it as your own portfolio. Attribution is highly appreciated if you build something inspired by this design!
 
 ---
 
@@ -423,6 +409,4 @@ This is a personal portfolio project and is not licensed for redistribution. You
 
 ---
 
-<p align="center">
-  Designed and developed by <strong>Arafat Khan</strong>
-</p>
+<div align="center"> <i>Designed and developed by <a href="https://arafatkhan.vercel.app"><b>Arafat Khan</b></a></i> </div> ```
